@@ -6,21 +6,29 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
-    @StateObject private var apiKeyManager = APIKeyManager()
+    
+    @EnvironmentObject var tokenManager: TokenManager
+    @State private var networkManager: NetworkManager?
+    
     
     var body: some View {
         VStack {
-           Text("Back to Drawing Board")
+            if let token = tokenManager.token {
+                Text("Current Token: \(token)")
+            } else {
+                Text("Fetching Token...")
+            }
+            
+            Button("fetch Unit Data") {
+                networkManager?.makeAuthenticatedRequest()
+            }
         }
         .padding()
         .onAppear {
-            apiKeyManager.refreshAPIKey()
+            self.networkManager = NetworkManager(tokenManager: tokenManager)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

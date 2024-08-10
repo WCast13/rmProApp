@@ -20,4 +20,18 @@ struct RMUnit: Codable {
     let userDefinedValues: [RMUserDefinedValue]
     let currentOccupancyStatus: RMOccupancyStatus
     let currentOccupants: [RMTennant]
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case unitID = "UnitID"
+        case propertyID = "PropertyID"
+        case name = "Name"
+        case colorID = "ColorID"
+        case userDefinedValues = "UserDefinedValues"
+        case addresses = "Addresses"
+        case leases = "Leases"
+        case currentOccupants = "CurrentOccupants"
+        case currentOccupancyStatus = "CurrentOccupancyStatus"
+        case isVacant = "IsVacant"
+    }
 }

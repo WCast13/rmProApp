@@ -17,4 +17,16 @@ struct RMOccupancyStatus : Codable {
     let endDate: String?
     let expectedMoveOutDate: String?
     let noticeDate: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case unitID = "UnitID"
+        case tenantID = "TenantID"
+        case prospectID = "ProspectID"
+        case unitStatusID = "UnitStatusID"
+        case occupancyType = "OccupancyType"
+        case startDate = "StartDate"
+        case endDate = "EndDate"
+        case expectedMoveOutDate = "ExpectedMoveOutDate"
+        case noticeDate = "NoticeDate"
+    }
 }

@@ -18,4 +18,17 @@ struct RMUserDefinedValue : Codable {
     let fieldType: String
     let updateUserID: Int
     let createUserID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case userDefinedValueID = "UserDefinedValueID"
+        case userDefinedFieldID = "UserDefinedFieldID"
+        case parentID = "ParentID"
+        case name = "Name"
+        case value = "Value"
+        case dateValue = "DateValue"
+        case updateDate = "UpdateDate"
+        case fieldType = "FieldType"
+        case updateUserID = "UpdateUserID"
+        case createUserID = "CreateUserID"
+    }
 }

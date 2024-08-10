@@ -20,6 +20,21 @@ struct RMAddress: Codable {
     let parentID: Int
     let parentType: String
     let addressType: RMAddressType
+    
+    enum CodingKeys: String, CodingKey {
+        case addressID = "AddressID"
+        case addressTypeID = "AddressTypeID"
+        case address = "Address"
+        case street = "Street"
+        case city = "City"
+        case state = "State"
+        case postalCode = "PostalCode"
+        case isPrimary = "IsPrimary"
+        case isBilling = "IsBilling"
+        case parentID = "ParentID"
+        case parentType = "ParentType"
+        case addressType = "AddressType"
+    }
 }
 
 struct RMAddressType: Codable {
@@ -28,4 +43,12 @@ struct RMAddressType: Codable {
     let description: String
     let sortOrder: Int
     let parentType: String
+    
+    enum CodingKeys: String, CodingKey {
+        case addressTypeID = "AddressTypeID"
+        case name = "Name"
+        case description = "Description"
+        case sortOrder = "SortOrder"
+        case parentType = "ParentType"
+    }
 }

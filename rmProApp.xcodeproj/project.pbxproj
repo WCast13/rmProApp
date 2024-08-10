@@ -13,15 +13,15 @@
 		E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */; };
 		E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */; };
 		E11E837E2C66CFE100254B27 /* UnitApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837D2C66CFE100254B27 /* UnitApiCall.swift */; };
+		E11E83832C670A1200254B27 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83822C670A1200254B27 /* TokenManager.swift */; };
 		E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501352C63D252000A0726 /* rmProAppApp.swift */; };
 		E15501382C63D252000A0726 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501372C63D252000A0726 /* ContentView.swift */; };
 		E155013A2C63D253000A0726 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E15501392C63D253000A0726 /* Assets.xcassets */; };
 		E155013E2C63D253000A0726 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E155013D2C63D253000A0726 /* Preview Assets.xcassets */; };
-		E15501462C63DE30000A0726 /* AuthenticateRM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501452C63DE30000A0726 /* AuthenticateRM.swift */; };
 		E155014B2C63EA5C000A0726 /* RMProspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014A2C63EA5C000A0726 /* RMProspect.swift */; };
 		E155014D2C6406B1000A0726 /* RMContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014C2C6406B1000A0726 /* RMContact.swift */; };
 		E155014F2C654149000A0726 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014E2C654149000A0726 /* Notes.swift */; };
-		E15501512C654280000A0726 /* RMCommunity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMCommunity.swift */; };
+		E15501512C654280000A0726 /* RMProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMProperty.swift */; };
 		E15501532C655139000A0726 /* RMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501522C655139000A0726 /* RMUnit.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,17 +32,17 @@
 		E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUserDefinedValue.swift; sourceTree = "<group>"; };
 		E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMOccupancyStatus.swift; sourceTree = "<group>"; };
 		E11E837D2C66CFE100254B27 /* UnitApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitApiCall.swift; sourceTree = "<group>"; };
+		E11E83822C670A1200254B27 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15501352C63D252000A0726 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
 		E15501372C63D252000A0726 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E15501392C63D253000A0726 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E155013B2C63D253000A0726 /* rmProApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rmProApp.entitlements; sourceTree = "<group>"; };
 		E155013D2C63D253000A0726 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E15501452C63DE30000A0726 /* AuthenticateRM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateRM.swift; sourceTree = "<group>"; };
 		E155014A2C63EA5C000A0726 /* RMProspect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProspect.swift; sourceTree = "<group>"; };
 		E155014C2C6406B1000A0726 /* RMContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMContact.swift; sourceTree = "<group>"; };
 		E155014E2C654149000A0726 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
-		E15501502C654280000A0726 /* RMCommunity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCommunity.swift; sourceTree = "<group>"; };
+		E15501502C654280000A0726 /* RMProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProperty.swift; sourceTree = "<group>"; };
 		E15501522C655139000A0726 /* RMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,7 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				E11E837D2C66CFE100254B27 /* UnitApiCall.swift */,
-				E15501452C63DE30000A0726 /* AuthenticateRM.swift */,
+				E11E83822C670A1200254B27 /* TokenManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -121,7 +121,7 @@
 				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
 				E11E83732C66CCD900254B27 /* RMTennant.swift */,
 				E155014C2C6406B1000A0726 /* RMContact.swift */,
-				E15501502C654280000A0726 /* RMCommunity.swift */,
+				E15501502C654280000A0726 /* RMProperty.swift */,
 				E11E83752C66CE5600254B27 /* RMAddress.swift */,
 				E11E83772C66CEB900254B27 /* RMLease.swift */,
 				E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */,
@@ -199,7 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E15501512C654280000A0726 /* RMCommunity.swift in Sources */,
+				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
 				E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */,
 				E11E83742C66CCD900254B27 /* RMTennant.swift in Sources */,
 				E15501382C63D252000A0726 /* ContentView.swift in Sources */,
@@ -207,12 +207,12 @@
 				E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */,
 				E155014B2C63EA5C000A0726 /* RMProspect.swift in Sources */,
 				E11E83782C66CEB900254B27 /* RMLease.swift in Sources */,
-				E15501462C63DE30000A0726 /* AuthenticateRM.swift in Sources */,
 				E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */,
 				E15501532C655139000A0726 /* RMUnit.swift in Sources */,
 				E155014F2C654149000A0726 /* Notes.swift in Sources */,
 				E11E837E2C66CFE100254B27 /* UnitApiCall.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
+				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

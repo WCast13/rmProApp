@@ -35,4 +35,31 @@ struct RMProspect: Codable {
     let lastHistoryItem: String
     let contact: RMContact
     
+    enum CodingKeys: String, CodingKey {
+        case prospectID = "ProspectID"
+        case prospectDisplayID = "ProspectDisplayID"
+        case propertyID = "PropertyID"
+        case name = "Name"
+        case firstName = "FirstName"
+        case lastName = "LastName"
+        case webMessage = "WebMessage"
+        case colorID = "ColorID"
+        case tenantColorID = "TenantColorID"
+        case prospectColorID = "ProspectColorID"
+        case comment = "Comment"
+        case overrideReason = "OverrideReason"
+        case createDate = "CreateDate"
+        case createUserID = "CreateUserID"
+        case updateDate = "UpdateDate"
+        case updateUserID = "UpdateUserID"
+        case prospectStatus = "ProspectStatus"
+        case prospectLostReasonDescription = "ProspectLostReasonDescription"
+        case peopleCount = "PeopleCount"
+        case moveInDate = "MoveInDate"
+        case lastStatusChangedDate = "LastStatusChangedDate"
+        case firstContact = "FirstContact"
+        case lastContact = "LastContact"
+        case lastHistoryItem = "LastHistoryItem"
+        case contact = "Contact"
+    }
 }

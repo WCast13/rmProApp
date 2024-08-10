@@ -31,4 +31,30 @@ struct RMLease : Codable {
     let tenant: RMTennant
     let propertyUnit: String
     let unitProperty: String
+    
+    enum CodingKeys: String, CodingKey {
+            case leaseID = "LeaseID"
+            case tenantID = "TenantID"
+            case unitID = "UnitID"
+            case propertyID = "PropertyID"
+            case isCommercial = "IsCommercial"
+            case moveInDate = "MoveInDate"
+            case moveOutDate = "MoveOutDate"
+            case expectedMoveOutDate = "ExpectedMoveOutDate"
+            case noticeDate = "NoticeDate"
+            case isMoveOutConfirmed = "IsMoveOutConfirmed"
+            case arrivalDate = "ArrivalDate"
+            case departureDate = "DepartureDate"
+            case isExcludeFromMasterPolicy = "IsExcludeFromMasterPolicy"
+            case sortOrder = "SortOrder"
+            case createDate = "CreateDate"
+            case updateDate = "UpdateDate"
+            case startDate = "StartDate"
+            case endDate = "EndDate"
+            case createUserID = "CreateUserID"
+            case updateUserID = "UpdateUserID"
+            case tenant = "Tenant"
+            case propertyUnit = "PropertyUnit"
+            case unitProperty = "UnitProperty"
+        }
 }
