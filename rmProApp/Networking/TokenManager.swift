@@ -36,7 +36,9 @@ class TokenManager: ObservableObject {
             
             if let newToken = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    self.token = newToken
+                    
+                    self.token = newToken.trimmingCharacters(in: .init(charactersIn: "\""))
+                    print(newToken)
                 }
             }
         }
