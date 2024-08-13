@@ -27,7 +27,7 @@ struct ContentView: View {
             }
             Button("Load Properties") {
                 Task {
-                    properties = await networkManager?.getPropertiesAsync()
+                    properties = await networkManager?.getRMData(from: "Properties", responseType: [RMProperty].self)
                 }
             }
         }

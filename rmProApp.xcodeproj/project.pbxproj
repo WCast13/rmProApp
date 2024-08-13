@@ -12,7 +12,7 @@
 		E11E83782C66CEB900254B27 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83772C66CEB900254B27 /* RMLease.swift */; };
 		E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */; };
 		E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */; };
-		E11E837E2C66CFE100254B27 /* UnitApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837D2C66CFE100254B27 /* UnitApiCall.swift */; };
+		E11E837E2C66CFE100254B27 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837D2C66CFE100254B27 /* NetworkManager.swift */; };
 		E11E83832C670A1200254B27 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83822C670A1200254B27 /* TokenManager.swift */; };
 		E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501352C63D252000A0726 /* rmProAppApp.swift */; };
 		E15501382C63D252000A0726 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501372C63D252000A0726 /* ContentView.swift */; };
@@ -31,7 +31,7 @@
 		E11E83772C66CEB900254B27 /* RMLease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLease.swift; sourceTree = "<group>"; };
 		E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUserDefinedValue.swift; sourceTree = "<group>"; };
 		E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMOccupancyStatus.swift; sourceTree = "<group>"; };
-		E11E837D2C66CFE100254B27 /* UnitApiCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitApiCall.swift; sourceTree = "<group>"; };
+		E11E837D2C66CFE100254B27 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E11E83822C670A1200254B27 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15501352C63D252000A0726 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		E11E837F2C66CFE600254B27 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E11E837D2C66CFE100254B27 /* UnitApiCall.swift */,
+				E11E837D2C66CFE100254B27 /* NetworkManager.swift */,
 				E11E83822C670A1200254B27 /* TokenManager.swift */,
 			);
 			path = Networking;
@@ -210,7 +210,7 @@
 				E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */,
 				E15501532C655139000A0726 /* RMUnit.swift in Sources */,
 				E155014F2C654149000A0726 /* Notes.swift in Sources */,
-				E11E837E2C66CFE100254B27 /* UnitApiCall.swift in Sources */,
+				E11E837E2C66CFE100254B27 /* NetworkManager.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
 				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
 			);
