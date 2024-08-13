@@ -13,12 +13,17 @@ class TokenManager: ObservableObject {
     private var refreshTimer: Timer?
     private let tokenEndpoint = "https://trieq.api.rentmanager.com/Authentication/AuthorizeUser/"
     
-    init() {
-        refreshToken()
-        startTokenRefreshTimer()
+    static let shared = TokenManager() // Shared singleton instance
+    
+    private init() { // Private initializer
+        Task {
+            await refreshToken()
+            startTokenRefreshTimer()
+        }
+        
     }
     
-    func refreshToken() {
+    func refreshToken() async {
         
         let parameters = "{\"Username\": \"w.castellano\",\n\"Password\": \"Trilogy123\"\n}"
         let postData = parameters.data(using: .utf8)
@@ -28,26 +33,24 @@ class TokenManager: ObservableObject {
         request.httpBody = postData
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Error refreshing token: \(error?.localizedDescription ?? "Error")")
-                return
-            }
-            
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
             if let newToken = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    
                     self.token = newToken.trimmingCharacters(in: .init(charactersIn: "\""))
                     print(newToken)
                 }
             }
+        } catch {
+            print("Error refreshing token: \(error.localizedDescription)")
         }
-        task.resume()
     }
     
     func startTokenRefreshTimer() {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 13 * 60, repeats: true) { _ in
-            self.refreshToken()
+            Task {
+                await self.refreshToken()
+            }
         }
     }
     

@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct rmProAppApp: App {
-    @StateObject private var tokenManager = TokenManager()
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(tokenManager)
         }
     }
 }
