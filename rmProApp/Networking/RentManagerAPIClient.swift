@@ -7,14 +7,11 @@
 
 import Foundation
 
-// MARK: From ChatGPT- Intergration of RentManager API Client Class
-// TODO: Rebuild NetworkManager to be more robust/specific
+// MARK: Rent Manager API Client
 
 class RentManagerAPIClient {
-    static let shared = RentManagerAPIClient()
-    
+    static let shared = RentManagerAPIClient() // Singleton for RM Api Client
     private init() {}
-    
     private let baseURL = "https://trieq.api.rentmanager.com/"
     
     // MARK: Create URL Function
