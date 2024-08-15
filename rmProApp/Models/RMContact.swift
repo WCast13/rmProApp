@@ -8,30 +8,30 @@
 import Foundation
 
 struct RMContact: Codable {
-    let contactID: Int
-    let firstName: String
-    let lastName: String
-    let middleName: String
-    let isActive: Bool
+    let contactID: Int?
+    let firstName: String?
+    let lastName: String?
+    let middleName: String?
+    let isActive: Bool?
     let isPrimary: Bool?
-    let contactTypeID: Int
+    let contactTypeID: Int?
     let dateOfBirth: String?
-    let federalTaxID: String
-    let comment: String
-    let email: String
-    let license: String
-    let vehicle: String
-    let imageID: Int
+    let federalTaxID: String?
+    let comment: String?
+    let email: String?
+    let license: String?
+    let vehicle: String?
+    let imageID: Int?
     let isShowOnBill: Bool?
-    let employer: String
+    let employer: String?
     let applicantType: String?
-    let createDate: String
-    let createUserID: Int
-    let updateDate: String
-    let annualIncome: Double
-    let updateUserID: Int
-    let parentID: Int
-    let parentType: String
+    let createDate: String?
+    let createUserID: Int?
+    let updateDate: String?
+    let annualIncome: Double?
+    let updateUserID: Int?
+    let parentID: Int?
+    let parentType: String?
     
     enum CodingKeys: String, CodingKey {
         case contactID = "ContactID"
@@ -60,3 +60,17 @@ struct RMContact: Codable {
         case parentType = "ParentType"
     }
 }
+
+/*
+ 
+ Field Options:
+ Addresses,AnnualIncome,ApplicantType,Comment,ContactID,ContactType,ContactTypeID,CreateDate,CreateUserID,DateOfBirth,Email,Employer,EncryptedFederalTaxID,FederalTaxID,FirstName,Image,ImageID,InListItemMode,IsActive,IsPrimary,IsShowOnBill,LastName,License,MaskSSN,MetaTag,MiddleName,Owner,OwnerProspect,ParentID,ParentType,PhoneNumbers,Prospect,Tenant,UpdateDate,UpdateUserID,UserDefinedValues,Vehicle,Vendor
+ 
+ Embed Options:
+ Addresses,AnnualIncome,ApplicantType,Comment,ContactID,ContactType,ContactTypeID,CreateDate,CreateUserID,DateOfBirth,Email,Employer,EncryptedFederalTaxID,FederalTaxID,FirstName,Image,ImageID,InListItemMode,IsActive,IsPrimary,IsShowOnBill,LastName,License,MaskSSN,MetaTag,MiddleName,Owner,OwnerProspect,ParentID,ParentType,PhoneNumbers,Prospect,Tenant,UpdateDate,UpdateUserID,UserDefinedValues,Vehicle,Vendor
+ 
+ Best Endpoint: /Contacts?embeds=Addresses,ContactType,PhoneNumbers,PhoneNumbers.PhoneNumberType,Tenant,Tenant.Leases,Tenant.Leases.Unit&filters=Tenant.PropertyID,eq,1%2C3%2C8%2C12&fields=Addresses,AnnualIncome,ApplicantType,ContactID,ContactType,CreateDate,DateOfBirth,Email,FirstName,IsActive,IsPrimary,IsShowOnBill,LastName,ParentID,PhoneNumbers,Tenant,UpdateDate,UserDefinedValues,Vehicle
+ 
+ 
+ 
+ */

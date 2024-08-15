@@ -86,10 +86,10 @@
 		E15501342C63D252000A0726 /* rmProApp */ = {
 			isa = PBXGroup;
 			children = (
+				E15501442C63D271000A0726 /* Views */,
 				E11E837F2C66CFE600254B27 /* Networking */,
 				E15501472C63EA0D000A0726 /* Models */,
 				E15501352C63D252000A0726 /* rmProAppApp.swift */,
-				E15501442C63D271000A0726 /* Views */,
 				E15501392C63D253000A0726 /* Assets.xcassets */,
 				E155013B2C63D253000A0726 /* rmProApp.entitlements */,
 				E155013C2C63D253000A0726 /* Preview Content */,
