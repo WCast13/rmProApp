@@ -28,7 +28,7 @@ struct RMLease : Codable {
     let endDate: String
     let createUserID: Int
     let updateUserID: Int
-    let tenant: RMTennant
+    let tenant: RMTenant
     let propertyUnit: String
     let unitProperty: String
     

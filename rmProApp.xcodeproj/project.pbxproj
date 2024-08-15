@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E11E83742C66CCD900254B27 /* RMTennant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83732C66CCD900254B27 /* RMTennant.swift */; };
+		E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83732C66CCD900254B27 /* RMTenant.swift */; };
 		E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83752C66CE5600254B27 /* RMAddress.swift */; };
 		E11E83782C66CEB900254B27 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83772C66CEB900254B27 /* RMLease.swift */; };
 		E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */; };
@@ -22,10 +22,11 @@
 		E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014E2C654149000A0726 /* RentManagerAPIClient.swift */; };
 		E15501512C654280000A0726 /* RMProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMProperty.swift */; };
 		E15501532C655139000A0726 /* RMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501522C655139000A0726 /* RMUnit.swift */; };
+		E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B046102C6DAAA700460160 /* URLBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E11E83732C66CCD900254B27 /* RMTennant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTennant.swift; sourceTree = "<group>"; };
+		E11E83732C66CCD900254B27 /* RMTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTenant.swift; sourceTree = "<group>"; };
 		E11E83752C66CE5600254B27 /* RMAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMAddress.swift; sourceTree = "<group>"; };
 		E11E83772C66CEB900254B27 /* RMLease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLease.swift; sourceTree = "<group>"; };
 		E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUserDefinedValue.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		E155014E2C654149000A0726 /* RentManagerAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentManagerAPIClient.swift; sourceTree = "<group>"; };
 		E15501502C654280000A0726 /* RMProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProperty.swift; sourceTree = "<group>"; };
 		E15501522C655139000A0726 /* RMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnit.swift; sourceTree = "<group>"; };
+		E1B046102C6DAAA700460160 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				E155014E2C654149000A0726 /* RentManagerAPIClient.swift */,
+				E1B046102C6DAAA700460160 /* URLBuilder.swift */,
 				E11E83822C670A1200254B27 /* TokenManager.swift */,
 			);
 			path = Networking;
@@ -113,15 +116,15 @@
 		E15501472C63EA0D000A0726 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E155014A2C63EA5C000A0726 /* RMProspect.swift */,
-				E15501522C655139000A0726 /* RMUnit.swift */,
-				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
-				E11E83732C66CCD900254B27 /* RMTennant.swift */,
-				E155014C2C6406B1000A0726 /* RMContact.swift */,
-				E15501502C654280000A0726 /* RMProperty.swift */,
 				E11E83752C66CE5600254B27 /* RMAddress.swift */,
+				E155014C2C6406B1000A0726 /* RMContact.swift */,
 				E11E83772C66CEB900254B27 /* RMLease.swift */,
 				E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */,
+				E15501502C654280000A0726 /* RMProperty.swift */,
+				E155014A2C63EA5C000A0726 /* RMProspect.swift */,
+				E11E83732C66CCD900254B27 /* RMTenant.swift */,
+				E15501522C655139000A0726 /* RMUnit.swift */,
+				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -197,8 +200,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
+				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
 				E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */,
-				E11E83742C66CCD900254B27 /* RMTennant.swift in Sources */,
+				E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */,
 				E15501382C63D252000A0726 /* ContentView.swift in Sources */,
 				E155014D2C6406B1000A0726 /* RMContact.swift in Sources */,
 				E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */,
