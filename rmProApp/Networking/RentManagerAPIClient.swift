@@ -121,7 +121,7 @@ class RentManagerAPIClient {
 
 enum URLStringEndPoints: String {
 
-    case contactAllData = "https://trieq.api.rentmanager.com//Contacts?embeds=Addresses,ContactType,PhoneNumbers,PhoneNumbers.PhoneNumberType,Tenant,Tenant.Leases,Tenant.Leases.Unit&filters=Tenant.Property.IsActive,eq,true&fields=Addresses,AnnualIncome,ApplicantType,ContactID,ContactType,CreateDate,DateOfBirth,Email,FirstName,IsActive,IsPrimary,IsShowOnBill,LastName,ParentID,PhoneNumbers,Tenant,UpdateDate,UserDefinedValues,Vehicle"
+    case contactAllData = "https://trieq.api.rentmanager.com/Contacts?embeds=Addresses,ContactType,PhoneNumbers,PhoneNumbers.PhoneNumberType,Tenant,Tenant.Leases,Tenant.Leases.Unit&filters=Tenant.Property.IsActive,eq,true&fields=Addresses,AnnualIncome,ApplicantType,ContactID,ContactType,CreateDate,DateOfBirth,Email,FirstName,IsActive,IsPrimary,IsShowOnBill,LastName,ParentID,PhoneNumbers,Tenant,UpdateDate,UserDefinedValues,Vehicle"
 }
 
 // MARK: API Endpoint Notes
