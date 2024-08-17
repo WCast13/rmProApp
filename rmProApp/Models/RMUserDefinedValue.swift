@@ -8,16 +8,16 @@
 import Foundation
 
 struct RMUserDefinedValue : Codable {
-    let userDefinedValueID: Int
-    let userDefinedFieldID: Int
-    let parentID: Int
-    let name: String
-    let value: String
-    let dateValue: String
-    let updateDate: String
-    let fieldType: String
-    let updateUserID: Int
-    let createUserID: Int
+    let userDefinedValueID: Int?
+    let userDefinedFieldID: Int?
+    let parentID: Int?
+    let name: String?
+    let value: String?
+    let dateValue: String?
+    let updateDate: String?
+    let fieldType: String?
+    let updateUserID: Int?
+    let createUserID: Int?
     
     enum CodingKeys: String, CodingKey {
         case userDefinedValueID = "UserDefinedValueID"

@@ -10,28 +10,38 @@ import Combine
 
 struct ContentView: View {
     @State private var properties: [RMProperty]?
-    @State private var tenants: [RMTenant]? // TODO: Fix Tenants
+    @State private var tenants: [RMTenant]?
     @State private var units: [RMUnit]?
     @State private var contacts: [RMContact]?
     
     var body: some View {
+        
         VStack {
-            Text("# of Properties: \(properties?.count ?? 0)")
-            Text("# of Units: \(units?.count ?? 0)")
-//            Text("# of Tenents: \(tenants?.count ?? 0)")
-//            Text("# of Contacts: \(contacts?.count ?? 0)")
+            if let units = units {
+                List(units) { unit in
+                    UnitCellView(unit: unit)
+                }
+            } else {
+                ProgressView("Loading Units...")
+            }
         }
         .padding()
         .onAppear {
             Task {
                 await TokenManager.shared.refreshToken()
                 properties = await RentManagerAPIClient.shared.request(endpoint: .properties, responseType: [RMProperty].self)
-                units = await RentManagerAPIClient.shared.request(responseType: [RMUnit].self, urlString: "https://trieq.api.rentmanager.com/Units?filters=Property.IsActive,eq,true")
-//                units = await RentManagerAPIClient.shared.request(endpoint: .units, responseType: [RMUnit].self)
-//                tenants = await RentManagerAPIClient.shared.request(endpoint: .tenants, responseType: [RMTenant].self, fields: [.contactID, .firstName, .lastName])
-//                contacts = await RentManagerAPIClient.shared.request(responseType: [RMContact].self, urlString: URLStringEndPoints.contactAllData.rawValue)
-//                print(contacts ?? "No contacts found")
+                units = await RentManagerAPIClient.shared.request(responseType: [RMUnit].self, urlString: "https://trieq.api.rentmanager.com/Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType")
             }
         }
     }
 }
+
+
+/*
+ UNITS ITERATION- For Labels
+ 
+ /Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType&filters=Property.IsActive,eq,true&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType
+ 
+ /Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType
+ */
+

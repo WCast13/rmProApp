@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct RMUnit: Codable {
+struct RMUnit: Codable, Identifiable {
+    
+    let uuid = UUID()
+    var id: UUID { uuid }
     
     let UnitID: Int?
     let propertyID: Int?
@@ -20,6 +23,8 @@ struct RMUnit: Codable {
     let userDefinedValues: [RMUserDefinedValue]?
     let currentOccupancyStatus: RMOccupancyStatus?
     let currentOccupants: [RMTenant]?
+    let primaryAddress: RMAddress?  // Added for PrimaryAddress
+    let unitType: RMUnitType?       // Added for UnitType
     
     enum CodingKeys: String, CodingKey {
         
@@ -34,6 +39,7 @@ struct RMUnit: Codable {
         case leases = "Leases"
         case currentOccupants = "CurrentOccupants"
         case currentOccupancyStatus = "CurrentOccupancyStatus"
-       
+        case primaryAddress = "PrimaryAddress"  // Mapping for PrimaryAddress
+        case unitType = "UnitType"
     }
 }
