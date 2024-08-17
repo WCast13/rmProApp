@@ -18,8 +18,9 @@ struct ContentView: View {
         Button("Generate Labels") {
             let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let pdfURL = documentsDirectory.appendingPathComponent("UnitLabels.pdf")
-
-            LabelGeneratorManager.shared.generatePDFLabels(units: units!, saveTo: pdfURL)
+            let templateURL = Bundle.main.url(forResource: "Avery 5160 Template PDF", withExtension: "pdf")!
+            
+            LabelGeneratorManager.shared.generatePDFLabels(units: units!, saveTo: pdfURL, templatePDF: templateURL)
 
             print("PDF generated at: \(pdfURL)")
         }
