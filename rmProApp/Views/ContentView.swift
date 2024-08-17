@@ -15,7 +15,14 @@ struct ContentView: View {
     @State private var contacts: [RMContact]?
     
     var body: some View {
-        
+        Button("Generate Labels") {
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let pdfURL = documentsDirectory.appendingPathComponent("UnitLabels.pdf")
+
+            LabelGeneratorManager.shared.generatePDFLabels(units: units!, saveTo: pdfURL)
+
+            print("PDF generated at: \(pdfURL)")
+        }
         VStack {
             if let units = units {
                 List(units) { unit in

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16022C6F0531005E0A03 /* UnitCellView.swift */; };
 		E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16042C6FD224005E0A03 /* RMUnitType.swift */; };
+		E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16062C7066A8005E0A03 /* LabelManager.swift */; };
 		E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83732C66CCD900254B27 /* RMTenant.swift */; };
 		E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83752C66CE5600254B27 /* RMAddress.swift */; };
 		E11E83782C66CEB900254B27 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83772C66CEB900254B27 /* RMLease.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		E11E16022C6F0531005E0A03 /* UnitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCellView.swift; sourceTree = "<group>"; };
 		E11E16042C6FD224005E0A03 /* RMUnitType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnitType.swift; sourceTree = "<group>"; };
+		E11E16062C7066A8005E0A03 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		E11E83732C66CCD900254B27 /* RMTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTenant.swift; sourceTree = "<group>"; };
 		E11E83752C66CE5600254B27 /* RMAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMAddress.swift; sourceTree = "<group>"; };
 		E11E83772C66CEB900254B27 /* RMLease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLease.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		E11E837F2C66CFE600254B27 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				E11E16062C7066A8005E0A03 /* LabelManager.swift */,
 				E155014E2C654149000A0726 /* RentManagerAPIClient.swift */,
 				E1B046102C6DAAA700460160 /* URLBuilder.swift */,
 				E11E83822C670A1200254B27 /* TokenManager.swift */,
@@ -206,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
+				E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */,
 				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
 				E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */,
 				E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */,
