@@ -7,6 +7,7 @@
 
 import PDFKit
 import UIKit
+import SwiftUI
 
 class LabelGeneratorManager {
     static let shared = LabelGeneratorManager() // Singleton for Label Manager
@@ -20,9 +21,9 @@ class LabelGeneratorManager {
     private let labelHeight: CGFloat = 1 * 72 // 1 inch
     
     private let topMargin: CGFloat = 0.5 * 72 // 0.5 inches
-    private let leftMargin: CGFloat = 0.19 * 72 // 0.19 inches
+    private let leftMargin: CGFloat = 0.219 * 72 // 0.219 inches
     
-    private let verticalSpacing: CGFloat = 0.15 * 72 // 0.15 inches
+    private let verticalSpacing: CGFloat = 0.0 // Adjusted vertical spacing
     private let horizontalSpacing: CGFloat = 0.125 * 72 // 0.125 inches
     
     func generatePDFLabels(units: [RMUnit], saveTo url: URL, templatePDF: URL) {
@@ -77,18 +78,36 @@ class LabelGeneratorManager {
     
     // Function to draw an individual label
     private func drawLabel(for unit: RMUnit, in rect: CGRect) {
+        
+        // Determine the text color based on unitType.name
+        let textColor: UIColor
+        switch unit.unitType?.name {
+        case "HEI- Regular Rent":
+            textColor = .black
+        case "HEI- Fire Protection":
+            textColor = .red
+        case "PTP- Pros B - Dry":
+            textColor = .darkGray
+        case "PTP- Pros B - Lake":
+            textColor = .blue
+        case "PTP- Pros A":
+            textColor = .green
+        default:
+            textColor = .yellow // Default or for any other types
+        }
+        
+        
         let labelText = """
         \(unit.currentOccupants?.first?.name ?? "VACANT")
         11201 SW 55th St
         """
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 10)
+            .font: UIFont.systemFont(ofSize: 9.5),
+            .foregroundColor: textColor
         ]
         
         labelText.draw(in: rect, withAttributes: attributes)
+        
     }
 }
-
-
-
