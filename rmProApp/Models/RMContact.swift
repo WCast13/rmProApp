@@ -8,6 +8,7 @@
 import Foundation
 
 struct RMContact: Codable {
+
     let contactID: Int?
     let firstName: String?
     let lastName: String?

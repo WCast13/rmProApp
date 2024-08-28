@@ -26,7 +26,8 @@ class LabelGeneratorManager {
     private let verticalSpacing: CGFloat = 0.0 // Adjusted vertical spacing
     private let horizontalSpacing: CGFloat = 0.125 * 72 // 0.125 inches
     
-    func generatePDFLabels(units: [RMUnit], saveTo url: URL, templatePDF: URL) {
+    func generatePDFLabels(units: [RMUnit], tenants: [RMTenant], saveTo url: URL, templatePDF: URL) {
+        print(units.count)
         guard let templateDocument = PDFDocument(url: templatePDF) else {
             print("Failed to load template PDF.")
             return
@@ -36,6 +37,8 @@ class LabelGeneratorManager {
         
         do {
             try pdfRenderer.writePDF(to: url) { context in
+                context.beginPage()
+                
                 var currentX = leftMargin
                 var currentY = topMargin
                 var pageIndex = 0
@@ -47,6 +50,7 @@ class LabelGeneratorManager {
                             context.beginPage()
                             pageIndex += 1
                         }
+                        
                         if let templatePage = templateDocument.page(at: pageIndex % templateDocument.pageCount) {
                             context.cgContext.drawPDFPage(templatePage.pageRef!)
                         }
@@ -54,7 +58,10 @@ class LabelGeneratorManager {
                     
                     // Draw the label
                     let labelRect = CGRect(x: currentX, y: currentY, width: labelWidth, height: labelHeight)
-                    drawLabel(for: unit, in: labelRect)
+                    
+                    let tenant = tenants.filter { $0.tenantID == unit.currentOccupants?.first?.tenantID }
+                    drawLabel(for: unit, tenant: tenant, in: labelRect)
+                
                     
                     // Update the position for the next label
                     if (index + 1) % 3 == 0 {
@@ -77,7 +84,7 @@ class LabelGeneratorManager {
     }
     
     // Function to draw an individual label
-    private func drawLabel(for unit: RMUnit, in rect: CGRect) {
+    private func drawLabel(for unit: RMUnit, tenant: [RMTenant], in rect: CGRect) {
         
         // Determine the text color based on unitType.name
         let textColor: UIColor
@@ -85,29 +92,58 @@ class LabelGeneratorManager {
         case "HEI- Regular Rent":
             textColor = .black
         case "HEI- Fire Protection":
-            textColor = .red
+            textColor = .fireRed
         case "PTP- Pros B - Dry":
-            textColor = .darkGray
+            textColor = .havenGreen
         case "PTP- Pros B - Lake":
-            textColor = .blue
+            textColor = .pembrokeBlue
         case "PTP- Pros A":
-            textColor = .green
+            textColor = .fireRed
         default:
             textColor = .yellow // Default or for any other types
         }
         
+        let contactsForLabel = tenant.first?.contacts?.filter { $0.isShowOnBill == true }
+        var namesPortion = ""
         
-        let labelText = """
-        \(unit.currentOccupants?.first?.name ?? "VACANT")
-        11201 SW 55th St
-        """
+        if contactsForLabel?.count ?? 0 > 0 {
+            for (index, contact) in contactsForLabel!.enumerated() {
+                namesPortion.append(index == 0 ? "\(contact.firstName!) \(contact.lastName!)" : "\n\(contact.firstName!) \(contact.lastName!)")
+                print(namesPortion)
+            }
+        } else { namesPortion = "VACANT" }
+        
+        var labelText = ""
+        
+        if unit.propertyID == 3 {
+            let addressParts = unit.primaryAddress?.street?.components(separatedBy: "\r\n")
+            
+            labelText = """
+            \(namesPortion)
+            \(addressParts?.first ?? "") Lot \(unit.name ?? "X-44")
+            Box \(addressParts?.last! ?? "")
+            \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33025")
+            \(unit.unitType?.name ?? "None")
+            """
+        } else {
+            labelText = """
+            \(namesPortion)
+            \(unit.primaryAddress?.street ?? "")
+            \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33009")
+            \(unit.unitType?.name ?? "None")
+            """
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+//        paragraphStyle.paragraphSpacingBefore = 0.1
         
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 9.5),
-            .foregroundColor: textColor
+            .font: UIFont.systemFont(ofSize: 9),
+            .foregroundColor: textColor,
+            .paragraphStyle : paragraphStyle
         ]
         
         labelText.draw(in: rect, withAttributes: attributes)
-        
     }
 }

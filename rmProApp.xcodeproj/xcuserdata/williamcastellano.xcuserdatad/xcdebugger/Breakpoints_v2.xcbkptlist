@@ -7,17 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D1B03CDB-87CE-452E-9E84-8D0B552D3D54"
-            shouldBeEnabled = "No"
+            uuid = "3A8E6218-C72F-47AE-9A4C-21D36EF648F9"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "rmProApp/Views/UnitCellView.swift"
+            filePath = "rmProApp/Networking/LabelManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "drawLabel(for:tenant:in:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

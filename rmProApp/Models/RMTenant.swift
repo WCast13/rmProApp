@@ -8,7 +8,11 @@
 // TODO: Fix The Coding Keys
 import Foundation
 
-struct RMTenant: Codable {
+struct RMTenant: Codable, Identifiable {
+    
+    let uuid = UUID()
+    var id: UUID { uuid }
+    
     let tenantID: Int?
     let tenantDisplayID: Int?
     let name: String?
@@ -59,6 +63,7 @@ struct RMTenant: Codable {
     let openBalance: Decimal?
     let status: String?
     let lastNameFirstName: String?
+    let contacts: [RMContact]?
     
     enum CodingKeys: String, CodingKey {
         case tenantID = "TenantID"
@@ -111,5 +116,6 @@ struct RMTenant: Codable {
         case openBalance = "OpenBalance"
         case status = "Status"
         case lastNameFirstName = "LastNameFirstName"
+        case contacts = "Contacts"
     }
 }

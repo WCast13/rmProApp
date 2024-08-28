@@ -45,7 +45,7 @@ class RentManagerAPIClient {
         }
         
         // Check if the URL is valid
-        guard let validURL = url else {
+        guard url != nil else {
             print("Invalid URL")
             return nil
         }
@@ -59,7 +59,7 @@ class RentManagerAPIClient {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse  {
                 let decodedData = try JSONDecoder().decode(responseType, from: data)
                 return decodedData
             } else {

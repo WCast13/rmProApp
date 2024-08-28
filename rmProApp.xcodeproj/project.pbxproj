@@ -27,6 +27,7 @@
 		E15501512C654280000A0726 /* RMProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMProperty.swift */; };
 		E15501532C655139000A0726 /* RMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501522C655139000A0726 /* RMUnit.swift */; };
 		E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B046102C6DAAA700460160 /* URLBuilder.swift */; };
+		E1C7A6882C77AAB900B8B8D7 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		E15501502C654280000A0726 /* RMProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProperty.swift; sourceTree = "<group>"; };
 		E15501522C655139000A0726 /* RMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnit.swift; sourceTree = "<group>"; };
 		E1B046102C6DAAA700460160 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
+		E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +97,9 @@
 		E15501342C63D252000A0726 /* rmProApp */ = {
 			isa = PBXGroup;
 			children = (
-				E15501442C63D271000A0726 /* Views */,
 				E11E837F2C66CFE600254B27 /* Networking */,
+				E15501442C63D271000A0726 /* Views */,
+				E1C7A6862C77AA9700B8B8D7 /* Assets */,
 				E15501472C63EA0D000A0726 /* Models */,
 				E15501352C63D252000A0726 /* rmProAppApp.swift */,
 				E15501392C63D253000A0726 /* Assets.xcassets */,
@@ -139,6 +142,14 @@
 				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E1C7A6862C77AA9700B8B8D7 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,6 +234,7 @@
 				E155014B2C63EA5C000A0726 /* RMProspect.swift in Sources */,
 				E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */,
 				E11E83782C66CEB900254B27 /* RMLease.swift in Sources */,
+				E1C7A6882C77AAB900B8B8D7 /* Color+Ext.swift in Sources */,
 				E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */,
 				E15501532C655139000A0726 /* RMUnit.swift in Sources */,
 				E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */,

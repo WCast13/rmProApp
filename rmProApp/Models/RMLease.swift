@@ -10,13 +10,13 @@ import Foundation
 struct RMLease : Codable {
     let leaseID: Int?
     let tenantID: Int?
-    let unitID: Int?
+    let unitID: Int32?
     let propertyID: Int?
     let isCommercial: Bool?
     let moveInDate: String?
     let moveOutDate: String?
-    let expectedMoveOutDate: Date?
-    let noticeDate: Date?
+    let expectedMoveOutDate: String?
+    let noticeDate: String?
     let isMoveOutConfirmed: Bool?
     let arrivalDate: String?
     let departureDate: String?
