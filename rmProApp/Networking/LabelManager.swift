@@ -136,7 +136,6 @@ class LabelGeneratorManager {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
-//        paragraphStyle.paragraphSpacingBefore = 0.1
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 9),
@@ -144,6 +143,10 @@ class LabelGeneratorManager {
             .paragraphStyle : paragraphStyle
         ]
         
-        labelText.draw(in: rect, withAttributes: attributes)
+        let textSize = labelText.size(withAttributes: attributes)
+        
+        let textRect = CGRect(x: rect.minX, y: rect.midY - textSize.height / 2, width: rect.width, height: rect.height)
+        
+        labelText.draw(in: textRect, withAttributes: attributes)
     }
 }
