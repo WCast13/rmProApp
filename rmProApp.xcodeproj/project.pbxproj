@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10735092C86470300BC190B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10735082C86470300BC190B /* HomeView.swift */; };
 		E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16022C6F0531005E0A03 /* UnitCellView.swift */; };
 		E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16042C6FD224005E0A03 /* RMUnitType.swift */; };
 		E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16062C7066A8005E0A03 /* LabelManager.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E10735082C86470300BC190B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E11E16022C6F0531005E0A03 /* UnitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCellView.swift; sourceTree = "<group>"; };
 		E11E16042C6FD224005E0A03 /* RMUnitType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnitType.swift; sourceTree = "<group>"; };
 		E11E16062C7066A8005E0A03 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				E15501372C63D252000A0726 /* ContentView.swift */,
 				E11E16022C6F0531005E0A03 /* UnitCellView.swift */,
+				E10735082C86470300BC190B /* HomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
 				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
+				E10735092C86470300BC190B /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
