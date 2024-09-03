@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E10735092C86470300BC190B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10735082C86470300BC190B /* HomeView.swift */; };
+		E107350B2C8777E600BC190B /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E107350A2C8777E600BC190B /* DocumentsView.swift */; };
 		E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16022C6F0531005E0A03 /* UnitCellView.swift */; };
 		E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16042C6FD224005E0A03 /* RMUnitType.swift */; };
 		E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16062C7066A8005E0A03 /* LabelManager.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		E10735082C86470300BC190B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E107350A2C8777E600BC190B /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
 		E11E16022C6F0531005E0A03 /* UnitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCellView.swift; sourceTree = "<group>"; };
 		E11E16042C6FD224005E0A03 /* RMUnitType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnitType.swift; sourceTree = "<group>"; };
 		E11E16062C7066A8005E0A03 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				E15501372C63D252000A0726 /* ContentView.swift */,
+				E107350A2C8777E600BC190B /* DocumentsView.swift */,
 				E11E16022C6F0531005E0A03 /* UnitCellView.swift */,
 				E10735082C86470300BC190B /* HomeView.swift */,
 			);
@@ -237,6 +240,7 @@
 				E155014B2C63EA5C000A0726 /* RMProspect.swift in Sources */,
 				E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */,
 				E11E83782C66CEB900254B27 /* RMLease.swift in Sources */,
+				E107350B2C8777E600BC190B /* DocumentsView.swift in Sources */,
 				E1C7A6882C77AAB900B8B8D7 /* Color+Ext.swift in Sources */,
 				E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */,
 				E15501532C655139000A0726 /* RMUnit.swift in Sources */,
