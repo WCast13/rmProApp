@@ -9,21 +9,21 @@ import SwiftUI
 import PDFKit
 
 struct DocumentsView: View {
-    @State private var documentURLs: [URL] = []
+    @State private var documents: [URL] = []
     
     var body: some View {
         
         VStack {
-            List(documentURLs, id: \.self) { url in
-                NavigationLink(destination: PDFViewerView(pdfURL: url)) {
+            List(documents, id: \.self) { url in
+                NavigationLink(destination: DocumentViewerView(documentURL: url)) {
                     Text(url.lastPathComponent)
                 }
             }
             .onAppear {
                 loadDocuments()
             }
+            .navigationTitle("Documents")
         }
-        .navigationTitle("Documents")
     }
     
     private func loadDocuments() {
@@ -31,7 +31,7 @@ struct DocumentsView: View {
         if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             do {
                 let urls = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
-                self.documentURLs = urls.filter { $0.pathExtension == "pdf" }
+                self.documents = urls.filter { $0.pathExtension == "pdf" }
             } catch {
                 print("Error Loading Documents: \(error)")
             }
@@ -39,18 +39,32 @@ struct DocumentsView: View {
     }
 }
 
-
-
-struct PDFViewerView: View {
-    let pdfURL: URL
+struct DocumentViewerView: View {
+    let documentURL: URL
     
     var body: some View {
-        PDFKitView(url: pdfURL)
-            .navigationTitle(pdfURL.lastPathComponent)
+        PDFKitRepresentedView(url: documentURL)
+            .navigationTitle(documentURL.lastPathComponent)
+            .navigationBarItems(trailing: Button("Print") {
+                printDocument()
+            })
+    }
+    
+    func printDocument() {
+        let printInfo = UIPrintInfo(dictionary: nil)
+        printInfo.jobName = documentURL.lastPathComponent
+        
+        let printController = UIPrintInteractionController.shared
+        printController.printInfo = printInfo
+        
+        if let pdfDocument = PDFDocument(url: documentURL) {
+            printController.printingItem = pdfDocument
+        }
+        printController.present(animated: true, completionHandler: nil)
     }
 }
 
-struct PDFKitView: UIViewRepresentable {
+struct PDFKitRepresentedView: UIViewRepresentable {
     let url: URL
     
     func makeUIView(context: Context) -> PDFView {

@@ -37,7 +37,7 @@ struct HomeView: View {
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
-                
+                .navigationTitle("Home")
             }
         }
     }
