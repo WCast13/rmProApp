@@ -21,13 +21,13 @@ class LabelGeneratorManager {
     private let labelHeight: CGFloat = 1 * 72 // 1 inch
     
     private let topMargin: CGFloat = 0.5 * 72 // 0.5 inches
-    private let leftMargin: CGFloat = 0.219 * 72 // 0.219 inches
+    private let leftMargin: CGFloat = 0.35 * 72 // 0.35 inches
     
     private let verticalSpacing: CGFloat = 0.0 // Adjusted vertical spacing
     private let horizontalSpacing: CGFloat = 0.125 * 72 // 0.125 inches
     
     func generatePDFLabels(units: [RMUnit], tenants: [RMTenant], saveTo url: URL, templatePDF: URL) {
-        print(units.count)
+        
         guard let templateDocument = PDFDocument(url: templatePDF) else {
             print("Failed to load template PDF.")
             return
@@ -85,23 +85,34 @@ class LabelGeneratorManager {
     
     // Function to draw an individual label
     private func drawLabel(for unit: RMUnit, tenant: [RMTenant], in rect: CGRect) {
+       
+        if unit.userDefinedValues?.last?.value == "Yes" {
+            print(unit.name ?? "")
+        } else {}
         
         // Determine the text color based on unitType.name
         let textColor: UIColor
-        switch unit.unitType?.name {
-        case "HEI- Regular Rent":
+        
+        if unit.userDefinedValues?.last?.value == "Yes" {
+            textColor = .fireRed
+        } else {
             textColor = .black
-        case "HEI- Fire Protection":
-            textColor = .fireRed
-        case "PTP- Pros B - Dry":
-            textColor = .havenGreen
-        case "PTP- Pros B - Lake":
-            textColor = .pembrokeBlue
-        case "PTP- Pros A":
-            textColor = .fireRed
-        default:
-            textColor = .yellow // Default or for any other types
         }
+        
+//        switch unit.unitType?.name {
+////        case "HEI- Regular Rent":
+////            textColor = .black
+////        case "HEI- Fire Protection":
+////            textColor = .fireRed
+//        case "PTP- Pros B - Dry":
+//            textColor = .havenGreen
+//        case "PTP- Pros B - Lake":
+//            textColor = .pembrokeBlue
+//        case "PTP- Pros A":
+//            textColor = .fireRed
+//        default:
+//            textColor = .yellow // Default or for any other types
+//        }
         
         let contactsForLabel = tenant.first?.contacts?.filter { $0.isShowOnBill == true }
         var namesPortion = ""
@@ -109,7 +120,6 @@ class LabelGeneratorManager {
         if contactsForLabel?.count ?? 0 > 0 {
             for (index, contact) in contactsForLabel!.enumerated() {
                 namesPortion.append(index == 0 ? "\(contact.firstName!) \(contact.lastName!)" : "\n\(contact.firstName!) \(contact.lastName!)")
-                print(namesPortion)
             }
         } else { namesPortion = "VACANT" }
         
@@ -123,14 +133,12 @@ class LabelGeneratorManager {
             \(addressParts?.first ?? "") Lot \(unit.name ?? "X-44")
             Box \(addressParts?.last! ?? "")
             \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33025")
-            \(unit.unitType?.name ?? "None")
             """
         } else {
             labelText = """
             \(namesPortion)
             \(unit.primaryAddress?.street ?? "")
             \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33009")
-            \(unit.unitType?.name ?? "None")
             """
         }
         

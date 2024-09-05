@@ -64,6 +64,7 @@ struct RMTenant: Codable, Identifiable {
     let status: String?
     let lastNameFirstName: String?
     let contacts: [RMContact]?
+    let udfs : [RMUserDefinedValue]?
     
     enum CodingKeys: String, CodingKey {
         case tenantID = "TenantID"
@@ -117,5 +118,6 @@ struct RMTenant: Codable, Identifiable {
         case status = "Status"
         case lastNameFirstName = "LastNameFirstName"
         case contacts = "Contacts"
+        case udfs = "UserDefinedValues"
     }
 }
