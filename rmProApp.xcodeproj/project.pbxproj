@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E10735092C86470300BC190B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10735082C86470300BC190B /* HomeView.swift */; };
 		E107350B2C8777E600BC190B /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E107350A2C8777E600BC190B /* DocumentsView.swift */; };
+		E107350F2C8A282E00BC190B /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E107350E2C8A282E00BC190B /* ps3877.pdf */; };
+		E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10735102C8A292100BC190B /* PS3877FormManager.swift */; };
 		E11E16032C6F0531005E0A03 /* UnitCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16022C6F0531005E0A03 /* UnitCellView.swift */; };
 		E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16042C6FD224005E0A03 /* RMUnitType.swift */; };
 		E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E16062C7066A8005E0A03 /* LabelManager.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		E10735082C86470300BC190B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E107350A2C8777E600BC190B /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
+		E107350E2C8A282E00BC190B /* ps3877.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ps3877.pdf; sourceTree = "<group>"; };
+		E10735102C8A292100BC190B /* PS3877FormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PS3877FormManager.swift; sourceTree = "<group>"; };
 		E11E16022C6F0531005E0A03 /* UnitCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCellView.swift; sourceTree = "<group>"; };
 		E11E16042C6FD224005E0A03 /* RMUnitType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnitType.swift; sourceTree = "<group>"; };
 		E11E16062C7066A8005E0A03 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				E11E16062C7066A8005E0A03 /* LabelManager.swift */,
+				E10735102C8A292100BC190B /* PS3877FormManager.swift */,
 				E155014E2C654149000A0726 /* RentManagerAPIClient.swift */,
 				E1B046102C6DAAA700460160 /* URLBuilder.swift */,
 				E11E83822C670A1200254B27 /* TokenManager.swift */,
@@ -108,6 +113,7 @@
 				E15501352C63D252000A0726 /* rmProAppApp.swift */,
 				E15501392C63D253000A0726 /* Assets.xcassets */,
 				E11E160A2C712CA5005E0A03 /* Avery 5160 Template PDF.pdf */,
+				E107350E2C8A282E00BC190B /* ps3877.pdf */,
 				E155013B2C63D253000A0726 /* rmProApp.entitlements */,
 				E155013C2C63D253000A0726 /* Preview Content */,
 			);
@@ -218,6 +224,7 @@
 			files = (
 				E155013E2C63D253000A0726 /* Preview Assets.xcassets in Resources */,
 				E11E160B2C712CA5005E0A03 /* Avery 5160 Template PDF.pdf in Resources */,
+				E107350F2C8A282E00BC190B /* ps3877.pdf in Resources */,
 				E155013A2C63D253000A0726 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +239,7 @@
 				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
 				E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */,
 				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
+				E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */,
 				E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */,
 				E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */,
 				E15501382C63D252000A0726 /* ContentView.swift in Sources */,

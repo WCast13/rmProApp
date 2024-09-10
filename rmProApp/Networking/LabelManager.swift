@@ -85,10 +85,6 @@ class LabelGeneratorManager {
     
     // Function to draw an individual label
     private func drawLabel(for unit: RMUnit, tenant: [RMTenant], in rect: CGRect) {
-       
-        if unit.userDefinedValues?.last?.value == "Yes" {
-            print(unit.name ?? "")
-        } else {}
         
         // Determine the text color based on unitType.name
         let textColor: UIColor
@@ -157,4 +153,36 @@ class LabelGeneratorManager {
         
         labelText.draw(in: textRect, withAttributes: attributes)
     }
+    
+    // New method to generate CSV file for all units
+       func generateCSVFile(units: [RMUnit], tenants: [RMTenant], saveTo url: URL) {
+           var csvText = "Unit Name, Tenant Name(s), Street Address, Box Number, City, State, Postal Code\n"
+           
+           for unit in units {
+               // Get the tenant(s) for the unit
+               let tenant = tenants.filter { $0.tenantID == unit.currentOccupants?.first?.tenantID }
+               
+               // Get unit name and address
+               let tenantName = unit.currentOccupants?.first?.name ?? "Vacant"
+               let unitName = unit.name ?? "N/A"
+               let addressParts = unit.primaryAddress?.street?.components(separatedBy: "\r\n")
+               let streetAddress = addressParts?.first ?? ""
+               let boxNumber = addressParts?.last ?? ""
+               let city = unit.primaryAddress?.city ?? "N/A"
+               let state = unit.primaryAddress?.state ?? "N/A"
+               let postalCode = unit.primaryAddress?.postalCode ?? "N/A"
+               
+               // Combine the values into a CSV row
+               let row = "\"\(unitName)\",\"\(tenantName)\",\"\(streetAddress)\",\"\(boxNumber)\",\"\(city)\",\"\(state)\",\"\(postalCode)\"\n"
+               csvText.append(row)
+           }
+           
+           do {
+               // Write the CSV text to the file at the specified URL
+               try csvText.write(to: url, atomically: true, encoding: .utf8)
+               print("CSV file created successfully at: \(url)")
+           } catch {
+               print("Failed to create CSV file: \(error.localizedDescription)")
+           }
+       }
 }
