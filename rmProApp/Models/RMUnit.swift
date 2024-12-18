@@ -15,6 +15,7 @@ struct RMUnit: Codable, Identifiable {
     let UnitID: Int?
     let propertyID: Int?
     let name: String?
+    let UnitTypeID: Int?
     let colorID: Int?
     let isVacant: Bool?
     
@@ -30,6 +31,7 @@ struct RMUnit: Codable, Identifiable {
         
         case UnitID = "UnitID"
         case propertyID = "PropertyID"
+        case UnitTypeID = "UnitTypeID"
         case name = "Name"
         case colorID = "ColorID"
         case isVacant = "IsVacant"

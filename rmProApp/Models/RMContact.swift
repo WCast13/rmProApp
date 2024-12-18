@@ -33,6 +33,7 @@ struct RMContact: Codable {
     let updateUserID: Int?
     let parentID: Int?
     let parentType: String?
+//    let phoneNumbers: [RMPhoneNumber]
     
     enum CodingKeys: String, CodingKey {
         case contactID = "ContactID"
@@ -59,6 +60,7 @@ struct RMContact: Codable {
         case updateUserID = "UpdateUserID"
         case parentID = "ParentID"
         case parentType = "ParentType"
+//        case phoneNumbers = "PhoneNumbers"
     }
 }
 

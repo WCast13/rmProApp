@@ -13,7 +13,6 @@ class RentManagerAPIClient {
     static let shared = RentManagerAPIClient() // Singleton for RM Api Client
     private init() {}
 
-    
     // MARK: API CAll- Request Function
     
     func request<T: Decodable>(endpoint: APIEndpoint? = nil, responseType: T.Type, filters: [(FilterField, FilterTest, String)]? = nil, embeds: [Embed]? = nil, orderingOptions: [OrderingOptions]? = nil, fields: [Field]? = nil, pageSize: Int? = nil, pageNumber: Int? = nil, urlString: String? = nil) async -> T? {
@@ -72,6 +71,48 @@ class RentManagerAPIClient {
         }
     }
     
+    // MARK: Site Type Change- Fire Protection Group to Regular Rent
+    
+    func fpgToRegularRent(unit: RMUnit) async {
+        
+        guard let url = URL(string: "https://trieq.api.rentmanager.com/Units/?filters=PropertyID,eq,3&embeds=UnitType,UserDefinedValues&fields=Name,PropertyID,UnitType,UserDefinedValues,UnitID,UnitTypeID") else {
+            print("Invalid URL")
+            return
+        }
+        
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.addValue("\(TokenManager.shared.token ?? "")", forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        request.httpMethod = "POST"
+        
+        do {
+            let body: [String: Any] = [
+                "UnitID": unit.UnitID ?? 0,
+                "PropertyID": 3,
+                "UnitTypeID": 3
+            ]
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error encoding httpBody: \(error.localizedDescription)")
+            return
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("Status Code: \(httpResponse.statusCode)")
+            }
+            
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("Response: \(responseString)")
+            }
+        } catch {
+            print("Request failed with error: \(error.localizedDescription)")
+        }
+    }
+    
     // MARK: API CAll- Request Function
    /*
     func requestString<T: Decodable>(urlString: String, responseType: T.Type) async -> T? {
@@ -112,6 +153,7 @@ class RentManagerAPIClient {
             }
         }
     */
+    
     
     
     

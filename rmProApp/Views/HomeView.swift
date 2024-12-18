@@ -13,8 +13,20 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 
+                NavigationLink(destination: UnitsView()) {
+                    Text("Units")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .bold()
+                }
+                .padding(.horizontal)
+                .padding(.bottom)
+                
                 NavigationLink(destination: ContentView()) {
-                    Text("Sites")
+                    Text("Mailing Labels")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -27,7 +39,7 @@ struct HomeView: View {
                 
                 
                 NavigationLink(destination: DocumentsView()) {
-                    Text("Documents")
+                    Text("Label Documents")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)

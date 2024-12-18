@@ -15,7 +15,7 @@ class PS3877FormManager {
     
     func create3877Form(units: [RMUnit], tenants: [RMTenant], saveTo url: URL, templatePDF: URL) {
         
-        let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 792, height: 612)) // 8.5x11 inches
+        let pdfRenderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 792, height: 612)) // 11 x 8.5 inches
         
         do {
             try pdfRenderer.writePDF(to: url) { context in
@@ -85,19 +85,7 @@ class PS3877FormManager {
                         """
                     }
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     let currentOccupant = unit.currentOccupants?.first?.name ?? "** No Name ** "
-                    
-                    
-        
                     
                     // Draw the unit name box
                     let nameBoxRect = CGRect(x: leftColumnX, y: currentY, width: unitNameBoxWidth, height: unitNameBoxHeight)

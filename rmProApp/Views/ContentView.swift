@@ -61,7 +61,6 @@ struct ContentView: View {
                 Spacer()
             }
             
-            
             if let units = units {
                 List(units) { unit in
                     UnitCellView(unit: unit)
