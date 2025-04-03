@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var units: [RMUnit]?
     @State private var contacts: [RMContact]?
     @State private var community: String = "Haven Lake Estates"
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         // Need segmented Control to Filter Units by Type

@@ -8,47 +8,33 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var navigationPath: NavigationPath
+    
     var body: some View {
         
-        NavigationView {
-            VStack {
-                
-                /*
-                 NavigationLink(destination: ResidentsView()) {
-                 Text("Label Documents")
-                 .frame(maxWidth: .infinity)
-                 .padding()
-                 .background(Color.blue)
-                 .foregroundColor(.white)
-                 .cornerRadius(10)
-                 .bold()
-                 */
-                
-                NavigationLink(destination: RentIncreaseNoticeBuilder()) {
-                    Text("Rent Increase Builder")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .bold()
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
-                
-                
+        VStack(spacing: 20) {
+            
+            NavigationLink(value: AppDestination.rentIncreaseBuilder) {
+                Text("Rent Increase Builder")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .bold()
             }
             .padding(.horizontal)
             .padding(.bottom)
-            .navigationTitle("Home")
+            
+            
         }
+        .padding(.horizontal)
+        .padding(.bottom)
+        .navigationTitle("Home")
     }
 }
 
 
-#Preview {
-    HomeView()
-}
 
 struct DashboardView: View {
     var body: some View {

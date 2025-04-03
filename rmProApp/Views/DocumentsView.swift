@@ -9,13 +9,14 @@ import SwiftUI
 import PDFKit
 
 struct DocumentsView: View {
+    @Binding var navigationPath: NavigationPath
     @State private var documents: [URL] = []
     
     var body: some View {
         
         VStack {
             List(documents, id: \.self) { url in
-                NavigationLink(destination: DocumentViewerView(documentURL: url)) {
+                NavigationLink(value: AppDestination.documentViewer(url)) {
                     Text(url.lastPathComponent)
                 }
             }
@@ -41,6 +42,7 @@ struct DocumentsView: View {
 
 struct DocumentViewerView: View {
     let documentURL: URL
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         PDFKitRepresentedView(url: documentURL)
@@ -77,6 +79,3 @@ struct PDFKitRepresentedView: UIViewRepresentable {
     func updateUIView(_ uiView: PDFView, context: Context) {}
 }
 
-#Preview {
-    DocumentsView()
-}

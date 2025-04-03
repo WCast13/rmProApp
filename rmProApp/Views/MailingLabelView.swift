@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MailingLabelView: View {
+    
     @State var unit: RMUnit
     
     var body: some View {

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct RentIncreaseNoticeBuilder: View {
+    @Binding var navigationPath: NavigationPath
+    
     var body: some View {
         
         NavigationView {
             VStack {
                 
-                NavigationLink(destination: ContentView()) {
+                NavigationLink(value: AppDestination.mailingLabels) {
                     Text("Create Mailing Labels")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -26,7 +28,7 @@ struct RentIncreaseNoticeBuilder: View {
                 .padding(.bottom)
                 
                 
-                NavigationLink(destination: DocumentsView()) {
+                NavigationLink(value: AppDestination.documents) {
                     Text("Completed Labels and ps3877 Form")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -52,8 +54,4 @@ struct RentIncreaseNoticeBuilder: View {
             }
         }
     }
-}
-
-#Preview {
-    RentIncreaseNoticeBuilder()
 }
