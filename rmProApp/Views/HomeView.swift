@@ -13,8 +13,19 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 
-                NavigationLink(destination: UnitsView()) {
-                    Text("Units")
+                /*
+                 NavigationLink(destination: ResidentsView()) {
+                 Text("Label Documents")
+                 .frame(maxWidth: .infinity)
+                 .padding()
+                 .background(Color.blue)
+                 .foregroundColor(.white)
+                 .cornerRadius(10)
+                 .bold()
+                 */
+                
+                NavigationLink(destination: RentIncreaseNoticeBuilder()) {
+                    Text("Rent Increase Builder")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -25,35 +36,15 @@ struct HomeView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
                 
-                NavigationLink(destination: ContentView()) {
-                    Text("Mailing Labels")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .bold()
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
                 
-                
-                NavigationLink(destination: DocumentsView()) {
-                    Text("Label Documents")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .bold()
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
-                .navigationTitle("Home")
             }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .navigationTitle("Home")
         }
     }
 }
+
 
 #Preview {
     HomeView()

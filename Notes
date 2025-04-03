@@ -1,0 +1,24 @@
+Add Button to "Home View" for "Rent Increase Notice" -> Navigates to "Units Button" and "Documents Button" ✅✅✅✅✅✅✅✅✅✅✅✅✅
+
+Add support for "7 Day Notices Template"
+    - Select Units for Notices
+    - Fill in Resident Information to Template
+    - Email to Frecia to save time on 7 Day Notices
+    - NICE TO ADD- Add support to input bullet points section of violations and what the resident needs to do to fix the violations
+    
+Add a "Residents Button" that Navigates to the a list of "Units/Residents"
+    - Add search feature to get to certain units quickly
+        - Be able to filter down to certain residents
+            - Fire Protection Group
+            - Prospectus A/B-Dry/B-Water
+            - Active Violations
+            - Open Balances
+            - Warning Emails
+                - Create Email for Warnings
+    - Add button to start violation and build out the 7 Day Notice listed above
+    - Be able to link to a "Resident Details Page"
+        - Build Out Page to include relavant data
+        - NICE TO ADD
+            - Add support to add charges to Resident quickly and easily
+            - Add support to change Site Type quickly
+            - Other Features that are tough in RM12

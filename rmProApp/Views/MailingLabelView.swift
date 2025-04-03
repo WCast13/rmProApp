@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UnitCellView: View {
+struct MailingLabelView: View {
     @State var unit: RMUnit
     
     var body: some View {

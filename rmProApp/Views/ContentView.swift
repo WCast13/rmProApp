@@ -63,7 +63,7 @@ struct ContentView: View {
             
             if let units = units {
                 List(units) { unit in
-                    UnitCellView(unit: unit)
+                    MailingLabelView(unit: unit)
                 }
             } else {
                 ProgressView("Loading Units...")
