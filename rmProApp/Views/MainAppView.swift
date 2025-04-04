@@ -15,6 +15,7 @@ struct MainAppView: View {
             HomeView(navigationPath: $navigationPath)
                 .navigationTitle("Home") // Ensure a title is set for the root view
                 .navigationDestination(for: AppDestination.self) { destination in
+                    
                     switch destination {
                     case .home:
                         HomeView(navigationPath: $navigationPath)
@@ -26,14 +27,18 @@ struct MainAppView: View {
                         DocumentsView(navigationPath: $navigationPath)
                     case .documentViewer(let url):
                         DocumentViewerView(documentURL: url, navigationPath: $navigationPath)
+                    case .residentsHome:
+                        ResidentsHomeView(navigationPath: $navigationPath)
+                    case .havenResidents:
+                        HavenResidentsView(navigationPath: $navigationPath)
+                    case .pembrokeResidents:
+                        PembrokeResidentsView(navigationPath: $navigationPath)
+                    case .residentDetails:
+                        ResidentDetailView(navigationPath: $navigationPath)
                     }
                 }
         }
     }
-}
-
-#Preview {
-    MainAppView()
 }
 
 enum AppDestination: Hashable {
@@ -42,4 +47,8 @@ enum AppDestination: Hashable {
     case mailingLabels
     case documents
     case documentViewer(URL)
+    case residentsHome
+    case havenResidents
+    case pembrokeResidents
+    case residentDetails
 }

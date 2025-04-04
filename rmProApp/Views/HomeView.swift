@@ -14,18 +14,8 @@ struct HomeView: View {
         
         VStack(spacing: 20) {
             
-            NavigationLink(value: AppDestination.rentIncreaseBuilder) {
-                Text("Rent Increase Builder")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .bold()
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
-            
+            HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
+            HomeButton(title: "Residents", destination: AppDestination.residentsHome)
             
         }
         .padding(.horizontal)

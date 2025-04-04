@@ -14,44 +14,13 @@ struct RentIncreaseNoticeBuilder: View {
         
         NavigationView {
             VStack {
-                
-                NavigationLink(value: AppDestination.mailingLabels) {
-                    Text("Create Mailing Labels")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .bold()
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
-                
-                
-                NavigationLink(value: AppDestination.documents) {
-                    Text("Completed Labels and ps3877 Form")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .bold()
-                    
-                    /*
-                    NavigationLink(destination: DocumentsView()) {
-                        Text("Label Documents")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .bold()
-                     */
-                }
-                .padding(.horizontal)
-                .padding(.bottom)
-                .navigationTitle("Home")
+                HomeButton(title: "Create Mailing Labels", destination: AppDestination.mailingLabels)
+                HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
             }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .navigationTitle("Home")
         }
     }
+    
 }

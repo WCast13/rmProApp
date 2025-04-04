@@ -34,6 +34,7 @@
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
 		E16155602D9DCBBE00F7D658 /* Rent Increase Notice Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */; };
 		E16155632D9EEA7E00F7D658 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16155622D9EEA7E00F7D658 /* MainAppView.swift */; };
+		E161556F2D9F4DBF00F7D658 /* SwiftUIAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161556E2D9F4DBF00F7D658 /* SwiftUIAssets.swift */; };
 		E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B046102C6DAAA700460160 /* URLBuilder.swift */; };
 		E1C7A6882C77AAB900B8B8D7 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */; };
 		E1DE0C052CD5231500843259 /* RMCharge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DE0C042CD5231400843259 /* RMCharge.swift */; };
@@ -70,6 +71,7 @@
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
 		E16155622D9EEA7E00F7D658 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		E161556E2D9F4DBF00F7D658 /* SwiftUIAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAssets.swift; sourceTree = "<group>"; };
 		E1B046102C6DAAA700460160 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		E1DE0C042CD5231400843259 /* RMCharge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharge.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E16155612D9DD07000F7D658 /* Archived */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Archived; sourceTree = "<group>"; };
+		E16155722D9F523E00F7D658 /* Need to Build View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Need to Build View"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,13 +151,14 @@
 		E15501442C63D271000A0726 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E16155622D9EEA7E00F7D658 /* MainAppView.swift */,
+				E10735082C86470300BC190B /* HomeView.swift */,
 				E15501372C63D252000A0726 /* ContentView.swift */,
 				E107350A2C8777E600BC190B /* DocumentsView.swift */,
 				E11E16022C6F0531005E0A03 /* MailingLabelView.swift */,
-				E10735082C86470300BC190B /* HomeView.swift */,
 				E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */,
+				E16155722D9F523E00F7D658 /* Need to Build View */,
 				E16155612D9DD07000F7D658 /* Archived */,
-				E16155622D9EEA7E00F7D658 /* MainAppView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,6 +185,7 @@
 		E1C7A6862C77AA9700B8B8D7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E161556E2D9F4DBF00F7D658 /* SwiftUIAssets.swift */,
 				E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */,
 				E1DE0C062CD523CA00843259 /* EncodeDecodeHelpers.swift */,
 			);
@@ -204,6 +209,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E16155612D9DD07000F7D658 /* Archived */,
+				E16155722D9F523E00F7D658 /* Need to Build View */,
 			);
 			name = rmProApp;
 			productName = rmProApp;
@@ -270,6 +276,7 @@
 				E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */,
 				E13A82282D19E1A60045C04E /* RMPhoneNumber.swift in Sources */,
 				E1DE0C052CD5231500843259 /* RMCharge.swift in Sources */,
+				E161556F2D9F4DBF00F7D658 /* SwiftUIAssets.swift in Sources */,
 				E1DE0C072CD523CA00843259 /* EncodeDecodeHelpers.swift in Sources */,
 				E11E837A2C66CEED00254B27 /* RMUserDefinedValue.swift in Sources */,
 				E11E83742C66CCD900254B27 /* RMTenant.swift in Sources */,
