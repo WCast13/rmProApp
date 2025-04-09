@@ -15,6 +15,7 @@ struct ResidentsHomeView: View {
         HStack {
             HomeButton(title: "Haven", destination: AppDestination.havenResidents)
             HomeButton(title: "Pembroke", destination: AppDestination.pembrokeResidents)
+            HomeButton(title: "Resident Details View", destination: AppDestination.residentDetails)
         }
         .padding(.bottom)
         

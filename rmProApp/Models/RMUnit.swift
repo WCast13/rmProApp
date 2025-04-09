@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct RMUnit: Codable, Identifiable {
-    
+struct RMUnit: Codable, Identifiable, Equatable, Hashable {
+   
     let uuid = UUID()
     var id: UUID { uuid }
     
@@ -43,5 +43,14 @@ struct RMUnit: Codable, Identifiable {
         case currentOccupancyStatus = "CurrentOccupancyStatus"
         case primaryAddress = "PrimaryAddress"  // Mapping for PrimaryAddress
         case unitType = "UnitType"
+    }
+    
+    //Equatable Conformence
+    static func == (lhs: RMUnit, rhs: RMUnit) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
     }
 }

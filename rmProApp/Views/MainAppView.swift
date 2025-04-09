@@ -35,8 +35,36 @@ struct MainAppView: View {
                         PembrokeResidentsView(navigationPath: $navigationPath)
                     case .residentDetails:
                         ResidentDetailView(navigationPath: $navigationPath)
+                    case .noticesBuilder(let unit):
+                        ViolationBuilderView(navigationPath: $navigationPath, unit: unit)
                     }
                 }
+        }
+        .onAppear {
+            
+            
+            let baseURL = "https://trieq.api.rentmanager.com/"
+            
+            let embeds: [TenantEmbedOption] = [.addresses, .addresses_AddressType, .balance, .color, .contacts, .contacts_Addresses, .contacts_ContactType, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .contacts_UserDefinedValues, .history, .leases, .leasesUnit, .loans]
+            
+            
+            let fields: [TenantFieldOption] = [.addresses, .balance, .openBalance, .color, .colorID, .contacts, .leases, .loans, .name, .charges, .bills, .doNotAcceptChecks, .doNotAcceptPayments, .doNotChargeLateFees, .doNotAllowTWAPayments, .isDoNotAcceptPartialPayments]
+            
+            let embedsString = embeds.map { $0.rawValue }.joined(separator: ",")
+            let fieldsString = fields.map { $0.rawValue }.joined(separator: ",")
+            let filtersString = [RMFilter(key: "PropertyID", operation: "eq", value: "3")].map { $0.queryString }.joined(separator: ";")
+            let pageSize: Int = 20000
+            
+            var queryItems: [URLQueryItem] = []
+            queryItems.append(URLQueryItem(name: "embeds", value: embedsString))
+            queryItems.append(URLQueryItem(name: "fields", value: fieldsString))
+            queryItems.append(URLQueryItem(name: "filters", value: filtersString))
+            queryItems.append(URLQueryItem(name: "pageSize", value: String(pageSize)))
+            
+            let finalOutput = baseURL + queryItems.map(\.self).map(\.description).joined(separator: "&")
+            print(finalOutput)
+           
+            
         }
     }
 }
@@ -51,4 +79,5 @@ enum AppDestination: Hashable {
     case havenResidents
     case pembrokeResidents
     case residentDetails
+    case noticesBuilder(RMUnit)
 }

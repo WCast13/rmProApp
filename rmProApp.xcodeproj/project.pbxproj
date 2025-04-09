@@ -22,6 +22,9 @@
 		E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */; };
 		E11E83832C670A1200254B27 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E83822C670A1200254B27 /* TokenManager.swift */; };
 		E13A82282D19E1A60045C04E /* RMPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13A82272D19E1A60045C04E /* RMPhoneNumber.swift */; };
+		E14005D12DA5D6160022A2D2 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D02DA5D6160022A2D2 /* TenantParams.swift */; };
+		E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D22DA5EABF0022A2D2 /* UnitParams.swift */; };
+		E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */; };
 		E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501352C63D252000A0726 /* rmProAppApp.swift */; };
 		E15501382C63D252000A0726 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501372C63D252000A0726 /* ContentView.swift */; };
 		E155013A2C63D253000A0726 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E15501392C63D253000A0726 /* Assets.xcassets */; };
@@ -57,6 +60,9 @@
 		E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMOccupancyStatus.swift; sourceTree = "<group>"; };
 		E11E83822C670A1200254B27 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		E13A82272D19E1A60045C04E /* RMPhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMPhoneNumber.swift; sourceTree = "<group>"; };
+		E14005D02DA5D6160022A2D2 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
+		E14005D22DA5EABF0022A2D2 /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
+		E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15501352C63D252000A0726 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
 		E15501372C63D252000A0726 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +112,16 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		E14005CF2DA5D5E90022A2D2 /* APIParameters */ = {
+			isa = PBXGroup;
+			children = (
+				E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */,
+				E14005D02DA5D6160022A2D2 /* TenantParams.swift */,
+				E14005D22DA5EABF0022A2D2 /* UnitParams.swift */,
+			);
+			path = APIParameters;
+			sourceTree = "<group>";
+		};
 		E15501292C63D252000A0726 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +142,7 @@
 		E15501342C63D252000A0726 /* rmProApp */ = {
 			isa = PBXGroup;
 			children = (
+				E14005CF2DA5D5E90022A2D2 /* APIParameters */,
 				E11E837F2C66CFE600254B27 /* Networking */,
 				E15501442C63D271000A0726 /* Views */,
 				E1C7A6862C77AA9700B8B8D7 /* Assets */,
@@ -224,7 +241,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					E15501312C63D252000A0726 = {
 						CreatedOnToolsVersion = 15.4;
@@ -272,6 +289,7 @@
 				E16155602D9DCBBE00F7D658 /* Rent Increase Notice Home.swift in Sources */,
 				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
 				E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */,
+				E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */,
 				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
 				E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */,
 				E13A82282D19E1A60045C04E /* RMPhoneNumber.swift in Sources */,
@@ -290,11 +308,13 @@
 				E107350B2C8777E600BC190B /* DocumentsView.swift in Sources */,
 				E1C7A6882C77AAB900B8B8D7 /* Color+Ext.swift in Sources */,
 				E11E837C2C66CF1100254B27 /* RMOccupancyStatus.swift in Sources */,
+				E14005D12DA5D6160022A2D2 /* TenantParams.swift in Sources */,
 				E15501532C655139000A0726 /* RMUnit.swift in Sources */,
 				E11E16052C6FD224005E0A03 /* RMUnitType.swift in Sources */,
 				E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
 				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
+				E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */,
 				E10735092C86470300BC190B /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,7 +356,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4QM78MLWEF;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -397,7 +419,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4QM78MLWEF;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -424,8 +448,8 @@
 				CODE_SIGN_ENTITLEMENTS = rmProApp/rmProApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"rmProApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QM78MLWEF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -462,8 +486,8 @@
 				CODE_SIGN_ENTITLEMENTS = rmProApp/rmProApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"rmProApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QM78MLWEF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

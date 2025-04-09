@@ -32,15 +32,16 @@ class RentManagerAPIClient {
         if let urlString = urlString {
             url = URL(string: urlString)
         } else {
-            url = URLBuilder.shared.createURL(
-                endpoint: endpoint!,
-                filters: filters,
-                embeds: embeds,
-                orderingOptions: orderingOptions,
-                fields: fields,
-                pageSize: pageSize,
-                pageNumber: pageNumber
-            )
+            url = URL(string: "")
+//            url = URLBuilder.shared.createURL(
+//                endpoint: endpoint!,
+//                filters: filters,
+//                embeds: embeds,
+//                orderingOptions: orderingOptions,
+//                fields: fields,
+//                pageSize: pageSize,
+//                pageNumber: pageNumber
+//            )
         }
         
         // Check if the URL is valid
