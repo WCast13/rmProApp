@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: Rent Manager API Client
 
+@MainActor
 class RentManagerAPIClient {
     static let shared = RentManagerAPIClient() // Singleton for RM Api Client
     private init() {}
@@ -35,7 +36,7 @@ class RentManagerAPIClient {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            if let httpResponse = response as? HTTPURLResponse  {
+            if response is HTTPURLResponse  {
                 let decodedData = try JSONDecoder().decode(responseType, from: data)
                 return decodedData
             } else {

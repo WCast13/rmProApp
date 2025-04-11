@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 class TokenManager: ObservableObject {
     @Published var token: String?
     private var refreshTimer: Timer?

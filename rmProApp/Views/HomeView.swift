@@ -16,7 +16,7 @@ struct HomeView: View {
             
             HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
             HomeButton(title: "Residents", destination: AppDestination.residentsHome)
-            HomeButton(title: "Special Tasks", destination: AppDestination.specialTask)
+            HomeButton(title: "Special Tasks- Resident Details View", destination: AppDestination.residentDetails("305"))
             
         }
         .padding(.horizontal)
@@ -24,8 +24,6 @@ struct HomeView: View {
         .navigationTitle("Home")
     }
 }
-
-
 
 struct DashboardView: View {
     var body: some View {

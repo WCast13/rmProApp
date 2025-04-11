@@ -16,6 +16,7 @@ struct RMTenant: Codable, Identifiable {
     let accountGroupID: Int?
     let balance: Decimal?
     let charges: [RMCharge]?
+    let chargeTypes: [RMChargeType]?
     let checkPayeeName: String?
     let colorID: Int?
     let comment: String?
@@ -50,12 +51,15 @@ struct RMTenant: Codable, Identifiable {
     let overrideUpdateDate: String?
     let overrideUpdateUserID: Int?
     let payments: [RMPayment]?
+    let paymentReversals: [RMPaymentReversal]?
     let postingStartDate: String?
     let propertyID: Int?
+    let recurringChargeSummaries: [RMRecurringChargeSummary]?
     let rentDueDay: Int?
     let rentPeriod: String?
     let screeningStatus: String?
     let securityDepositHeld: Int?
+    let securityDepositSummaries: [RMSecurityDepositSummary]?
     let statementMethod: String?
     let status: String?
     let tenantDisplayID: Int?
@@ -106,6 +110,7 @@ struct RMTenant: Codable, Identifiable {
         case overrideUpdateDate = "OverrideUpdateDate"
         case overrideUpdateUserID = "OverrideUpdateUserID"
         case payments = "Payments"
+        
         case postingStartDate = "PostingStartDate"
         case propertyID = "PropertyID"
         case rentDueDay = "RentDueDay"
@@ -123,5 +128,27 @@ struct RMTenant: Codable, Identifiable {
         case updateDate = "UpdateDate"
         case updateUserID = "UpdateUserID"
         case webMessage = "WebMessage"
+        
+        case paymentReversals = "PaymentReversals"
+        case recurringChargeSummaries = "RecurringChargeSummaries"
+        case securityDepositSummaries = "SecurityDepositSummaries"
+        case chargeTypes = "ChargeTypes"
+        
     }
 }
+
+/*
+ 
+ let recurringCharges: [JSONAny]?
+ let openReceivables: [JSONAny]?
+ let recurringChargeSummaries: [RecurringChargeSummary]?
+ let securityDepositSummaries: [SecurityDepositSummary]?
+ let loans: [JSONAny]?
+ let vehicles: [JSONAny]?
+ let evictions: [JSONAny]?
+ let historyEvictionNotes: [JSONAny]?
+ let historyEviction: [JSONAny]?
+ 
+ 
+ */
+

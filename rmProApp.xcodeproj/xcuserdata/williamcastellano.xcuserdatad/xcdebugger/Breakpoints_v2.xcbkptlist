@@ -30,8 +30,8 @@
             filePath = "rmProApp/Networking/RentManagerAPIClient.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
             landmarkName = "request(url:responseType:)"
             landmarkType = "7">
          </BreakpointContent>
