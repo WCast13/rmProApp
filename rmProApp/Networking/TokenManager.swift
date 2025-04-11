@@ -20,7 +20,6 @@ class TokenManager: ObservableObject {
             await refreshToken()
             startTokenRefreshTimer()
         }
-        
     }
     
     func refreshToken() async {

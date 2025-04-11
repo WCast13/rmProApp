@@ -22,3 +22,12 @@ Add a "Residents Button" that Navigates to the a list of "Units/Residents"
             - Add support to add charges to Resident quickly and easily
             - Add support to change Site Type quickly
             - Other Features that are lengthy in RM Express
+
+Units API Call-
+    - For getting Box Numbers- Haven
+        - Unit ---> name
+        - Primary address ---> Street ---> Seperate Componets "\n" ---> Last Item
+        
+    
+
+

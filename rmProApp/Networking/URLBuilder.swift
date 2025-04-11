@@ -13,11 +13,16 @@ class URLBuilder {
     private init() {}
     
     // MARK: Create URL Function
-    func buildURL(endpoint: APIEndpoint, embeds: String? = nil, fields: String? = nil, filters: [RMFilter]? = nil, pageSize: Int? = nil) -> URL? {
+    func buildURL(endpoint: APIEndpoint, embeds: String? = nil, fields: String? = nil, filters: [RMFilter]? = nil, pageSize: Int? = nil, id: String? = nil) -> URL? {
         
         let baseURL = "https://trieq.api.rentmanager.com/"
         var urlComponents = URLComponents(string: baseURL + endpoint.rawValue)!
         var queryItems: [URLQueryItem] = []
+        
+        if let id = id {
+            urlComponents.path += "/\(id)"
+        }
+        
         
         if let embeds = embeds {
             queryItems.append(URLQueryItem(name: "embeds", value: embeds))
@@ -38,6 +43,8 @@ class URLBuilder {
         
         urlComponents.queryItems = queryItems
         
-        return urlComponents.url
+        print("Url\n---\n\(urlComponents.url!)\n\n\n")
+        
+        return urlComponents.url!
     }
  }

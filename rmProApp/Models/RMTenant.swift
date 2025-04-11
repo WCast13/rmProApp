@@ -13,111 +13,115 @@ struct RMTenant: Codable, Identifiable {
     let uuid = UUID()
     var id: UUID { uuid }
     
-    let tenantID: Int?
-    let tenantDisplayID: Int?
-    let name: String?
-    let firstName: String?
-    let lastName: String?
-    let webMessage: String?
-    let isCompany: Bool?
-    let colorID: Int?
+    let accountGroupID: Int?
+    let balance: Decimal?
+    let charges: [RMCharge]?
     let checkPayeeName: String?
-    let statementMethod: String?
+    let colorID: Int?
     let comment: String?
-    let rentDueDay: Int?
-    let rentPeriod: String?
-    let doNotChargeLateFees: Bool?
-    let doNotPrintStatements: Bool?
+    let contacts: [RMContact]?
+    let createDate: String?
+    let createUserID: Int?
+    let defaultTaxTypeID: Int?
     let doNotAcceptChecks: Bool?
     let doNotAcceptPayments: Bool?
     let doNotAllowTWAPayments: Bool?
+    let doNotChargeLateFees: Bool?
+    let doNotPrintStatements: Bool?
     let doNotSendARAutomationNotifications: Bool?
-    let isProspect: Bool?
-    let accountGroupID: Int?
-    let totalCalls: Int?
     let failedCalls: Int?
-    let isAccountGroupMaster: Bool?
-    let totalVisits: Int?
-    let totalEmails: Int?
     let firstContact: String?
+    let firstName: String?
+    let flexibleRentInternalStatus: String?
+    let flexibleRentStatus: String?
+    let isAccountGroupMaster: Bool?
+    let isCompany: Bool?
+    let isProspect: Bool?
+    let isShowCommentBanner: Bool?
     let lastContact: String?
-    let propertyID: Int?
-    let postingStartDate: String?
-    let defaultTaxTypeID: Int?
-    let overrideScreeningDecision: Bool?
-    let overrideReason: String?
+    let lastName: String?
+    let lastNameFirstName: String?
+    let name: String?
+    let openBalance: Decimal?
     let overrideCreateDate: String?
     let overrideCreateUserID: Int?
+    let overrideReason: String?
+    let overrideScreeningDecision: Bool?
     let overrideUpdateDate: String?
     let overrideUpdateUserID: Int?
-    let isShowCommentBanner: Bool?
-    let createDate: String?
-    let createUserID: Int?
-    let updateDate: String?
-    let updateUserID: Int?
-    let flexibleRentStatus: String?
-    let flexibleRentInternalStatus: String?
+    let payments: [RMPayment]?
+    let postingStartDate: String?
+    let propertyID: Int?
+    let rentDueDay: Int?
+    let rentPeriod: String?
     let screeningStatus: String?
     let securityDepositHeld: Int?
-    let balance: Decimal?
-    let openBalance: Decimal?
+    let statementMethod: String?
     let status: String?
-    let lastNameFirstName: String?
-    let contacts: [RMContact]?
-    let udfs : [RMUserDefinedValue]?
+    let tenantDisplayID: Int?
+    let tenantID: Int?
+    let totalCalls: Int?
+    let totalEmails: Int?
+    let totalVisits: Int?
+    let udfs: [RMUserDefinedValue]?
+    let updateDate: String?
+    let updateUserID: Int?
+    let webMessage: String?
     
     enum CodingKeys: String, CodingKey {
-        case tenantID = "TenantID"
-        case tenantDisplayID = "TenantDisplayID"
-        case name = "Name"
-        case firstName = "FirstName"
-        case lastName = "LastName"
-        case webMessage = "WebMessage"
-        case isCompany = "IsCompany"
-        case colorID = "ColorID"
+        case accountGroupID = "AccountGroupID"
+        case balance = "Balance"
+        case charges = "Charges"
         case checkPayeeName = "CheckPayeeName"
-        case statementMethod = "StatementMethod"
+        case colorID = "ColorID"
         case comment = "Comment"
-        case rentDueDay = "RentDueDay"
-        case rentPeriod = "RentPeriod"
-        case doNotChargeLateFees = "DoNotChargeLateFees"
-        case doNotPrintStatements = "DoNotPrintStatements"
+        case contacts = "Contacts"
+        case createDate = "CreateDate"
+        case createUserID = "CreateUserID"
+        case defaultTaxTypeID = "DefaultTaxTypeID"
         case doNotAcceptChecks = "DoNotAcceptChecks"
         case doNotAcceptPayments = "DoNotAcceptPayments"
         case doNotAllowTWAPayments = "DoNotAllowTWAPayments"
+        case doNotChargeLateFees = "DoNotChargeLateFees"
+        case doNotPrintStatements = "DoNotPrintStatements"
         case doNotSendARAutomationNotifications = "DoNotSendARAutomationNotifications"
-        case isProspect = "IsProspect"
-        case accountGroupID = "AccountGroupID"
-        case totalCalls = "TotalCalls"
         case failedCalls = "FailedCalls"
-        case isAccountGroupMaster = "IsAccountGroupMaster"
-        case totalVisits = "TotalVisits"
-        case totalEmails = "TotalEmails"
         case firstContact = "FirstContact"
+        case firstName = "FirstName"
+        case flexibleRentInternalStatus = "FlexibleRentInternalStatus"
+        case flexibleRentStatus = "FlexibleRentStatus"
+        case isAccountGroupMaster = "IsAccountGroupMaster"
+        case isCompany = "IsCompany"
+        case isProspect = "IsProspect"
+        case isShowCommentBanner = "IsShowCommentBanner"
         case lastContact = "LastContact"
-        case propertyID = "PropertyID"
-        case postingStartDate = "PostingStartDate"
-        case defaultTaxTypeID = "DefaultTaxTypeID"
-        case overrideScreeningDecision = "OverrideScreeningDecision"
-        case overrideReason = "OverrideReason"
+        case lastName = "LastName"
+        case lastNameFirstName = "LastNameFirstName"
+        case name = "Name"
+        case openBalance = "OpenBalance"
         case overrideCreateDate = "OverrideCreateDate"
         case overrideCreateUserID = "OverrideCreateUserID"
+        case overrideReason = "OverrideReason"
+        case overrideScreeningDecision = "OverrideScreeningDecision"
         case overrideUpdateDate = "OverrideUpdateDate"
         case overrideUpdateUserID = "OverrideUpdateUserID"
-        case isShowCommentBanner = "IsShowCommentBanner"
-        case createDate = "CreateDate"
-        case createUserID = "CreateUserID"
-        case updateDate = "UpdateDate"
-        case updateUserID = "UpdateUserID"
-        case flexibleRentStatus = "FlexibleRentStatus"
-        case flexibleRentInternalStatus = "FlexibleRentInternalStatus"
+        case payments = "Payments"
+        case postingStartDate = "PostingStartDate"
+        case propertyID = "PropertyID"
+        case rentDueDay = "RentDueDay"
+        case rentPeriod = "RentPeriod"
         case screeningStatus = "ScreeningStatus"
         case securityDepositHeld = "SecurityDepositHeld"
-        case balance = "Balance"
-        case openBalance = "OpenBalance"
+        case statementMethod = "StatementMethod"
         case status = "Status"
-        case lastNameFirstName = "LastNameFirstName"
-        case contacts = "Contacts"
+        case tenantDisplayID = "TenantDisplayID"
+        case tenantID = "TenantID"
+        case totalCalls = "TotalCalls"
+        case totalEmails = "TotalEmails"
+        case totalVisits = "TotalVisits"
         case udfs = "UserDefinedValues"
+        case updateDate = "UpdateDate"
+        case updateUserID = "UpdateUserID"
+        case webMessage = "WebMessage"
     }
 }

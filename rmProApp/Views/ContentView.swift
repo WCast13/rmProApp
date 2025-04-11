@@ -72,10 +72,10 @@ struct ContentView: View {
         }
         .onAppear {
             Task {
-                await TokenManager.shared.refreshToken()
+                
 //                properties = await RentManagerAPIClient.shared.request(endpoint: .properties, responseType: [RMProperty].self)
-                tenants = await RentManagerAPIClient.shared.request(responseType: [RMTenant].self, urlString: "https://trieq.api.rentmanager.com//Tenants?embeds=Contacts,UserDefinedValues&filters=PropertyID,eq,3&fields=Contacts,Name,PropertyID,TenantID,UserDefinedValues&PageSize=20000")
-                units = await RentManagerAPIClient.shared.request(responseType: [RMUnit].self, urlString: "https://trieq.api.rentmanager.com/Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType,Leases,Leases.Tenant,UserDefinedValues&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType,Leases,UserDefinedValues")
+//                tenants = await RentManagerAPIClient.shared.request(responseType: [RMTenant].self, urlString: "https://trieq.api.rentmanager.com//Tenants?embeds=Contacts,UserDefinedValues&filters=PropertyID,eq,3&fields=Contacts,Name,PropertyID,TenantID,UserDefinedValues&PageSize=20000")
+//                units = await RentManagerAPIClient.shared.request(responseType: [RMUnit].self, urlString: "https://trieq.api.rentmanager.com/Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType,Leases,Leases.Tenant,UserDefinedValues&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType,Leases,UserDefinedValues")
                 
             }
         }

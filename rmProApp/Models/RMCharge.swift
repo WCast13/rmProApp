@@ -11,30 +11,30 @@ import Foundation
 struct RMCharge: Codable, Identifiable {
     
     var uuid = UUID()
-    var chargeID: Int?
-    var id: Int?
-    var accountID: Int?
-    var jobID: Int?
-    var accountType: String?
-    var reference: String?
-    var comment: String?
-    var amount: Int?
-    var transactionDate: String?
-    var createDate: String?
-    var createUserID: Int?
-    var updateDate: String?
-    var updateUserID: Int?
-    var transactionType: String?
-    var propertyID: Int?
-    var unitID: Int?
-    var chargeTypeID: Int?
-    var amountAllocated: Int?
-    var isFullyAllocated: Bool?
-    var isSecurityDepositPriorToGLStartDate: Bool?
-    var accrualDebitID: Int?
-    var accrualCreditID: Int?
-    var tenantBillID: Int?
-    var tenantCheckID: Int?
+    let chargeID: Int?
+    let id: Int?
+    let accountID: Int?
+    let jobID: Int?
+    let accountType: String?
+    let reference: String?
+    let comment: String?
+    let amount: Double?
+    let transactionDate: String?
+    let createDate: String?
+    let createUserID: Int?
+    let updateDate: String?
+    let updateUserID: Int?
+    let transactionType: String?
+    let propertyID: Int?
+    let unitID: Int?
+    let chargeTypeID: Int?
+    let amountAllocated: Double?
+    let isFullyAllocated: Bool?
+    let isSecurityDepositPriorToGLStartDate: Bool?
+    let accrualDebitID: Int?
+    let accrualCreditID: Int?
+    let tenantBillID: Int?
+    let tenantCheckID: Int?
 
     enum CodingKeys: String, CodingKey {
         case chargeID = "ChargeID"

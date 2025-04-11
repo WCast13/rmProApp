@@ -16,6 +16,7 @@ struct HomeView: View {
             
             HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
             HomeButton(title: "Residents", destination: AppDestination.residentsHome)
+            HomeButton(title: "Special Tasks", destination: AppDestination.specialTask)
             
         }
         .padding(.horizontal)
