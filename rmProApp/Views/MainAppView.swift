@@ -23,8 +23,6 @@ struct MainAppView: View {
                         HomeView(navigationPath: $navigationPath)
                     case .rentIncreaseBuilder:
                         RentIncreaseNoticeBuilder(navigationPath: $navigationPath)
-                    case .mailingLabels:
-                        ContentView(navigationPath: $navigationPath)
                     case .documents:
                         DocumentsView(navigationPath: $navigationPath)
                     case .documentViewer(let url):
@@ -55,9 +53,9 @@ struct MainAppView: View {
 }
 
 enum AppDestination: Hashable {
+    
     case home
     case rentIncreaseBuilder
-    case mailingLabels
     case documents
     case documentViewer(URL)
     case residentsHome

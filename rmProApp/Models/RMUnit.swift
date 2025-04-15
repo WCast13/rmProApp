@@ -12,29 +12,31 @@ struct RMUnit: Codable, Identifiable, Equatable, Hashable {
     let uuid = UUID()
     var id: UUID { uuid }
     
-    let UnitID: Int?
+    let unitID: Int?
     let propertyID: Int?
     let name: String?
-    let UnitTypeID: Int?
+    let unitTypeID: Int?
     let colorID: Int?
     let isVacant: Bool?
+    let comment: String?
     
     let addresses: [RMAddress]?
     let leases: [RMLease]?
     let userDefinedValues: [RMUserDefinedValue]?
     let currentOccupancyStatus: RMOccupancyStatus?
     let currentOccupants: [RMTenant]?
-    let primaryAddress: RMAddress?  // Added for PrimaryAddress
-    let unitType: RMUnitType?       // Added for UnitType
+    let primaryAddress: RMAddress?
+    let unitType: RMUnitType?
     
     enum CodingKeys: String, CodingKey {
         
-        case UnitID = "UnitID"
+        case unitID = "UnitID"
         case propertyID = "PropertyID"
-        case UnitTypeID = "UnitTypeID"
+        case unitTypeID = "UnitTypeID"
         case name = "Name"
         case colorID = "ColorID"
         case isVacant = "IsVacant"
+        case comment = "Comment"
         
         case userDefinedValues = "UserDefinedValues"
         case addresses = "Addresses"

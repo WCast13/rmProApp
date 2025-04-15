@@ -30,6 +30,7 @@ struct RMTenant: Codable, Identifiable {
     let doNotChargeLateFees: Bool?
     let doNotPrintStatements: Bool?
     let doNotSendARAutomationNotifications: Bool?
+    let evictionID: Int?
     let failedCalls: Int?
     let firstContact: String?
     let firstName: String?
@@ -42,6 +43,7 @@ struct RMTenant: Codable, Identifiable {
     let lastContact: String?
     let lastName: String?
     let lastNameFirstName: String?
+    let leases: [RMLease]?
     let name: String?
     let openBalance: Decimal?
     let overrideCreateDate: String?
@@ -68,9 +70,17 @@ struct RMTenant: Codable, Identifiable {
     let totalEmails: Int?
     let totalVisits: Int?
     let udfs: [RMUserDefinedValue]?
+    let unit: RMUnit?
     let updateDate: String?
     let updateUserID: Int?
     let webMessage: String?
+    let addresses: [RMAddress]?
+    let primaryContact: RMContact?
+        
+//        let openReceivables: [JSONAny]? //RMCharge?
+//        let loans: [RMLoan]?
+//        let vehicles: [RMVehicle]?
+//        let evictions: [RMEvictions]?
     
     enum CodingKeys: String, CodingKey {
         case accountGroupID = "AccountGroupID"
@@ -98,6 +108,7 @@ struct RMTenant: Codable, Identifiable {
         case isCompany = "IsCompany"
         case isProspect = "IsProspect"
         case isShowCommentBanner = "IsShowCommentBanner"
+        case leases = "Leases"
         case lastContact = "LastContact"
         case lastName = "LastName"
         case lastNameFirstName = "LastNameFirstName"
@@ -110,7 +121,7 @@ struct RMTenant: Codable, Identifiable {
         case overrideUpdateDate = "OverrideUpdateDate"
         case overrideUpdateUserID = "OverrideUpdateUserID"
         case payments = "Payments"
-        
+        case paymentReversals = "PaymentReversals"
         case postingStartDate = "PostingStartDate"
         case propertyID = "PropertyID"
         case rentDueDay = "RentDueDay"
@@ -124,31 +135,34 @@ struct RMTenant: Codable, Identifiable {
         case totalCalls = "TotalCalls"
         case totalEmails = "TotalEmails"
         case totalVisits = "TotalVisits"
+        
         case udfs = "UserDefinedValues"
+        case unit = "Unit"
         case updateDate = "UpdateDate"
         case updateUserID = "UpdateUserID"
         case webMessage = "WebMessage"
         
-        case paymentReversals = "PaymentReversals"
         case recurringChargeSummaries = "RecurringChargeSummaries"
         case securityDepositSummaries = "SecurityDepositSummaries"
         case chargeTypes = "ChargeTypes"
+        case evictionID = "EvictionID"
+        case addresses = "Addresses"
+        case primaryContact = "PrimaryContact"
+        
         
     }
 }
 
 /*
+ FOR Resident Details:- Need to Add
+ Open Recievables
+ Loans
+ Vehicles
+ Evictions
+ History
  
- let recurringCharges: [JSONAny]?
- let openReceivables: [JSONAny]?
- let recurringChargeSummaries: [RecurringChargeSummary]?
- let securityDepositSummaries: [SecurityDepositSummary]?
- let loans: [JSONAny]?
- let vehicles: [JSONAny]?
- let evictions: [JSONAny]?
- let historyEvictionNotes: [JSONAny]?
- let historyEviction: [JSONAny]?
- 
+ NEEDS TO EDIT-
+ Lease
  
  */
 

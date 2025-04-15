@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Binding var navigationPath: NavigationPath
+    @EnvironmentObject var tenantDataManager: TenantDataManager
     
     var body: some View {
         
@@ -17,6 +18,14 @@ struct HomeView: View {
             HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
             HomeButton(title: "Residents", destination: AppDestination.residentsHome)
             HomeButton(title: "Special Tasks- Resident Details View", destination: AppDestination.residentDetails("305"))
+            
+            HStack {
+                Spacer()
+                Text("\(tenantDataManager.havenTenants.count)")
+                Spacer()
+                Text("\(tenantDataManager.pembrokeTenants.count)")
+                Spacer()
+            }
             
         }
         .padding(.horizontal)

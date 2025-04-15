@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct RMUnitType: Codable {
+struct RMUnitType: Codable, Identifiable {
+    let id = UUID()
     let unitTypeID: Int?
     let name: String?
     let comment: String?
@@ -20,7 +21,9 @@ struct RMUnitType: Codable {
     let updateDate: String?
     let updateUserID: Int?
     let isOtherRentableItem: Bool?
-    let metaTag: String?
+    let recurringCharges: [RMRecurringCharges]?
+    let units: [RMUnit]?
+    
     
     enum CodingKeys: String, CodingKey {
         case unitTypeID = "UnitTypeID"
@@ -35,6 +38,7 @@ struct RMUnitType: Codable {
         case updateDate = "UpdateDate"
         case updateUserID = "UpdateUserID"
         case isOtherRentableItem = "IsOtherRentableItem"
-        case metaTag = "MetaTag"
+        case recurringCharges = "RecurringCharges"
+        case units = "Units"
     }
 }

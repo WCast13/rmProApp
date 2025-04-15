@@ -1,5 +1,5 @@
 //
-//  RMPaynentReversal.swift
+//  RMPaymentReversal.swift
 //  rmProApp
 //
 //  Created by William Castellano on 4/10/25.

@@ -14,7 +14,6 @@ struct RentIncreaseNoticeBuilder: View {
         
         NavigationView {
             VStack {
-                HomeButton(title: "Create Mailing Labels", destination: AppDestination.mailingLabels)
                 HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
             }
             .padding(.horizontal)

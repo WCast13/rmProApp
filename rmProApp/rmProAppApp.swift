@@ -12,6 +12,11 @@ struct rmProAppApp: App {
     var body: some Scene {
         WindowGroup {
             MainAppView()
+//                .onAppear {
+//                    Task {
+//                        await TokenManager.shared.refreshToken()
+//                    }
+//                }
         }
     }
 }

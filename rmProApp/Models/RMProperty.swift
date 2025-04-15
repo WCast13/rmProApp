@@ -18,29 +18,25 @@ struct RMProperty: Codable {
     let propertyType: String?
     let email: String?
     let taxID: String?
-    let statementMethod: String?
     let comment: String?
-    let isSystemDefaultAssignedUser: Bool?
     let createDate: String?
     let updateDate: String?
     let createUserID: Int?
     let updateUserID: Int?
     let concurrencyID: Int?
+    let colorID: Int?
+    let isLateChargeEnabled: Bool?
     let isEpayEnabled: Bool?
     let defaultBankID: Int?
-    let lastDailyPost: String?
-    let vacantUnitIDs: String?
-    let serviceManagerAssignedUserID: Int?
-    let isOverrideAssignedUserID: Bool?
-    let isLateChargeEnabled: Bool?
-    let lastMonthlyPost: String?
     let postingDay: Int?
-    let logoFileID: Int?
-    let primaryOwnerID: Int?
-    let isAllocationOrderDisabled: Bool?
-    let aRAutomationUseSystemPreference: Bool?
-    
-    
+    let lastMonthlyPost: String?
+    let lastDailyPost: String?
+    let evictionWorkflowID: Int?
+    let unitCount: Int?
+    let occupiedUnitCount: Int?
+    let vacantUnitCount: Int?
+    let lastUnitCountPost: String?
+    let vacantUnitIDs: String?
     
     enum CodingKeys: String, CodingKey {
         case propertyID = "PropertyID"
@@ -53,9 +49,7 @@ struct RMProperty: Codable {
         case propertyType = "PropertyType"
         case email = "Email"
         case taxID = "TaxID"
-        case statementMethod = "StatementMethod"
         case comment = "Comment"
-        case isSystemDefaultAssignedUser = "IsSystemDefaultAssignedUser"
         case createDate = "CreateDate"
         case updateDate = "UpdateDate"
         case createUserID = "CreateUserID"
@@ -65,16 +59,14 @@ struct RMProperty: Codable {
         case defaultBankID = "DefaultBankID"
         case lastDailyPost = "LastDailyPost"
         case vacantUnitIDs = "VacantUnitIDs"
-        case serviceManagerAssignedUserID = "ServiceManagerAssignedUserID"
-        case isOverrideAssignedUserID = "IsOverrideAssignedUserID"
         case isLateChargeEnabled = "IsLateChargeEnabled"
         case lastMonthlyPost = "LastMonthlyPost"
         case postingDay = "PostingDay"
-        case logoFileID = "LogoFileID"
-        case primaryOwnerID = "PrimaryOwnerID"
-        case isAllocationOrderDisabled = "IsAllocationOrderDisabled"
-        case aRAutomationUseSystemPreference = "ARAutomationUseSystemPreference"
-        
-        
+        case evictionWorkflowID = "EvictionWorkflowID"
+        case unitCount = "UnitCount"
+        case occupiedUnitCount = "OccupiedUnitCount"
+        case vacantUnitCount = "VacantUnitCount"
+        case lastUnitCountPost = "LastUnitCountPost"
+        case colorID = "ColorID"
     }
 }

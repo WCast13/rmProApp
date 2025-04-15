@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ResidentsHomeView: View {
     @Binding var navigationPath: NavigationPath
+    @EnvironmentObject var tenantDataManager: TenantDataManager
+    let allResidents: [RMTenant] = []
     
     var body: some View {
         

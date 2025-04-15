@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Rent Manager API Client
 
-@MainActor
+//@MainActor
 class RentManagerAPIClient {
     static let shared = RentManagerAPIClient() // Singleton for RM Api Client
     private init() {}
@@ -18,7 +18,7 @@ class RentManagerAPIClient {
     
     func request<T: Decodable>(url: URL, responseType: T.Type) async -> T? {
         
-        guard let currentKey = TokenManager.shared.token else {
+        guard let currentKey = await TokenManager.shared.token else {
             print("Token is nil")
             return nil
         }
@@ -59,14 +59,14 @@ class RentManagerAPIClient {
         }
         
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
-        request.addValue("\(TokenManager.shared.token ?? "")", forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("\(await TokenManager.shared.token ?? "")", forHTTPHeaderField: "X-RM12Api-ApiToken")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         request.httpMethod = "POST"
         
         do {
             let body: [String: Any] = [
-                "UnitID": unit.UnitID ?? 0,
+                "UnitID": unit.unitID ?? 0,
                 "PropertyID": 3,
                 "UnitTypeID": 3
             ]
