@@ -17,10 +17,7 @@ class TokenManager: ObservableObject {
     static let shared = TokenManager() // Shared singleton instance
     
     private init() { // Private initializer
-        Task {
-            await refreshToken()
-            startTokenRefreshTimer()
-        }
+        startTokenRefreshTimer()
     }
     
     func refreshToken() async {

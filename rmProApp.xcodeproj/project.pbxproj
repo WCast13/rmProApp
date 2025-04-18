@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,8 @@
 		E13B42742DA9BB1A00A924DF /* RMRecurringCharges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42732DA9BB1A00A924DF /* RMRecurringCharges.swift */; };
 		E13B42762DADD4AC00A924DF /* RentIncreaseTenants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */; };
 		E13B42782DAE0B1200A924DF /* UnitDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42772DAE0B1200A924DF /* UnitDataManager.swift */; };
+		E13B427C2DAE4FDC00A924DF /* RMLoan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B427B2DAE4FDC00A924DF /* RMLoan.swift */; };
+		E13B42822DAEC7A800A924DF /* UnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42802DAEC7A800A924DF /* UnitsView.swift */; };
 		E14005D12DA5D6160022A2D2 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D02DA5D6160022A2D2 /* TenantParams.swift */; };
 		E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D22DA5EABF0022A2D2 /* UnitParams.swift */; };
 		E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */; };
@@ -49,6 +51,8 @@
 		E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014E2C654149000A0726 /* RentManagerAPIClient.swift */; };
 		E15501512C654280000A0726 /* RMProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMProperty.swift */; };
 		E15501532C655139000A0726 /* RMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501522C655139000A0726 /* RMUnit.swift */; };
+		E155936A2DB0457200085E9B /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15593692DB0456400085E9B /* SampleData.swift */; };
+		E155936C2DB18BF000085E9B /* RMLeaseTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */; };
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
 		E16155602D9DCBBE00F7D658 /* Rent Increase Notice Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */; };
 		E16155632D9EEA7E00F7D658 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16155622D9EEA7E00F7D658 /* MainAppView.swift */; };
@@ -89,6 +93,8 @@
 		E13B42732DA9BB1A00A924DF /* RMRecurringCharges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMRecurringCharges.swift; sourceTree = "<group>"; };
 		E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentIncreaseTenants.swift; sourceTree = "<group>"; };
 		E13B42772DAE0B1200A924DF /* UnitDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataManager.swift; sourceTree = "<group>"; };
+		E13B427B2DAE4FDC00A924DF /* RMLoan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLoan.swift; sourceTree = "<group>"; };
+		E13B42802DAEC7A800A924DF /* UnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsView.swift; sourceTree = "<group>"; };
 		E14005D02DA5D6160022A2D2 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E14005D22DA5EABF0022A2D2 /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
 		E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
@@ -104,6 +110,8 @@
 		E155014E2C654149000A0726 /* RentManagerAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentManagerAPIClient.swift; sourceTree = "<group>"; };
 		E15501502C654280000A0726 /* RMProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProperty.swift; sourceTree = "<group>"; };
 		E15501522C655139000A0726 /* RMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnit.swift; sourceTree = "<group>"; };
+		E15593692DB0456400085E9B /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLeaseTenant.swift; sourceTree = "<group>"; };
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
 		E16155622D9EEA7E00F7D658 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
@@ -113,10 +121,6 @@
 		E1DE0C042CD5231400843259 /* RMCharge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharge.swift; sourceTree = "<group>"; };
 		E1DE0C062CD523CA00843259 /* EncodeDecodeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeDecodeHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		E16155612D9DD07000F7D658 /* Archived */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Archived; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E155012F2C63D252000A0726 /* Frameworks */ = {
@@ -132,13 +136,9 @@
 		E11E837F2C66CFE600254B27 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E11E16062C7066A8005E0A03 /* LabelManager.swift */,
-				E10735102C8A292100BC190B /* PS3877FormManager.swift */,
-				E155014E2C654149000A0726 /* RentManagerAPIClient.swift */,
-				E1B046102C6DAAA700460160 /* URLBuilder.swift */,
-				E11E83822C670A1200254B27 /* TokenManager.swift */,
-				E13B426E2DA8DC6B00A924DF /* TenantDataManager.swift */,
-				E13B42772DAE0B1200A924DF /* UnitDataManager.swift */,
+				E13B427D2DAEC5A100A924DF /* Essential API Manager */,
+				E13B427E2DAEC73B00A924DF /* RM Data Manager  */,
+				E13B427F2DAEC78400A924DF /* Notice Manager */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -157,20 +157,49 @@
 		E13B42712DA8EA8700A924DF /* Need To Build */ = {
 			isa = PBXGroup;
 			children = (
+				E13B42552DA761CA00A924DF /* ResidentsHomeView.swift */,
+				E13B42542DA761CA00A924DF /* ResidentDetailView.swift */,
 				E13B42522DA761CA00A924DF /* HavenResidentsView.swift */,
 				E13B42532DA761CA00A924DF /* PembrokeResidentsView.swift */,
-				E13B42542DA761CA00A924DF /* ResidentDetailView.swift */,
-				E13B42552DA761CA00A924DF /* ResidentsHomeView.swift */,
 				E13B42562DA761CA00A924DF /* ViolationBuilderView.swift */,
 			);
 			path = "Need To Build";
 			sourceTree = "<group>";
 		};
-		E13B42722DA9BADB00A924DF /* New */ = {
+		E13B427D2DAEC5A100A924DF /* Essential API Manager */ = {
 			isa = PBXGroup;
 			children = (
+				E155014E2C654149000A0726 /* RentManagerAPIClient.swift */,
+				E1B046102C6DAAA700460160 /* URLBuilder.swift */,
+				E11E83822C670A1200254B27 /* TokenManager.swift */,
 			);
-			path = New;
+			path = "Essential API Manager";
+			sourceTree = "<group>";
+		};
+		E13B427E2DAEC73B00A924DF /* RM Data Manager  */ = {
+			isa = PBXGroup;
+			children = (
+				E13B426E2DA8DC6B00A924DF /* TenantDataManager.swift */,
+				E13B42772DAE0B1200A924DF /* UnitDataManager.swift */,
+			);
+			path = "RM Data Manager ";
+			sourceTree = "<group>";
+		};
+		E13B427F2DAEC78400A924DF /* Notice Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E11E16062C7066A8005E0A03 /* LabelManager.swift */,
+				E10735102C8A292100BC190B /* PS3877FormManager.swift */,
+			);
+			path = "Notice Manager";
+			sourceTree = "<group>";
+		};
+		E13B42812DAEC7A800A924DF /* Archived */ = {
+			isa = PBXGroup;
+			children = (
+				E13B42802DAEC7A800A924DF /* UnitsView.swift */,
+			);
+			path = Archived;
 			sourceTree = "<group>";
 		};
 		E14005CF2DA5D5E90022A2D2 /* APIParameters */ = {
@@ -213,9 +242,9 @@
 			children = (
 				E14005CF2DA5D5E90022A2D2 /* APIParameters */,
 				E11E837F2C66CFE600254B27 /* Networking */,
+				E15501472C63EA0D000A0726 /* Models */,
 				E15501442C63D271000A0726 /* Views */,
 				E1C7A6862C77AA9700B8B8D7 /* Assets */,
-				E15501472C63EA0D000A0726 /* Models */,
 				E15501352C63D252000A0726 /* rmProAppApp.swift */,
 				E15501392C63D253000A0726 /* Assets.xcassets */,
 				E11E160A2C712CA5005E0A03 /* Avery 5160 Template PDF.pdf */,
@@ -242,7 +271,7 @@
 				E13B42712DA8EA8700A924DF /* Need To Build */,
 				E14005D82DA745910022A2D2 /* Special API Tasks */,
 				E13B42702DA8EA2A00A924DF /* Rent Increase Notice */,
-				E16155612D9DD07000F7D658 /* Archived */,
+				E13B42812DAEC7A800A924DF /* Archived */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,6 +284,7 @@
 				E13B426A2DA8CD3D00A924DF /* RMChargeType.swift */,
 				E155014C2C6406B1000A0726 /* RMContact.swift */,
 				E11E83772C66CEB900254B27 /* RMLease.swift */,
+				E13B427B2DAE4FDC00A924DF /* RMLoan.swift */,
 				E11E837B2C66CF1100254B27 /* RMOccupancyStatus.swift */,
 				E13B425E2DA835E200A924DF /* RMPayment.swift */,
 				E13B42602DA8C74200A924DF /* RMPaymentReversal.swift */,
@@ -268,8 +298,8 @@
 				E15501522C655139000A0726 /* RMUnit.swift */,
 				E11E16042C6FD224005E0A03 /* RMUnitType.swift */,
 				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
-				E13B42722DA9BADB00A924DF /* New */,
 				E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */,
+				E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -277,6 +307,7 @@
 		E1C7A6862C77AA9700B8B8D7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E15593692DB0456400085E9B /* SampleData.swift */,
 				E161556E2D9F4DBF00F7D658 /* SwiftUIAssets.swift */,
 				E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */,
 				E1DE0C062CD523CA00843259 /* EncodeDecodeHelpers.swift */,
@@ -298,9 +329,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				E16155612D9DD07000F7D658 /* Archived */,
 			);
 			name = rmProApp;
 			productName = rmProApp;
@@ -367,6 +395,7 @@
 				E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */,
 				E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */,
 				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
+				E155936A2DB0457200085E9B /* SampleData.swift in Sources */,
 				E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */,
 				E13A82282D19E1A60045C04E /* RMPhoneNumber.swift in Sources */,
 				E1DE0C052CD5231500843259 /* RMCharge.swift in Sources */,
@@ -396,13 +425,16 @@
 				E13B42572DA761CA00A924DF /* ViolationBuilderView.swift in Sources */,
 				E13B42582DA761CA00A924DF /* HavenResidentsView.swift in Sources */,
 				E13B42672DA8CA6E00A924DF /* RMRecurringChargesSummary.swift in Sources */,
+				E13B427C2DAE4FDC00A924DF /* RMLoan.swift in Sources */,
 				E13B42592DA761CA00A924DF /* ResidentsHomeView.swift in Sources */,
+				E13B42822DAEC7A800A924DF /* UnitsView.swift in Sources */,
 				E13B425A2DA761CA00A924DF /* ResidentDetailView.swift in Sources */,
 				E13B425B2DA761CA00A924DF /* PembrokeResidentsView.swift in Sources */,
 				E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */,
 				E13B425F2DA835EB00A924DF /* RMPayment.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
 				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
+				E155936C2DB18BF000085E9B /* RMLeaseTenant.swift in Sources */,
 				E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */,
 				E10735092C86470300BC190B /* HomeView.swift in Sources */,
 			);

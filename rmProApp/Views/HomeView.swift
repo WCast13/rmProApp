@@ -16,17 +16,18 @@ struct HomeView: View {
         VStack(spacing: 20) {
             
             HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
-            HomeButton(title: "Residents", destination: AppDestination.residentsHome)
-            HomeButton(title: "Special Tasks- Resident Details View", destination: AppDestination.residentDetails("305"))
+            HomeButton(title: "Residents Home View", destination: AppDestination.residentsHome)
+//            HomeButton(title: "Special Tasks- Resident Details View", destination: AppDestination.residentDetails("305"))
             
             HStack {
                 Spacer()
-                Text("\(tenantDataManager.havenTenants.count)")
+                Text("\(tenantDataManager.allTenants.count)")
                 Spacer()
-                Text("\(tenantDataManager.pembrokeTenants.count)")
+                Text("\(tenantDataManager.allLease.count)")
+                Spacer()
+                Text("\(tenantDataManager.rentIncreaseTenants.count)")
                 Spacer()
             }
-            
         }
         .padding(.horizontal)
         .padding(.bottom)
