@@ -34,10 +34,12 @@
 		E13B426D2DA8CE6E00A924DF /* RMSecurityDepositSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B426C2DA8CE6E00A924DF /* RMSecurityDepositSummary.swift */; };
 		E13B426F2DA8DC6B00A924DF /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B426E2DA8DC6B00A924DF /* TenantDataManager.swift */; };
 		E13B42742DA9BB1A00A924DF /* RMRecurringCharges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42732DA9BB1A00A924DF /* RMRecurringCharges.swift */; };
-		E13B42762DADD4AC00A924DF /* RentIncreaseTenants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */; };
 		E13B42782DAE0B1200A924DF /* UnitDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42772DAE0B1200A924DF /* UnitDataManager.swift */; };
 		E13B427C2DAE4FDC00A924DF /* RMLoan.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B427B2DAE4FDC00A924DF /* RMLoan.swift */; };
 		E13B42822DAEC7A800A924DF /* UnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13B42802DAEC7A800A924DF /* UnitsView.swift */; };
+		E13CA5912DB6B97F003ED895 /* WCRentIncreaseTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CA5902DB6B97F003ED895 /* WCRentIncreaseTenant.swift */; };
+		E13CA5932DB6C095003ED895 /* WCTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CA5922DB6C075003ED895 /* WCTransaction.swift */; };
+		E13CA5952DB6DE74003ED895 /* TenantTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13CA5942DB6DE74003ED895 /* TenantTransactionsManager.swift */; };
 		E14005D12DA5D6160022A2D2 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D02DA5D6160022A2D2 /* TenantParams.swift */; };
 		E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D22DA5EABF0022A2D2 /* UnitParams.swift */; };
 		E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */; };
@@ -51,8 +53,7 @@
 		E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155014E2C654149000A0726 /* RentManagerAPIClient.swift */; };
 		E15501512C654280000A0726 /* RMProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501502C654280000A0726 /* RMProperty.swift */; };
 		E15501532C655139000A0726 /* RMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15501522C655139000A0726 /* RMUnit.swift */; };
-		E155936A2DB0457200085E9B /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15593692DB0456400085E9B /* SampleData.swift */; };
-		E155936C2DB18BF000085E9B /* RMLeaseTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */; };
+		E155936C2DB18BF000085E9B /* WCLeaseTenant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E155936B2DB18BF000085E9B /* WCLeaseTenant.swift */; };
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
 		E16155602D9DCBBE00F7D658 /* Rent Increase Notice Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */; };
 		E16155632D9EEA7E00F7D658 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16155622D9EEA7E00F7D658 /* MainAppView.swift */; };
@@ -91,10 +92,12 @@
 		E13B426C2DA8CE6E00A924DF /* RMSecurityDepositSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSecurityDepositSummary.swift; sourceTree = "<group>"; };
 		E13B426E2DA8DC6B00A924DF /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
 		E13B42732DA9BB1A00A924DF /* RMRecurringCharges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMRecurringCharges.swift; sourceTree = "<group>"; };
-		E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentIncreaseTenants.swift; sourceTree = "<group>"; };
 		E13B42772DAE0B1200A924DF /* UnitDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataManager.swift; sourceTree = "<group>"; };
 		E13B427B2DAE4FDC00A924DF /* RMLoan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLoan.swift; sourceTree = "<group>"; };
 		E13B42802DAEC7A800A924DF /* UnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsView.swift; sourceTree = "<group>"; };
+		E13CA5902DB6B97F003ED895 /* WCRentIncreaseTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCRentIncreaseTenant.swift; sourceTree = "<group>"; };
+		E13CA5922DB6C075003ED895 /* WCTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCTransaction.swift; sourceTree = "<group>"; };
+		E13CA5942DB6DE74003ED895 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
 		E14005D02DA5D6160022A2D2 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E14005D22DA5EABF0022A2D2 /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
 		E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
@@ -110,8 +113,7 @@
 		E155014E2C654149000A0726 /* RentManagerAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentManagerAPIClient.swift; sourceTree = "<group>"; };
 		E15501502C654280000A0726 /* RMProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMProperty.swift; sourceTree = "<group>"; };
 		E15501522C655139000A0726 /* RMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMUnit.swift; sourceTree = "<group>"; };
-		E15593692DB0456400085E9B /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLeaseTenant.swift; sourceTree = "<group>"; };
+		E155936B2DB18BF000085E9B /* WCLeaseTenant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCLeaseTenant.swift; sourceTree = "<group>"; };
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		E161555F2D9DCBBE00F7D658 /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
 		E16155622D9EEA7E00F7D658 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
@@ -180,7 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				E13B426E2DA8DC6B00A924DF /* TenantDataManager.swift */,
-				E13B42772DAE0B1200A924DF /* UnitDataManager.swift */,
+				E13CA5942DB6DE74003ED895 /* TenantTransactionsManager.swift */,
 			);
 			path = "RM Data Manager ";
 			sourceTree = "<group>";
@@ -198,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				E13B42802DAEC7A800A924DF /* UnitsView.swift */,
+				E14005D22DA5EABF0022A2D2 /* UnitParams.swift */,
+				E13B42772DAE0B1200A924DF /* UnitDataManager.swift */,
 			);
 			path = Archived;
 			sourceTree = "<group>";
@@ -207,7 +211,6 @@
 			children = (
 				E14005D42DA6EF570022A2D2 /* APIEndpointsFilter.swift */,
 				E14005D02DA5D6160022A2D2 /* TenantParams.swift */,
-				E14005D22DA5EABF0022A2D2 /* UnitParams.swift */,
 			);
 			path = APIParameters;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 		E15501472C63EA0D000A0726 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E13CA5922DB6C075003ED895 /* WCTransaction.swift */,
 				E11E83752C66CE5600254B27 /* RMAddress.swift */,
 				E1DE0C042CD5231400843259 /* RMCharge.swift */,
 				E13B426A2DA8CD3D00A924DF /* RMChargeType.swift */,
@@ -298,8 +302,8 @@
 				E15501522C655139000A0726 /* RMUnit.swift */,
 				E11E16042C6FD224005E0A03 /* RMUnitType.swift */,
 				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
-				E13B42752DADD4AC00A924DF /* RentIncreaseTenants.swift */,
-				E155936B2DB18BF000085E9B /* RMLeaseTenant.swift */,
+				E13CA5902DB6B97F003ED895 /* WCRentIncreaseTenant.swift */,
+				E155936B2DB18BF000085E9B /* WCLeaseTenant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -307,7 +311,6 @@
 		E1C7A6862C77AA9700B8B8D7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E15593692DB0456400085E9B /* SampleData.swift */,
 				E161556E2D9F4DBF00F7D658 /* SwiftUIAssets.swift */,
 				E1C7A6872C77AAB900B8B8D7 /* Color+Ext.swift */,
 				E1DE0C062CD523CA00843259 /* EncodeDecodeHelpers.swift */,
@@ -389,13 +392,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E13B42612DA8C74200A924DF /* RMPaymentReversal.swift in Sources */,
-				E13B42762DADD4AC00A924DF /* RentIncreaseTenants.swift in Sources */,
 				E16155602D9DCBBE00F7D658 /* Rent Increase Notice Home.swift in Sources */,
 				E15501512C654280000A0726 /* RMProperty.swift in Sources */,
 				E11E16072C7066A8005E0A03 /* LabelManager.swift in Sources */,
 				E14005D52DA6EF660022A2D2 /* APIEndpointsFilter.swift in Sources */,
 				E1B046112C6DAAA700460160 /* URLBuilder.swift in Sources */,
-				E155936A2DB0457200085E9B /* SampleData.swift in Sources */,
 				E10735112C8A292100BC190B /* PS3877FormManager.swift in Sources */,
 				E13A82282D19E1A60045C04E /* RMPhoneNumber.swift in Sources */,
 				E1DE0C052CD5231500843259 /* RMCharge.swift in Sources */,
@@ -410,6 +411,7 @@
 				E15501382C63D252000A0726 /* ContentView.swift in Sources */,
 				E155014D2C6406B1000A0726 /* RMContact.swift in Sources */,
 				E16155632D9EEA7E00F7D658 /* MainAppView.swift in Sources */,
+				E13CA5952DB6DE74003ED895 /* TenantTransactionsManager.swift in Sources */,
 				E15501362C63D252000A0726 /* rmProAppApp.swift in Sources */,
 				E155014B2C63EA5C000A0726 /* RMProspect.swift in Sources */,
 				E11E16032C6F0531005E0A03 /* MailingLabelView.swift in Sources */,
@@ -425,16 +427,18 @@
 				E13B42572DA761CA00A924DF /* ViolationBuilderView.swift in Sources */,
 				E13B42582DA761CA00A924DF /* HavenResidentsView.swift in Sources */,
 				E13B42672DA8CA6E00A924DF /* RMRecurringChargesSummary.swift in Sources */,
+				E13CA5912DB6B97F003ED895 /* WCRentIncreaseTenant.swift in Sources */,
 				E13B427C2DAE4FDC00A924DF /* RMLoan.swift in Sources */,
 				E13B42592DA761CA00A924DF /* ResidentsHomeView.swift in Sources */,
 				E13B42822DAEC7A800A924DF /* UnitsView.swift in Sources */,
 				E13B425A2DA761CA00A924DF /* ResidentDetailView.swift in Sources */,
 				E13B425B2DA761CA00A924DF /* PembrokeResidentsView.swift in Sources */,
 				E155014F2C654149000A0726 /* RentManagerAPIClient.swift in Sources */,
+				E13CA5932DB6C095003ED895 /* WCTransaction.swift in Sources */,
 				E13B425F2DA835EB00A924DF /* RMPayment.swift in Sources */,
 				E11E83762C66CE5600254B27 /* RMAddress.swift in Sources */,
 				E11E83832C670A1200254B27 /* TokenManager.swift in Sources */,
-				E155936C2DB18BF000085E9B /* RMLeaseTenant.swift in Sources */,
+				E155936C2DB18BF000085E9B /* WCLeaseTenant.swift in Sources */,
 				E14005D32DA5EABF0022A2D2 /* UnitParams.swift in Sources */,
 				E10735092C86470300BC190B /* HomeView.swift in Sources */,
 			);

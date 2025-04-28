@@ -8,7 +8,8 @@
 import Foundation
 
 // MARK: - Loan
-struct Loan: Codable {
+struct RMLoan: Codable, Identifiable, Hashable {
+    let id = UUID()
     let loanID: Int?
     let reference: String?
     let accountID: Int?

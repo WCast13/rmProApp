@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct RMAddress: Codable {
+struct RMAddress: Codable, Identifiable, Hashable {
+    static func == (lhs: RMAddress, rhs: RMAddress) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    let id = UUID()
     let addressID: Int?
     let addressTypeID: Int?
     let address: String?
@@ -19,7 +24,7 @@ struct RMAddress: Codable {
     let isBilling: Bool?
     let parentID: Int?
     let parentType: String?
-    let addressType: RMAddressType?
+//    let addressType: RMAddressType?
     
     enum CodingKeys: String, CodingKey {
         case addressID = "AddressID"
@@ -33,7 +38,7 @@ struct RMAddress: Codable {
         case isBilling = "IsBilling"
         case parentID = "ParentID"
         case parentType = "ParentType"
-        case addressType = "AddressType"
+//        case addressType = "AddressType"
     }
 }
 

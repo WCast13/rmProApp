@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct RMUnitType: Codable, Identifiable {
+struct RMUnitType: Codable, Identifiable, Hashable {
+    static func == (lhs: RMUnitType, rhs: RMUnitType) -> Bool {
+        lhs.unitTypeID == rhs.unitTypeID
+    }
+    
     let id = UUID()
     let unitTypeID: Int?
     let name: String?

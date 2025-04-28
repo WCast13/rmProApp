@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Charge
-struct RMCharge: Codable, Identifiable {
+struct RMCharge: Codable, Identifiable, Hashable {
     
     var uuid = UUID()
     let chargeID: Int?
@@ -18,7 +18,7 @@ struct RMCharge: Codable, Identifiable {
     let accountType: String?
     let reference: String?
     let comment: String?
-    let amount: Double?
+    let amount: Decimal?
     let transactionDate: String?
     let createDate: String?
     let createUserID: Int?
@@ -28,13 +28,14 @@ struct RMCharge: Codable, Identifiable {
     let propertyID: Int?
     let unitID: Int?
     let chargeTypeID: Int?
-    let amountAllocated: Double?
+    let amountAllocated: Decimal?
     let isFullyAllocated: Bool?
     let isSecurityDepositPriorToGLStartDate: Bool?
     let accrualDebitID: Int?
     let accrualCreditID: Int?
     let tenantBillID: Int?
     let tenantCheckID: Int?
+    let chargeType: RMChargeType?
 
     enum CodingKeys: String, CodingKey {
         case chargeID = "ChargeID"
@@ -61,5 +62,6 @@ struct RMCharge: Codable, Identifiable {
         case accrualCreditID = "AccrualCreditID"
         case tenantBillID = "TenantBillID"
         case tenantCheckID = "TenantCheckID"
+        case chargeType = "ChargeType"
     }
 }

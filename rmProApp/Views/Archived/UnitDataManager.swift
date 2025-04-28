@@ -32,21 +32,5 @@ class UnitDataManager: ObservableObject {
         
         print("\n\n")
         print(vacantUnits.count)
-        
-//        for unit in unitsWithBasicData {
-//            if unit.isVacant == true {
-//                if unit.leases?.first?.propertyID == 3 || unit.leases?.first?.propertyID == 12 {
-//                    print(unit.name ?? "N/A Name")
-//                    print(unit.isVacant ?? false)
-////                    print(unit.unitType ?? "N/UT")
-////                    print(unit.propertyID ?? 0)
-//                    print(unit.addresses?.first?.street?.components(separatedBy: "\r\n").first ?? "N/Add")
-////                    print(unit.leases?.count ?? 0)
-//                    vacantUnits.append(unit)
-//                }
-//            }
-//        }
     }
-    
-    
 }

@@ -14,13 +14,13 @@ class TenantDataManager: ObservableObject {
     @Published var pembrokeTenants: [RMTenant] = []
     @Published var allTenants: [RMTenant] = []
     @Published var singleTenant: RMTenant?
-    @Published var allLease: [RMLeaseTenant] = []
+    @Published var allUnitTenants: [WCLeaseTenant] = []
     
     // TODO: Dashboard Filters
     @Published var tenantsInDeliquency: [RMTenant]?
     @Published var tenantsInEviction: [RMTenant]? // TODO: Need RMEviction
     @Published var tenantPaymentReturns: [RMTenant]? // TODO: Might Not Need
-    @Published var rentIncreaseTenants: [RentIncreaseTenant] = []
+    @Published var rentIncreaseTenants: [WCRentIncreaseTenant] = []
     
     static let shared = TenantDataManager()
     
@@ -39,11 +39,11 @@ class TenantDataManager: ObservableObject {
     
     // MARK: Tenant Embeds/Fields
     private let simpleEmbeds: [TenantEmbedOption] = [
-        .addresses, .addresses_AddressType, .balance, .color, .contacts, .contacts_Addresses, .contacts_ContactType, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .contacts_UserDefinedValues, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .paymentReversals ,  .recurringChargeSummaries, .recurringChargeSummaries_ChargeType, .securityDepositHeld, .securityDepositSummaries, .userDefinedValues, .vehicles
+         .balance, .color, .contacts, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .paymentReversals ,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .userDefinedValues, .vehicles
     ]
     
     private let simpleFields: [TenantFieldOption] = [
-        .addresses, .balance, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .paymentReversals, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
+         .balance, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .paymentReversals, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
     ]
     
     private let fullEmbeds: [TenantEmbedOption] = [
@@ -53,6 +53,10 @@ class TenantDataManager: ObservableObject {
     private let fullFields: [TenantFieldOption] = [
         .addresses, .balance, .charges, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .history, .historyEviction, .historyEvictionNotes, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .payments, .paymentReversals, .primaryContact, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
     ]
+    
+    
+    private let transactionsEmbeds: [TenantEmbedOption] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
+    private let transactionsFields: [TenantFieldOption] = [.charges, .payments, .paymentReversals]
     
     // MARK: Fetch Tenants- Haven/Pembroke
     func fetchTenants() async {
@@ -102,15 +106,36 @@ class TenantDataManager: ObservableObject {
         let singleTenantUrl = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: fullEmbedsString, fields: fullFieldsString, id: tenantID)
         
         if let url = singleTenantUrl {
-            singleTenant = await RentManagerAPIClient.shared.request(url: url, responseType: RMTenant.self)
+           
+        singleTenant = await RentManagerAPIClient.shared.request(url: url, responseType: RMTenant.self)
+            
         }
         return singleTenant
     }
     
+    func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
+        let transactionEmbedsString = transactionsEmbeds.map { $0.rawValue }.joined(separator: ",")
+        let transactionFieldsString = transactionsFields.map { $0.rawValue }.joined(separator: ",")
+        
+        let transactionURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: transactionEmbedsString, fields: transactionFieldsString, id: tenantID)
+        
+        let transactions = await RentManagerAPIClient.shared.request(url: transactionURL!, responseType: RMTenant.self )
+        return transactions
+    }
+
+    // MARK: Combines Haven and Pembroke Residents
+    func buildFilteredResidents() {
+        allTenants = havenTenants + pembrokeTenants
+        print(("All Tenants Count: \(allTenants.count)"))
+
+        rentIncreaseTenants = buildRentIncreaseTenants()
+        
+    }
+    
     // MARK: Generate Rent Increase Tenants for Mailing Labels
     // TODO: Need to Add Vacant Units to List
-    func buildRentIncreaseTenants() -> [RentIncreaseTenant] {
-        var rentIncreaseTenants: [RentIncreaseTenant] = []
+    func buildRentIncreaseTenants() -> [WCRentIncreaseTenant] {
+        var rentIncreaseTenants: [WCRentIncreaseTenant] = []
         
         for tenant in allTenants {
             guard let leases = tenant.leases else { continue }
@@ -121,7 +146,11 @@ class TenantDataManager: ObservableObject {
             for lease in activeLeases {
                 guard let unit = lease.unit, let address = unit.addresses?.first else { continue }
                 
-                var rentIncreaseTenant = RentIncreaseTenant()
+                if lease.unit?.unitType?.name == "Loan" {
+                    continue
+                }
+                
+                var rentIncreaseTenant = WCRentIncreaseTenant()
                 rentIncreaseTenant.unitName = unit.name ?? "No Unit Name"
                 rentIncreaseTenant.city = address.city ?? "No City"
                 rentIncreaseTenant.state = address.state ?? "No State"
@@ -138,9 +167,9 @@ class TenantDataManager: ObservableObject {
                 rentIncreaseTenant.contacts = tenant.contacts?.filter { $0.isShowOnBill == true } ?? []
                 rentIncreaseTenants.append(rentIncreaseTenant)
                 
-                let tenantToAdd: RMLeaseTenant = makeLeaseTenants(tenant: tenant, lease: lease)
+                let tenantToAdd: WCLeaseTenant = makeLeaseTenants(tenant: tenant, lease: lease)
                 
-                allLease.append(tenantToAdd)
+                allUnitTenants.append(tenantToAdd)
             }
         }
         
@@ -150,22 +179,15 @@ class TenantDataManager: ObservableObject {
     }
     
     
-    // MARK: Builds Resident Filters for Dashboard
-    func buildFilteredResidents() {
-        allTenants = havenTenants + pembrokeTenants
-        print(("All Tenants Count: \(allTenants.count)"))
-        
-        tenantsInDeliquency = allTenants.filter { $0.balance ?? 0 > 0.0 }
-        print("Tenants in Deliquency Count: \(tenantsInDeliquency?.count ?? 0)")
-        
-        rentIncreaseTenants = buildRentIncreaseTenants()
-    }
-    
-    func buildTranasactions() {
-        let tenant = havenTenants[0]
-        let charges = tenant.charges ?? []
-        let payments = tenant.payments ?? []
-//        let paymentReversals = tenant.paymentReversals ?? []
+    func buildTranasactions(tenantID: Int) async {
+        let tenant = pembrokeTenants.filter { $0.tenantID == tenantID }.first
+        print("Start Build Transactions")
+        print("***************************************")
+        print(tenant?.tenantDisplayID ?? 0)
+        print(tenant?.name ?? "")
+        let charges = tenant?.charges ?? []
+        let payments = tenant?.payments ?? []
+        let paymentReversals = tenant?.paymentReversals ?? []
         
         let charge = charges.first
         print(charge?.amount ?? 0.0)
@@ -186,11 +208,16 @@ class TenantDataManager: ObservableObject {
         print(payment?.reversalType ?? "")
         print(payment?.transactionDate ?? Date())
         print(payment?.transactionType ?? "")
+        
+        print(charges.count)
+        print(payments.count)
+        print(paymentReversals.count)
+        
     }
 }
 
-func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> RMLeaseTenant {
-    var leaseTenant = RMLeaseTenant(
+func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
+    let leaseTenant = WCLeaseTenant(
         accountGroupID: tenant.accountGroupID,
                                     balance: tenant.balance,
                                     charges: tenant.charges,
@@ -222,6 +249,7 @@ func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> RMLeaseTenant {
                                     lastName: tenant.lastName,
                                     lastNameFirstName: tenant.lastNameFirstName,
                                     lease: lease, // Set the single lease
+                                    loans: tenant.loans,
                                     name: tenant.name,
                                     openBalance: tenant.openBalance,
                                     overrideCreateDate: tenant.overrideCreateDate,
@@ -261,16 +289,16 @@ func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> RMLeaseTenant {
 //                                    history: tenant.history
                                 )
     
-    print("\nName, Tenant Display ID, Tenant ID, Property ID, ContactsCount")
-    print("Name \(leaseTenant.name ?? "")")
-    print("Display ID \(leaseTenant.tenantDisplayID ?? 0)")
-    print("Tenant ID \(leaseTenant.tenantID ?? 0)")
-    print("Balance \(leaseTenant.balance ?? 0)")
-    print("Open Balance \(leaseTenant.openBalance ?? 0)")
-    print("Unit ID \(leaseTenant.lease?.unitID ?? 0)")
-    print("Move in Date \(leaseTenant.lease?.moveInDate ?? "")")
-    print("Move out Date \(leaseTenant.lease?.moveOutDate ?? "")")
-    print("\(leaseTenant.unit?.name ?? "No Name")")
+//    print("\nName, Tenant Display ID, Tenant ID, Property ID, ContactsCount")
+//    print("Name \(leaseTenant.name ?? "")")
+//    print("Display ID \(leaseTenant.tenantDisplayID ?? 0)")
+//    print("Tenant ID \(leaseTenant.tenantID ?? 0)")
+//    print("Balance \(leaseTenant.balance ?? 0)")
+//    print("Open Balance \(leaseTenant.openBalance ?? 0)")
+//    print("Unit ID \(leaseTenant.lease?.unitID ?? 0)")
+//    print("Move in Date \(leaseTenant.lease?.moveInDate ?? "")")
+//    print("Move out Date \(leaseTenant.lease?.moveOutDate ?? "")")
+//    print("\(leaseTenant.unit?.name ?? "No Name")")
     
     
     

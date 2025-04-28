@@ -10,30 +10,42 @@ import SwiftUI
 struct ResidentDetailView: View {
     @Binding var navigationPath: NavigationPath
     @EnvironmentObject var tenantDataManager: TenantDataManager
-    
-    let tenantID: String
-    @State var tenant: RMTenant?
+
+    @State var tenant: WCLeaseTenant
     
     var body: some View {
         VStack {
-            if let tenant = tenant {
                 Text("\(tenant.name ?? "Error Loading Tenant Data")")
                 Text("\(tenant.charges?.count ?? 0)")
-            } else {
-                Text("Loading...")
-            }
+            
         }
         .onAppear() {
             Task {
-                tenant = await tenantDataManager.fetchSingleTenant(tenantID: tenantID)
+//                tenant = await tenantDataManager.fetchSingleTenant(tenantID: tenantID)
+                await processTenantTransasactions()
             }
         }
         .padding()
         .navigationTitle("Resident Details")
     }
-}
     
-    /*
+    func processTenantTransasactions() async {
+        let transactionData = await tenantDataManager.fetchSingleTenantTransactions(tenantID: String(tenant.tenantID ?? 0))
+        
+        if let charges = transactionData?.charges, !charges.isEmpty, let payments = transactionData?.payments, !payments.isEmpty, let paymentReversals = transactionData?.paymentReversals {
+            
+            tenant.charges = charges
+            tenant.payments = payments
+            tenant.paymentReversals = paymentReversals
+            
+            let transactions = await TenantTransactionsManager.shared.processTransactions(tenant: tenant)
+            
+            tenant.transactions = transactions
+        }
+    }
+}
+
+/*
      #Preview {
      ResidentDetailView()
      }

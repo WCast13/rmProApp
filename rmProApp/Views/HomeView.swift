@@ -23,7 +23,7 @@ struct HomeView: View {
                 Spacer()
                 Text("\(tenantDataManager.allTenants.count)")
                 Spacer()
-                Text("\(tenantDataManager.allLease.count)")
+                Text("\(tenantDataManager.allUnitTenants.count)")
                 Spacer()
                 Text("\(tenantDataManager.rentIncreaseTenants.count)")
                 Spacer()

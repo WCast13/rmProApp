@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct RMUserDefinedValue : Codable {
+struct RMUserDefinedValue : Codable, Identifiable, Hashable {
+    let id = UUID()
     let userDefinedValueID: Int?
     let userDefinedFieldID: Int?
     let parentID: Int?

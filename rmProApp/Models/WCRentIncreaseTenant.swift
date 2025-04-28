@@ -1,13 +1,13 @@
 //
-//  MailingTenant.swift
+//  WCRentIncreaseTenant.swift
 //  rmProApp
 //
-//  Created by William Castellano on 4/14/25.
+//  Created by William Castellano on 4/21/25.
 //
 
 import Foundation
 
-struct RentIncreaseTenant: Codable, Identifiable {
+struct WCRentIncreaseTenant: Codable, Identifiable, Hashable {
     var id = UUID()
     
     var unitName: String?
@@ -18,5 +18,4 @@ struct RentIncreaseTenant: Codable, Identifiable {
     var postalCode: String?
     
     var contacts: [RMContact] = []
-    
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - PaymentReversal
-struct RMPaymentReversal: Codable, Identifiable {
+struct RMPaymentReversal: Codable, Identifiable, Hashable {
     let id = UUID()
     let accountID: Int?
     let paymentID: Int?

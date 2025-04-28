@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RMSecurityDepositSummary: Codable, Identifiable {
+struct RMSecurityDepositSummary: Codable, Identifiable, Hashable {
     let id = UUID()
     
     let accountID: Int?

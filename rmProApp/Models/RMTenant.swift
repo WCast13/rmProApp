@@ -8,10 +8,9 @@
 // TODO: Fix The Coding Keys
 import Foundation
 
-struct RMTenant: Codable, Identifiable {
+struct RMTenant: Codable, Identifiable, Hashable {
     
-    let uuid = UUID()
-    var id: UUID { uuid }
+    var id =  UUID()
     
     let accountGroupID: Int?
     let balance: Decimal?
@@ -44,6 +43,7 @@ struct RMTenant: Codable, Identifiable {
     let lastName: String?
     let lastNameFirstName: String?
     let leases: [RMLease]?
+    let loans: [RMLoan]?
     let name: String?
     let openBalance: Decimal?
     let overrideCreateDate: String?
@@ -78,7 +78,6 @@ struct RMTenant: Codable, Identifiable {
     let primaryContact: RMContact?
         
 //        let openReceivables: [JSONAny]? //RMCharge?
-//        let loans: [RMLoan]?
 //        let vehicles: [RMVehicle]?
 //        let evictions: [RMEvictions]?
     
@@ -112,6 +111,7 @@ struct RMTenant: Codable, Identifiable {
         case lastContact = "LastContact"
         case lastName = "LastName"
         case lastNameFirstName = "LastNameFirstName"
+        case loans = "Loans"
         case name = "Name"
         case openBalance = "OpenBalance"
         case overrideCreateDate = "OverrideCreateDate"

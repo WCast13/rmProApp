@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct RMProperty: Codable {
+struct RMProperty: Codable, Hashable, Identifiable {
+    let id = UUID()
     let propertyID: Int?
     let name: String?
     let shortName: String?

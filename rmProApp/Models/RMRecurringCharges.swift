@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RMRecurringCharges: Codable, Identifiable {
+struct RMRecurringCharges: Codable, Identifiable, Hashable {
     var id = UUID()
 
     let recurringChargeID: Int?

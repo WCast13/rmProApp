@@ -31,8 +31,6 @@ class RentManagerAPIClient {
         request.allHTTPHeaderFields = headers
         request.httpMethod = "GET"
         
-        print(request.allHTTPHeaderFields!)
-        
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ChargeType
-struct RMChargeType: Codable, Identifiable {
+struct RMChargeType: Codable, Identifiable, Hashable {
     let id = UUID()
     let chargeTypeID: Int?
     let name: String?

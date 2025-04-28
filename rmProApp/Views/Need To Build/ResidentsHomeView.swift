@@ -22,13 +22,15 @@ struct ResidentsHomeView: View {
         case fireProtectionGroup = "Fire Protection Group"
         case ptpA = "Prospectus A"
         case ptpWater = "Prospectus B - Lake"
-        case ptpdry = "Prospectus B - Dry"
+        case ptpDry = "Prospectus B - Dry"
+        case loans = "Loans"
+        
         
         var id: String { rawValue }
     }
     
-    private var filteredResidents: [RMLeaseTenant] {
-        let residents = tenantDataManager.allLease
+    private var filteredResidents: [WCLeaseTenant] {
+        let residents = tenantDataManager.allUnitTenants
         let searchText = searchText.lowercased()
         
         return residents.filter { tenant in
@@ -42,15 +44,17 @@ struct ResidentsHomeView: View {
             case .pembroke:
                 return matchesSearch && tenant.propertyID == 12
             case .delinquent:
-                return matchesSearch && (tenant.balance ?? 0) > 0
+                return matchesSearch && (tenant.openBalance ?? 0) > 0
             case .fireProtectionGroup:
                 return matchesSearch && tenant.lease?.unit?.unitType?.name == "HEI- Fire Protection"
             case .ptpA:
                 return matchesSearch && tenant.lease?.unit?.unitType?.name == "PTP- Pros A"
             case .ptpWater:
                 return matchesSearch && tenant.lease?.unit?.unitType?.name == "PTP- Pros B - Lake"
-            case .ptpdry:
+            case .ptpDry:
                 return matchesSearch && tenant.lease?.unit?.unitType?.name == "PTP- Pros B - Dry"
+            case .loans:
+                return matchesSearch && tenant.loans?.count ?? 0 > 0
             }
         }
         .sorted { $0.lease?.unit?.name ?? "" < $1.lease?.unit?.name ?? "" }
@@ -156,12 +160,12 @@ struct FilterChipView: View {
 
 // Resident Card
 struct ResidentCard : View {
-    let tenant: RMLeaseTenant
+    let tenant: WCLeaseTenant
     @Binding var navigationPath: NavigationPath
     
     var body: some View {
         Button(action: {
-            navigationPath.append(AppDestination.residentDetails("\(tenant.tenantID ?? 0)"))
+            navigationPath.append(AppDestination.residentDetails((tenant)))
         }) {
             HStack(alignment: .top, spacing: 12) {
                 //Initials Circle
@@ -186,7 +190,7 @@ struct ResidentCard : View {
                             .foregroundColor(.green)
                     }
                     
-                    if let balance = tenant.balance, balance > 0 {
+                    if let balance = tenant.openBalance, balance > 0 {
                         Text("Balance: $\(balance)")
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .foregroundColor(.red)

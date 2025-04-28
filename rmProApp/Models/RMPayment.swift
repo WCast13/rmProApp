@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RMPayment : Codable, Identifiable {
+struct RMPayment : Codable, Identifiable, Hashable {
     let uuid = UUID()
     
     let paymentID: Int?

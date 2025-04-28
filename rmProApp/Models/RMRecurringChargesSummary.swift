@@ -8,7 +8,8 @@
 import Foundation
 
 // MARK: - RecurringChargeSummary
-struct RMRecurringChargeSummary: Codable {
+struct RMRecurringChargeSummary: Codable, Hashable, Identifiable {
+    let id = UUID()
     let isException: Bool?
     let groupName: String?
     let entityTypeEnumSortOrder: Int?

@@ -33,8 +33,8 @@ struct MainAppView: View {
                         HavenResidentsView(navigationPath: $navigationPath)
                     case .pembrokeResidents:
                         PembrokeResidentsView(navigationPath: $navigationPath)
-                    case .residentDetails(let tenantID):
-                        ResidentDetailView(navigationPath: $navigationPath, tenantID: tenantID)
+                    case .residentDetails(let tenant):
+                        ResidentDetailView(navigationPath: $navigationPath, tenant: tenant)
                     case .noticesBuilder(let unit):
                         ViolationBuilderView(navigationPath: $navigationPath, unit: unit)
                     case .specialTask:
@@ -61,7 +61,7 @@ enum AppDestination: Hashable {
     case residentsHome
     case havenResidents
     case pembrokeResidents
-    case residentDetails(String)
+    case residentDetails(WCLeaseTenant)
     case noticesBuilder(RMUnit)
     case specialTask
 }

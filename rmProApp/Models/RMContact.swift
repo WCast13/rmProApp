@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct RMContact: Codable {
-
+struct RMContact: Codable, Identifiable, Hashable {
+    let id = UUID()
+    
     let contactID: Int?
     let firstName: String?
     let lastName: String?

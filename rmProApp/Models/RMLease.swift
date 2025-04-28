@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct RMLease : Codable {
+struct RMLease : Codable, Identifiable, Hashable, Equatable {
+    static func == (lhs: RMLease, rhs: RMLease) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    
+    let id = UUID()
     let leaseID: Int?
     let tenantID: Int?
     let unitID: Int?
