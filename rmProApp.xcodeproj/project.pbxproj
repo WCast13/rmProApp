@@ -282,7 +282,6 @@
 		E15501472C63EA0D000A0726 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E13CA5922DB6C075003ED895 /* WCTransaction.swift */,
 				E11E83752C66CE5600254B27 /* RMAddress.swift */,
 				E1DE0C042CD5231400843259 /* RMCharge.swift */,
 				E13B426A2DA8CD3D00A924DF /* RMChargeType.swift */,
@@ -304,6 +303,7 @@
 				E11E83792C66CEED00254B27 /* RMUserDefinedValue.swift */,
 				E13CA5902DB6B97F003ED895 /* WCRentIncreaseTenant.swift */,
 				E155936B2DB18BF000085E9B /* WCLeaseTenant.swift */,
+				E13CA5922DB6C075003ED895 /* WCTransaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

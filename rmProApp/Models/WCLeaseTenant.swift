@@ -17,6 +17,8 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     
     let id = UUID()
     var accountGroupID: Int?
+    var addresses: [RMAddress]?
+    var allLeases: [RMLease]?
     var balance: Decimal?
     var charges: [RMCharge]?
     var chargeTypes: [RMChargeType]?
@@ -78,7 +80,7 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     var updateDate: String?
     var updateUserID: Int?
     var webMessage: String?
-    var addresses: [RMAddress]?
+    
     var primaryContact: RMContact?
     var transactions: [WCTransaction]?
         
@@ -90,6 +92,8 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     enum CodingKeys: String, CodingKey {
         case accountGroupID = "AccountGroupID"
         case balance = "Balance"
+        case addresses = "Addresses"
+        case allLeases = "Leases"
         case charges = "Charges"
         case checkPayeeName = "CheckPayeeName"
         case colorID = "ColorID"
@@ -113,7 +117,7 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         case isCompany = "IsCompany"
         case isProspect = "IsProspect"
         case isShowCommentBanner = "IsShowCommentBanner"
-        case lease = "Leases"
+        case lease = "Lease"
         case lastContact = "LastContact"
         case lastName = "LastName"
         case lastNameFirstName = "LastNameFirstName"
@@ -152,7 +156,6 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         case securityDepositSummaries = "SecurityDepositSummaries"
         case chargeTypes = "ChargeTypes"
         case evictionID = "EvictionID"
-        case addresses = "Addresses"
         case primaryContact = "PrimaryContact"
         
         

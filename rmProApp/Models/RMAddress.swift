@@ -12,18 +12,18 @@ struct RMAddress: Codable, Identifiable, Hashable {
         lhs.id == rhs.id
     }
     
-    let id = UUID()
-    let addressID: Int?
-    let addressTypeID: Int?
-    let address: String?
-    let street: String?
-    let city: String?
-    let state: String?
-    let postalCode: String?
-    let isPrimary: Bool?
-    let isBilling: Bool?
-    let parentID: Int?
-    let parentType: String?
+    var id = UUID()
+    var addressID: Int?
+    var addressTypeID: Int?
+    var address: String?
+    var street: String?
+    var city: String?
+    var state: String?
+    var postalCode: String?
+    var isPrimary: Bool?
+    var isBilling: Bool?
+    var parentID: Int?
+    var parentType: String?
 //    let addressType: RMAddressType?
     
     enum CodingKeys: String, CodingKey {

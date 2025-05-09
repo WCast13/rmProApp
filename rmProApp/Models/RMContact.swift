@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct RMContact: Codable, Identifiable, Hashable {
+struct RMContact: Codable, Identifiable, Hashable, Equatable {
+    
+    static func == (lhs: RMContact, rhs: RMContact) -> Bool {
+        lhs.contactID == rhs.contactID
+    }
+    
     let id = UUID()
     
     let contactID: Int?
@@ -34,7 +39,7 @@ struct RMContact: Codable, Identifiable, Hashable {
     let updateUserID: Int?
     let parentID: Int?
     let parentType: String?
-//    let phoneNumbers: [RMPhoneNumber]
+    let phoneNumbers: [RMPhoneNumber]
     
     enum CodingKeys: String, CodingKey {
         case contactID = "ContactID"
@@ -61,7 +66,7 @@ struct RMContact: Codable, Identifiable, Hashable {
         case updateUserID = "UpdateUserID"
         case parentID = "ParentID"
         case parentType = "ParentType"
-//        case phoneNumbers = "PhoneNumbers"
+        case phoneNumbers = "PhoneNumbers"
     }
 }
 

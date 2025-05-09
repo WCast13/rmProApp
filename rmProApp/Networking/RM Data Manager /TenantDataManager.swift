@@ -39,11 +39,11 @@ class TenantDataManager: ObservableObject {
     
     // MARK: Tenant Embeds/Fields
     private let simpleEmbeds: [TenantEmbedOption] = [
-         .balance, .color, .contacts, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .paymentReversals ,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .userDefinedValues, .vehicles
+        .addresses, .addresses_AddressType, .balance, .color, .contacts, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .paymentReversals ,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .userDefinedValues, .vehicles
     ]
     
     private let simpleFields: [TenantFieldOption] = [
-         .balance, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .paymentReversals, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
+        .addresses, .balance, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .paymentReversals, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
     ]
     
     private let fullEmbeds: [TenantEmbedOption] = [
@@ -54,9 +54,11 @@ class TenantDataManager: ObservableObject {
         .addresses, .balance, .charges, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .history, .historyEviction, .historyEvictionNotes, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .payments, .paymentReversals, .primaryContact, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
     ]
     
-    
     private let transactionsEmbeds: [TenantEmbedOption] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
     private let transactionsFields: [TenantFieldOption] = [.charges, .payments, .paymentReversals]
+    
+    private let addressEmbeds: [TenantEmbedOption] = [.addresses, .addresses_AddressType]
+    private let addressFields: [TenantFieldOption] = [.addresses]
     
     // MARK: Fetch Tenants- Haven/Pembroke
     func fetchTenants() async {
@@ -114,13 +116,30 @@ class TenantDataManager: ObservableObject {
     }
     
     func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
+        let transactionsEmbeds: [TenantEmbedOption] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
+        let transactionsFields: [TenantFieldOption] = [.charges, .payments, .paymentReversals]
+        
         let transactionEmbedsString = transactionsEmbeds.map { $0.rawValue }.joined(separator: ",")
         let transactionFieldsString = transactionsFields.map { $0.rawValue }.joined(separator: ",")
         
         let transactionURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: transactionEmbedsString, fields: transactionFieldsString, id: tenantID)
         
-        let transactions = await RentManagerAPIClient.shared.request(url: transactionURL!, responseType: RMTenant.self )
+        let transactions = await RentManagerAPIClient.shared.request(url: transactionURL!, responseType: RMTenant.self)
         return transactions
+    }
+    
+    func fetchAddresses(tenantID: String) async -> RMTenant? {
+        let addressEmbeds: [TenantEmbedOption] = [.addresses, .addresses_AddressType]
+        let addressFields: [TenantFieldOption] = [.addresses]
+        
+        let addressEmbedsString = addressEmbeds.map { $0.rawValue }.joined(separator: ",")
+        let addressFieldsString = addressFields.map { $0.rawValue }.joined(separator: ",")
+        
+        let addressURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: addressEmbedsString, fields: addressFieldsString, id: tenantID)
+        
+        let tenantAddresses = await RentManagerAPIClient.shared.request(url: addressURL!, responseType: RMTenant.self)
+        
+        return tenantAddresses
     }
 
     // MARK: Combines Haven and Pembroke Residents
@@ -178,7 +197,6 @@ class TenantDataManager: ObservableObject {
         return rentIncreaseTenants
     }
     
-    
     func buildTranasactions(tenantID: Int) async {
         let tenant = pembrokeTenants.filter { $0.tenantID == tenantID }.first
         print("Start Build Transactions")
@@ -219,88 +237,71 @@ class TenantDataManager: ObservableObject {
 func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
     let leaseTenant = WCLeaseTenant(
         accountGroupID: tenant.accountGroupID,
-                                    balance: tenant.balance,
-                                    charges: tenant.charges,
-                                    chargeTypes: tenant.chargeTypes,
-                                    checkPayeeName: tenant.checkPayeeName,
-                                    colorID: tenant.colorID,
-                                    comment: tenant.comment,
-                                    contacts: tenant.contacts,
-                                    createDate: tenant.createDate,
-                                    createUserID: tenant.createUserID,
-                                    defaultTaxTypeID: tenant.defaultTaxTypeID,
-                                    doNotAcceptChecks: tenant.doNotAcceptChecks,
-                                    doNotAcceptPayments: tenant.doNotAcceptPayments,
-                                    doNotAllowTWAPayments: tenant.doNotAllowTWAPayments,
-                                    doNotChargeLateFees: tenant.doNotChargeLateFees,
-                                    doNotPrintStatements: tenant.doNotPrintStatements,
-                                    doNotSendARAutomationNotifications: tenant.doNotSendARAutomationNotifications,
-                                    evictionID: tenant.evictionID,
-                                    failedCalls: tenant.failedCalls,
-                                    firstContact: tenant.firstContact,
-                                    firstName: tenant.firstName,
-                                    flexibleRentInternalStatus: tenant.flexibleRentInternalStatus,
-                                    flexibleRentStatus: tenant.flexibleRentStatus,
-                                    isAccountGroupMaster: tenant.isAccountGroupMaster,
-                                    isCompany: tenant.isCompany,
-                                    isProspect: tenant.isProspect,
-                                    isShowCommentBanner: tenant.isShowCommentBanner,
-                                    lastContact: tenant.lastContact,
-                                    lastName: tenant.lastName,
-                                    lastNameFirstName: tenant.lastNameFirstName,
-                                    lease: lease, // Set the single lease
-                                    loans: tenant.loans,
-                                    name: tenant.name,
-                                    openBalance: tenant.openBalance,
-                                    overrideCreateDate: tenant.overrideCreateDate,
-                                    overrideCreateUserID: tenant.overrideCreateUserID,
-                                    overrideReason: tenant.overrideReason,
-                                    overrideScreeningDecision: tenant.overrideScreeningDecision,
-                                    overrideUpdateDate: tenant.overrideUpdateDate,
-                                    overrideUpdateUserID: tenant.overrideUpdateUserID,
-                                    payments: tenant.payments,
-                                    paymentReversals: tenant.paymentReversals,
-                                    postingStartDate: tenant.postingStartDate,
-                                    propertyID: tenant.propertyID,
-                                    recurringChargeSummaries: tenant.recurringChargeSummaries,
-                                    rentDueDay: tenant.rentDueDay,
-                                    rentPeriod: tenant.rentPeriod,
-                                    screeningStatus: tenant.screeningStatus,
-                                    securityDepositHeld: tenant.securityDepositHeld,
-                                    securityDepositSummaries: tenant.securityDepositSummaries,
-                                    statementMethod: tenant.statementMethod,
-                                    status: tenant.status,
-                                    tenantDisplayID: tenant.tenantDisplayID,
-                                    tenantID: tenant.tenantID,
-                                    totalCalls: tenant.totalCalls,
-                                    totalEmails: tenant.totalEmails,
-                                    totalVisits: tenant.totalVisits,
-                                    udfs: tenant.udfs,
-                                    unit: lease.unit, // Use the unit from the lease
-                                    updateDate: tenant.updateDate,
-                                    updateUserID: tenant.updateUserID,
-                                    webMessage: tenant.webMessage,
-                                    addresses: tenant.addresses,
-                                    primaryContact: tenant.primaryContact,
-//                                    openReceivables: tenant.openReceivables,
-//                                    loans: tenant.loans,
-//                                    vehicles: tenant.vehicles,
-//                                    evictions: tenant.evictions,
-//                                    history: tenant.history
-                                )
-    
-//    print("\nName, Tenant Display ID, Tenant ID, Property ID, ContactsCount")
-//    print("Name \(leaseTenant.name ?? "")")
-//    print("Display ID \(leaseTenant.tenantDisplayID ?? 0)")
-//    print("Tenant ID \(leaseTenant.tenantID ?? 0)")
-//    print("Balance \(leaseTenant.balance ?? 0)")
-//    print("Open Balance \(leaseTenant.openBalance ?? 0)")
-//    print("Unit ID \(leaseTenant.lease?.unitID ?? 0)")
-//    print("Move in Date \(leaseTenant.lease?.moveInDate ?? "")")
-//    print("Move out Date \(leaseTenant.lease?.moveOutDate ?? "")")
-//    print("\(leaseTenant.unit?.name ?? "No Name")")
-    
-    
+        addresses: tenant.addresses,
+        allLeases: tenant.leases,
+        balance: tenant.balance,
+        charges: tenant.charges,
+        chargeTypes: tenant.chargeTypes,
+        checkPayeeName: tenant.checkPayeeName,
+        colorID: tenant.colorID,
+        comment: tenant.comment,
+        contacts: tenant.contacts,
+        createDate: tenant.createDate,
+        createUserID: tenant.createUserID,
+        defaultTaxTypeID: tenant.defaultTaxTypeID,
+        doNotAcceptChecks: tenant.doNotAcceptChecks,
+        doNotAcceptPayments: tenant.doNotAcceptPayments,
+        doNotAllowTWAPayments: tenant.doNotAllowTWAPayments,
+        doNotChargeLateFees: tenant.doNotChargeLateFees,
+        doNotPrintStatements: tenant.doNotPrintStatements,
+        doNotSendARAutomationNotifications: tenant.doNotSendARAutomationNotifications,
+        evictionID: tenant.evictionID,
+        failedCalls: tenant.failedCalls,
+        firstContact: tenant.firstContact,
+        firstName: tenant.firstName,
+        flexibleRentInternalStatus: tenant.flexibleRentInternalStatus,
+        flexibleRentStatus: tenant.flexibleRentStatus,
+        isAccountGroupMaster: tenant.isAccountGroupMaster,
+        isCompany: tenant.isCompany,
+        isProspect: tenant.isProspect,
+        isShowCommentBanner: tenant.isShowCommentBanner,
+        lastContact: tenant.lastContact,
+        lastName: tenant.lastName,
+        lastNameFirstName: tenant.lastNameFirstName,
+        lease: lease, // Set the single lease
+        loans: tenant.loans,
+        name: tenant.name,
+        openBalance: tenant.openBalance,
+        overrideCreateDate: tenant.overrideCreateDate,
+        overrideCreateUserID: tenant.overrideCreateUserID,
+        overrideReason: tenant.overrideReason,
+        overrideScreeningDecision: tenant.overrideScreeningDecision,
+        overrideUpdateDate: tenant.overrideUpdateDate,
+        overrideUpdateUserID: tenant.overrideUpdateUserID,
+        payments: tenant.payments,
+        paymentReversals: tenant.paymentReversals,
+        postingStartDate: tenant.postingStartDate,
+        propertyID: tenant.propertyID,
+        recurringChargeSummaries: tenant.recurringChargeSummaries,
+        rentDueDay: tenant.rentDueDay,
+        rentPeriod: tenant.rentPeriod,
+        screeningStatus: tenant.screeningStatus,
+        securityDepositHeld: tenant.securityDepositHeld,
+        securityDepositSummaries: tenant.securityDepositSummaries,
+        statementMethod: tenant.statementMethod,
+        status: tenant.status,
+        tenantDisplayID: tenant.tenantDisplayID,
+        tenantID: tenant.tenantID,
+        totalCalls: tenant.totalCalls,
+        totalEmails: tenant.totalEmails,
+        totalVisits: tenant.totalVisits,
+        udfs: tenant.udfs,
+        unit: lease.unit, // Use the unit from the lease
+        updateDate: tenant.updateDate,
+        updateUserID: tenant.updateUserID,
+        webMessage: tenant.webMessage,
+        primaryContact: tenant.primaryContact
+    )
     
     return leaseTenant
 }

@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct RMPhoneNumber: Codable {
+struct RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
+    static func == (lhs: RMPhoneNumber, rhs: RMPhoneNumber) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    var id = UUID()
     var phoneNumberID: Int?
     var phoneNumberTypeID: Int?
     var phoneNumber: String?
