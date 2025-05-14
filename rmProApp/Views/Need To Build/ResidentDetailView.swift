@@ -36,7 +36,6 @@ struct ResidentDetailView: View {
                 LeaseSection(leases: tenant.allLeases ?? [], recurringCharges: tenant.allLeases?.first?.unit?.unitType?.recurringCharges ?? [])
                 
             }
-            
         }
         .onAppear() {
             Task {

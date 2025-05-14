@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TenantEmbedOption: String, CaseIterable {
+enum TenantEmbeds: String, CaseIterable {
     case addresses = "Addresses"
     case addresses_AddressType = "Addresses.AddressType"
     case balance = "Balance"
@@ -88,7 +88,7 @@ enum TenantEmbedOption: String, CaseIterable {
     case webUsers = "WebUsers"
 }
 
-enum TenantFieldOption: String, CaseIterable {
+enum TenantFields: String, CaseIterable {
     case accountStatements = "AccountStatements"
     case accountType = "AccountType"
     case addresses = "Addresses"
@@ -189,4 +189,91 @@ enum TenantFieldOption: String, CaseIterable {
     case webMessage = "WebMessage"
     case webUserAccounts = "WebUserAccounts"
     case webUsers = "WebUsers"
+}
+
+extension TenantEmbeds {
+
+    static let fullEmbeds: [TenantEmbeds] = [
+        .addresses, .addresses_AddressType, .balance, .charges, .color, .contacts, .contacts_Addresses, .contacts_ContactType, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .contacts_UserDefinedValues, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .history, .leases, .leases_Property, .leases_Unit, .leases_Unit_Property, .leases_Unit_Addresses, .leases_Unit_UnitType, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .payments, .paymentReversals, .primaryContact, .primaryContact_PhoneNumbers, .primaryContact_PhoneNumbers_PhoneNumberType,  .recurringChargeSummaries, .recurringChargeSummaries_ChargeType, .securityDepositHeld, .securityDepositSummaries, .tenantBills, .tenantChecks, .userDefinedValues, .vehicles
+    ]
+    
+    static let simpleEmbeds: [TenantEmbeds] = [
+        .addresses, .addresses_AddressType, .balance, .color, .contacts, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType, .evictions, .evictions_EvictionOutcome, .evictions_EvictionWorkflowStage, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openPrepays, .openReceivables, .openReceivables_ChargeType, .paymentReversals ,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .userDefinedValues, .vehicles
+    ]
+
+    static let baseEmbeds: [TenantEmbeds] = [
+        .balance, .color, .leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses, .loans, .openBalance, .openReceivables, .openReceivables_ChargeType, .securityDepositHeld, .userDefinedValues
+    ]
+    
+    static let bareEmbeds: [TenantEmbeds] = [
+        .balance, .color, .openBalance, .openReceivables, .openReceivables_ChargeType, .securityDepositHeld
+    ]
+    
+    static let leaseEmbeds: [TenantEmbeds] = [.leases, .leases_Unit, .leases_Unit_UnitType, .leases_Unit_Addresses]
+    static let addressEmbeds: [TenantEmbeds] = [.addresses, .addresses_AddressType]
+    static let contactsEmbeds: [TenantEmbeds] = [.contacts, .contacts_PhoneNumbers, .contacts_PhoneNumbers_PhoneNumberType]
+    static let udfEmbeds: [TenantEmbeds] = [.userDefinedValues]
+    static let historyEmbeds: [TenantEmbeds] = [.history, .historyCalls, .historyEviction, .historyEvictionNotes, .historyViolationNotes]
+    static let loanEmbeds: [TenantEmbeds] = [.loans]
+    
+    static let transactionsEmbeds: [TenantEmbeds] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
+    
+   
+    
+    
+    
+
+}
+
+extension TenantFields {
+    
+    static let fullFields: [TenantFields] = [
+    .addresses, .balance, .charges, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .history, .historyEviction, .historyEvictionNotes, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .payments, .paymentReversals, .primaryContact, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues, .vehicles
+]
+    
+    static let simpleFields: [TenantFields] = [
+        .addresses, .balance, .colorID, .comment, .contacts, .evictionID, .evictions, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .paymentReversals, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .securityDepositSummaries, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues
+    ]
+
+    static let baseFields: [TenantFields] = [
+         .balance, .colorID, .comment, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues
+    ]
+    
+    static let bareFields: [TenantFields] = [
+             .balance, .colorID, .comment, .firstName, .lastName, .name, .openBalance, .openReceivables, .propertyID, .securityDepositHeld, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID
+        ]
+    
+    static let leaseFields: [TenantFields] = [.leases, tenantID, .firstName, .lastName, .name]
+    static let addressFields: [TenantFields] = [.addresses]
+    static let contactFields: [TenantFields] = [.contacts]
+    static let udfFields: [TenantFields] = [.userDefinedValues]
+    static let historyFields: [TenantFields] = [.history, .historyCalls, .historyNotes, .historyEviction, .historyEvictionNotes]
+    static let loanFields: [TenantFields] = [.loans]
+    
+    static let transactionsFields: [TenantFields] = [.charges, .payments, .paymentReversals]
+    
+    
+    /*
+     Removeing: Addresses, Contacts, UDF?, History, Recurring Charges Summaries, Security Deposit Summaries, Payment Reversals, Evictions
+     */
+    
+
+    
+    /*
+     Removes: Leases, Loans, UDFs- Should break App
+     */
+    
+    
+    
+    /*
+     Removeing: Addresses, Contacts, UDF?, History, Recurring Charges Summaries, Security Deposit Summaries, Payment Reversals, Evictions, Vehicles
+     */
+    
+    
+    
+    /*
+     Removes: Leases, Loans, UDFs- Should break App
+     */
+    
+
 }
