@@ -124,7 +124,7 @@ class TenantDataManager: ObservableObject {
         }
         
         allTenants[index] = existing
-        print(allTenants.count)
+//        print(allTenants.count)
     }
     
     // MARK: Get Single Tenant- Details
@@ -155,18 +155,32 @@ class TenantDataManager: ObservableObject {
         return transactions
     }
     
-    func fetchAddresses(tenantID: String) async -> RMTenant? {
+    func fetchAddresses(tenant: WCLeaseTenant) async -> [RMAddress] {
         let addressEmbeds: [TenantEmbeds] = [.addresses, .addresses_AddressType]
         let addressFields: [TenantFields] = [.addresses]
         
         let addressEmbedsString = addressEmbeds.map { $0.rawValue }.joined(separator: ",")
         let addressFieldsString = addressFields.map { $0.rawValue }.joined(separator: ",")
         
-        let addressURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: addressEmbedsString, fields: addressFieldsString, id: tenantID)
+        let addressURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: addressEmbedsString, fields: addressFieldsString, id: String(tenant.tenantID ?? 0))
         
         let tenantAddresses = await RentManagerAPIClient.shared.request(url: addressURL!, responseType: RMTenant.self)
         
-        return tenantAddresses
+        return tenantAddresses?.addresses ?? [RMAddress]()
+    }
+    
+    func fetchContacts(tenant: WCLeaseTenant) async -> [RMContact] {
+        let contactEmbeds: [TenantEmbeds] = [.contacts]
+        let contactFields: [TenantFields] = [.contacts]
+        
+        let contactEmbedsString = contactEmbeds.map { $0.rawValue }.joined(separator: ",")
+        let contactFieldsString = contactFields.map { $0.rawValue }.joined(separator: ",")
+        
+        let contactURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: contactEmbedsString, fields: contactFieldsString, id: "\(tenant.tenantID ?? 0)")
+        let contacts = await RentManagerAPIClient.shared.request(url: contactURL!, responseType: RMTenant.self)
+        
+        print("Contcts Count: \(contacts?.contacts?.count ?? 0)")
+        return contacts?.contacts ?? [RMContact]()
     }
     
     // MARK: Generate Rent Increase Tenants for Mailing Labels
@@ -213,41 +227,44 @@ class TenantDataManager: ObservableObject {
         self.rentIncreaseTenants = rentIncreaseTenants
     }
     
-    func buildTranasactions(tenantID: Int) async {
-        let tenant = pembrokeTenants.filter { $0.tenantID == tenantID }.first
-        print("Start Build Transactions")
-        print("***************************************")
-        print(tenant?.tenantDisplayID ?? 0)
-        print(tenant?.name ?? "")
-        let charges = tenant?.charges ?? []
-        let payments = tenant?.payments ?? []
-        let paymentReversals = tenant?.paymentReversals ?? []
-        
-        let charge = charges.first
-        print(charge?.amount ?? 0.0)
-        print(charge?.amountAllocated ?? 0.0)
-        print(charge?.accountType ?? "")
-        print(charge?.comment ?? "")
-        print(charge?.transactionDate ?? Date())
-        print(charge?.isFullyAllocated ?? false)
-        print(charge?.chargeTypeID ?? 0)
-        
-        let payment = payments.first
-        print(payment?.amount ?? 0.0)
-        print(payment?.accountType ?? "")
-        print(payment?.amountAllocated ?? 0.0)
-        print(payment?.comment ?? "")
-        print(payment?.isFullyAllocated ?? false)
-        print(payment?.reversalDate ?? Date())
-        print(payment?.reversalType ?? "")
-        print(payment?.transactionDate ?? Date())
-        print(payment?.transactionType ?? "")
-        
-        print(charges.count)
-        print(payments.count)
-        print(paymentReversals.count)
-        
-    }
+    
+    /* ARCHIVED:
+     func buildTranasactions(tenantID: Int) async {
+         let tenant = pembrokeTenants.filter { $0.tenantID == tenantID }.first
+         print("Start Build Transactions")
+         print("***************************************")
+         print(tenant?.tenantDisplayID ?? 0)
+         print(tenant?.name ?? "")
+         let charges = tenant?.charges ?? []
+         let payments = tenant?.payments ?? []
+         let paymentReversals = tenant?.paymentReversals ?? []
+         
+         let charge = charges.first
+         print(charge?.amount ?? 0.0)
+         print(charge?.amountAllocated ?? 0.0)
+         print(charge?.accountType ?? "")
+         print(charge?.comment ?? "")
+         print(charge?.transactionDate ?? Date())
+         print(charge?.isFullyAllocated ?? false)
+         print(charge?.chargeTypeID ?? 0)
+         
+         let payment = payments.first
+         print(payment?.amount ?? 0.0)
+         print(payment?.accountType ?? "")
+         print(payment?.amountAllocated ?? 0.0)
+         print(payment?.comment ?? "")
+         print(payment?.isFullyAllocated ?? false)
+         print(payment?.reversalDate ?? Date())
+         print(payment?.reversalType ?? "")
+         print(payment?.transactionDate ?? Date())
+         print(payment?.transactionType ?? "")
+         
+         print(charges.count)
+         print(payments.count)
+         print(paymentReversals.count)
+         
+     }
+     */
     
     func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
         let leaseTenant = WCLeaseTenant(

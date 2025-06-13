@@ -43,7 +43,7 @@ class URLBuilder {
         
         urlComponents.queryItems = queryItems
         
-        print("Url\n---\n\(urlComponents.url!)\n\n\n")
+        print("Url\n---\(urlComponents.url!)\n")
         
         return urlComponents.url!
     }

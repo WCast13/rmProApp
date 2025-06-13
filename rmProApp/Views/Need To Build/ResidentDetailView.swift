@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Playgrounds
 
 struct ResidentDetailView: View {
     @Binding var navigationPath: NavigationPath
@@ -15,32 +16,43 @@ struct ResidentDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Unit: \(tenant.unit?.name ?? "N/A")")
+                Text(String(describing: tenant.balance ?? 0.0))
+                Text(tenant.primaryContact?.firstName ?? "")
+                Text(tenant.contacts?.first?.firstName ?? "")
+                Text("Move in Date: \(tenant.lease?.moveInDate ?? "")")
+                Text("Unit Type: \(tenant.unit?.unitType?.name ?? "N/A")")
+                Text("Security Deposit: \(String(describing: tenant.securityDepositHeld ?? 0))")
+                Text("Transactions Count: \(tenant.transactions?.count ?? 0)")
+                Text("\(tenant.transactions?.first?.transactionDate ?? "")")
+                Text(String(describing: tenant.transactions?.first?.amount ?? 0))
+//                Text("Address: \(tenant.lease?.unit?.addresses?.first?.address ?? "")")
                 
-                // MARK: Information Section
-                TitleSectionHeader(title: "Resident Information")
-                InformationSection(tenant: tenant)
+                Text("Contacts Count: \(tenant.contacts?.count ?? 0)")
                 
-                
-                // MARK: Addresses Section
-                TitleSectionHeader(title: "Addresses")
-                
-                // MARK: Contact Details Section
-                TitleSectionHeader(title: "Contact Details")
-                ForEach(tenant.contacts ?? []) { contact in
-                    ContactDetailView(contact: contact)
+                Button("Print contacts to console") {
+                    print("Contacts: \(String(describing: tenant.contacts))")
                 }
                 
-                // MARK: Leases Section
-                TitleSectionHeader(title: "Lease Details")
-                LeaseSection(leases: tenant.allLeases ?? [], recurringCharges: tenant.allLeases?.first?.unit?.unitType?.recurringCharges ?? [])
+                /*
+                 Text("Balance", tenant.balance ?? "$0.00")
+                                Text("Primary Contact", tenant.primaryContact?.firstName ?? "N/A")
+                                Text("Secondary Contact", tenant.contacts?.dropFirst().first?.firstName ?? "N/A")
+                                Text("Move In", tenant.lease?.moveInDate ?? "N/A")
+                                Text("Site Type", tenant.unit?.unitType?.name ?? "N/A")
+                                Text("Security Deposit", "\(tenant.securityDepositHeld ?? 0)")
+                 */
                 
+               
             }
         }
         .onAppear() {
             Task {
                 //                tenant = await tenantDataManager.fetchSingleTenant(tenantID: tenantID)
-                await processTenantTransasactions()
+                 await processTenantTransasactions()
+                tenant.addresses = await tenantDataManager.fetchAddresses(tenant: tenant)
+                tenant.contacts = await tenantDataManager.fetchContacts(tenant: tenant)
             }
         }
         .padding()
@@ -189,4 +201,3 @@ struct InfoGrid: View {
      Text("ePay?")
      Text("Security Deposit")
      */
-

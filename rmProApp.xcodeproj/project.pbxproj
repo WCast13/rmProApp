@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
+		E17C43272DEFA082005E3ACC /* NewRedidentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */; };
 		E1A434992DD5018800BDE071 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434792DD5018800BDE071 /* TenantDataManager.swift */; };
 		E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4345F2DD5018800BDE071 /* RMLease.swift */; };
 		E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434552DD5018800BDE071 /* TenantParams.swift */; };
@@ -67,6 +68,7 @@
 /* Begin PBXFileReference section */
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
+		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				E1A434832DD5018800BDE071 /* HavenResidentsView.swift */,
 				E1A434842DD5018800BDE071 /* PembrokeResidentsView.swift */,
 				E1A434852DD5018800BDE071 /* ResidentDetailView.swift */,
+				E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */,
 				E1A434862DD5018800BDE071 /* ResidentsHomeView.swift */,
 				E1A434872DD5018800BDE071 /* ViolationBuilderView.swift */,
 			);
@@ -412,6 +415,7 @@
 				E1A434AB2DD5018800BDE071 /* RMPayment.swift in Sources */,
 				E1A434AC2DD5018800BDE071 /* MailingLabelView.swift in Sources */,
 				E1A434AD2DD5018800BDE071 /* RMRecurringCharges.swift in Sources */,
+				E17C43272DEFA082005E3ACC /* NewRedidentDetail.swift in Sources */,
 				E1A434AE2DD5018800BDE071 /* RMUserDefinedValue.swift in Sources */,
 				E1A434AF2DD5018800BDE071 /* RMPaymentReversal.swift in Sources */,
 				E1A434B02DD5018800BDE071 /* RMRecurringChargesSummary.swift in Sources */,
@@ -584,10 +588,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = wctech.rmProApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -622,10 +626,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = wctech.rmProApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
