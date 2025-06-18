@@ -7,7 +7,9 @@
 
 import Foundation
 import PDFKit
+#if canImport(UIKit)
 import UIKit
+#endif
 
 class PS3877FormManager {
     static let shared = PS3877FormManager()

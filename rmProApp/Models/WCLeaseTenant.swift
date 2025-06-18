@@ -158,7 +158,6 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         case evictionID = "EvictionID"
         case primaryContact = "PrimaryContact"
         
-        
     }
 }
 
@@ -174,4 +173,3 @@ struct WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
  Lease
  
  */
-

@@ -31,6 +31,6 @@ class UnitDataManager: ObservableObject {
         vacantUnits = unitsWithBasicData.filter { $0.isVacant == true && $0.name?.components(separatedBy: " ").last != "Loan" }
         
         print("\n\n")
-        print(vacantUnits.count)
+        print("Vacant Units: \(vacantUnits.count)")
     }
 }
