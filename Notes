@@ -42,3 +42,11 @@ Test Tenants
 115- Maria Acosta- C-07
 121- Maibis Palmero Alonso- G-20
 
+There are multiple changes I would like to make to the fetching of and persistance of tenant data.
+
+1: Tenant data does not change much, loading every tenant each time the app is loaded is a waste. The app should save the lease, contact, addresses, phone numbers, emails and other such data through swiftData/cloudkit. On app startup or manual refresh of tenants, the app fetches tenants with moveInDates and move out dates that are after the last update of tenants and updates the tenants.
+
+The initial API call is the same as it currently is, the data just needs to be saved in SwiftData. The contacts, addresses, loans and all other information needs to be fetched in the background and saved into swiftData.
+
+ 
+

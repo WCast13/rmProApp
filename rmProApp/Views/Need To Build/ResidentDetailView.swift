@@ -49,10 +49,14 @@ struct ResidentDetailView: View {
         }
         .onAppear() {
             Task {
-                //                tenant = await tenantDataManager.fetchSingleTenant(tenantID: tenantID)
-                 await processTenantTransasactions()
-                tenant.addresses = await tenantDataManager.fetchAddresses(tenant: tenant)
-                tenant.contacts = await tenantDataManager.fetchContacts(tenant: tenant)
+                await processTenantTransasactions()
+                
+                // Only fetch if data is missing (basic cache strategy)
+                async let addresses: [RMAddress] = tenant.addresses?.isEmpty != false ? tenantDataManager.fetchAddresses(tenant: tenant) : tenant.addresses ?? []
+                async let contacts: [RMContact] = tenant.contacts?.isEmpty != false ? tenantDataManager.fetchContacts(tenant: tenant) : tenant.contacts ?? []
+                
+                tenant.addresses = await addresses
+                tenant.contacts = await contacts
             }
         }
         .padding()
@@ -201,3 +205,4 @@ struct InfoGrid: View {
      Text("ePay?")
      Text("Security Deposit")
      */
+

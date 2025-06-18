@@ -179,7 +179,7 @@ class TenantDataManager: ObservableObject {
         let contactURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: contactEmbedsString, fields: contactFieldsString, id: "\(tenant.tenantID ?? 0)")
         let contacts = await RentManagerAPIClient.shared.request(url: contactURL!, responseType: RMTenant.self)
         
-        print("Contcts Count: \(contacts?.contacts?.count ?? 0)")
+        print(contacts?.contacts?.count ?? 0)
         return contacts?.contacts ?? [RMContact]()
     }
     
