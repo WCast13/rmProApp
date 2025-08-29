@@ -45,7 +45,7 @@ struct MainAppView: View {
         .environmentObject(tenantDataManager)
         .onAppear {
             Task {
-                await tokenManager.refreshToken()
+                await tokenManager.checkAndRefreshToken()
                 await tenantDataManager.fetchTenants()
             }
         }

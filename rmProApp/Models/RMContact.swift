@@ -6,40 +6,42 @@
 //
 
 import Foundation
+import SwiftData
 
-struct RMContact: Codable, Identifiable, Hashable, Equatable {
+@Model
+final class RMContact: Codable, Identifiable, Hashable, Equatable {
     
     static func == (lhs: RMContact, rhs: RMContact) -> Bool {
         lhs.contactID == rhs.contactID
     }
     
-    let id = UUID()
+    var id = UUID()
     
-    let contactID: Int?
-    let firstName: String?
-    let lastName: String?
-    let middleName: String?
-    let isActive: Bool?
-    let isPrimary: Bool?
-    let contactTypeID: Int?
-    let dateOfBirth: String?
-    let federalTaxID: String?
-    let comment: String?
-    let email: String?
-    let license: String?
-    let vehicle: String?
-    let imageID: Int?
-    let isShowOnBill: Bool?
-    let employer: String?
-    let applicantType: String?
-    let createDate: String?
-    let createUserID: Int?
-    let updateDate: String?
-    let annualIncome: Double?
-    let updateUserID: Int?
-    let parentID: Int?
-    let parentType: String?
-    let phoneNumbers: [RMPhoneNumber]
+    var contactID: Int?
+    var firstName: String?
+    var lastName: String?
+    var middleName: String?
+    var isActive: Bool?
+    var isPrimary: Bool?
+    var contactTypeID: Int?
+    var dateOfBirth: String?
+    var federalTaxID: String?
+    var comment: String?
+    var email: String?
+    var license: String?
+    var vehicle: String?
+    var imageID: Int?
+    var isShowOnBill: Bool?
+    var employer: String?
+    var applicantType: String?
+    var createDate: String?
+    var createUserID: Int?
+    var updateDate: String?
+    var annualIncome: Double?
+    var updateUserID: Int?
+    var parentID: Int?
+    var parentType: String?
+    var phoneNumbers: [RMPhoneNumber] = []
     
     enum CodingKeys: String, CodingKey {
         case contactID = "ContactID"
@@ -67,6 +69,64 @@ struct RMContact: Codable, Identifiable, Hashable, Equatable {
         case parentID = "ParentID"
         case parentType = "ParentType"
         case phoneNumbers = "PhoneNumbers"
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.contactID = try container.decodeIfPresent(Int.self, forKey: .contactID)
+        self.firstName = try container.decodeIfPresent(String.self, forKey: .firstName)
+        self.lastName = try container.decodeIfPresent(String.self, forKey: .lastName)
+        self.middleName = try container.decodeIfPresent(String.self, forKey: .middleName)
+        self.isActive = try container.decodeIfPresent(Bool.self, forKey: .isActive)
+        self.isPrimary = try container.decodeIfPresent(Bool.self, forKey: .isPrimary)
+        self.contactTypeID = try container.decodeIfPresent(Int.self, forKey: .contactTypeID)
+        self.dateOfBirth = try container.decodeIfPresent(String.self, forKey: .dateOfBirth)
+        self.federalTaxID = try container.decodeIfPresent(String.self, forKey: .federalTaxID)
+        self.comment = try container.decodeIfPresent(String.self, forKey: .comment)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email)
+        self.license = try container.decodeIfPresent(String.self, forKey: .license)
+        self.vehicle = try container.decodeIfPresent(String.self, forKey: .vehicle)
+        self.imageID = try container.decodeIfPresent(Int.self, forKey: .imageID)
+        self.isShowOnBill = try container.decodeIfPresent(Bool.self, forKey: .isShowOnBill)
+        self.employer = try container.decodeIfPresent(String.self, forKey: .employer)
+        self.applicantType = try container.decodeIfPresent(String.self, forKey: .applicantType)
+        self.createDate = try container.decodeIfPresent(String.self, forKey: .createDate)
+        self.createUserID = try container.decodeIfPresent(Int.self, forKey: .createUserID)
+        self.updateDate = try container.decodeIfPresent(String.self, forKey: .updateDate)
+        self.annualIncome = try container.decodeIfPresent(Double.self, forKey: .annualIncome)
+        self.updateUserID = try container.decodeIfPresent(Int.self, forKey: .updateUserID)
+        self.parentID = try container.decodeIfPresent(Int.self, forKey: .parentID)
+        self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
+        self.phoneNumbers = try container.decodeIfPresent([RMPhoneNumber].self, forKey: .phoneNumbers) ?? []
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(contactID, forKey: .contactID)
+        try container.encodeIfPresent(firstName, forKey: .firstName)
+        try container.encodeIfPresent(lastName, forKey: .lastName)
+        try container.encodeIfPresent(middleName, forKey: .middleName)
+        try container.encodeIfPresent(isActive, forKey: .isActive)
+        try container.encodeIfPresent(isPrimary, forKey: .isPrimary)
+        try container.encodeIfPresent(contactTypeID, forKey: .contactTypeID)
+        try container.encodeIfPresent(dateOfBirth, forKey: .dateOfBirth)
+        try container.encodeIfPresent(federalTaxID, forKey: .federalTaxID)
+        try container.encodeIfPresent(comment, forKey: .comment)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(license, forKey: .license)
+        try container.encodeIfPresent(vehicle, forKey: .vehicle)
+        try container.encodeIfPresent(imageID, forKey: .imageID)
+        try container.encodeIfPresent(isShowOnBill, forKey: .isShowOnBill)
+        try container.encodeIfPresent(employer, forKey: .employer)
+        try container.encodeIfPresent(applicantType, forKey: .applicantType)
+        try container.encodeIfPresent(createDate, forKey: .createDate)
+        try container.encodeIfPresent(createUserID, forKey: .createUserID)
+        try container.encodeIfPresent(updateDate, forKey: .updateDate)
+        try container.encodeIfPresent(annualIncome, forKey: .annualIncome)
+        try container.encodeIfPresent(updateUserID, forKey: .updateUserID)
+        try container.encodeIfPresent(parentID, forKey: .parentID)
+        try container.encodeIfPresent(parentType, forKey: .parentType)
+        try container.encode(phoneNumbers, forKey: .phoneNumbers)
     }
 }
 

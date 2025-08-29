@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
+		E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F3F2E5F71E30056B554 /* KeychainService.swift */; };
+		E17A7F422E5F72790056B554 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F412E5F72790056B554 /* LoginView.swift */; };
 		E17C43272DEFA082005E3ACC /* NewRedidentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */; };
-		E1A434992DD5018800BDE071 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434792DD5018800BDE071 /* TenantDataManager.swift */; };
 		E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4345F2DD5018800BDE071 /* RMLease.swift */; };
 		E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434552DD5018800BDE071 /* TenantParams.swift */; };
 		E1A4349C2DD5018800BDE071 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */; };
@@ -54,7 +55,6 @@
 		E1A434C32DD5018800BDE071 /* PembrokeResidentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434842DD5018800BDE071 /* PembrokeResidentsView.swift */; };
 		E1A434C42DD5018800BDE071 /* WCTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434702DD5018800BDE071 /* WCTransaction.swift */; };
 		E1A434C52DD5018800BDE071 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434912DD5018800BDE071 /* MainAppView.swift */; };
-		E1A434C62DD5018800BDE071 /* TenantTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4347A2DD5018800BDE071 /* TenantTransactionsManager.swift */; };
 		E1A434C72DD5018800BDE071 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434762DD5018800BDE071 /* LabelManager.swift */; };
 		E1A434C82DD5018800BDE071 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434572DD5018800BDE071 /* Color+Ext.swift */; };
 		E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */; };
@@ -68,6 +68,8 @@
 /* Begin PBXFileReference section */
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
+		E17A7F3F2E5F71E30056B554 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		E17A7F412E5F72790056B554 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
@@ -101,8 +103,6 @@
 		E1A434742DD5018800BDE071 /* URLBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
 		E1A434762DD5018800BDE071 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		E1A434772DD5018800BDE071 /* PS3877FormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PS3877FormManager.swift; sourceTree = "<group>"; };
-		E1A434792DD5018800BDE071 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
-		E1A4347A2DD5018800BDE071 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
 		E1A4347D2DD5018800BDE071 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E1A4347F2DD5018800BDE071 /* UnitDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataManager.swift; sourceTree = "<group>"; };
 		E1A434802DD5018800BDE071 /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
@@ -125,6 +125,10 @@
 		E1A434962DD5018800BDE071 /* rmProApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rmProApp.entitlements; sourceTree = "<group>"; };
 		E1A434972DD5018800BDE071 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "RM Data Manager"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E155012F2C63D252000A0726 /* Frameworks */ = {
@@ -205,6 +209,7 @@
 		E1A434752DD5018800BDE071 /* Essential API Manager */ = {
 			isa = PBXGroup;
 			children = (
+				E17A7F3F2E5F71E30056B554 /* KeychainService.swift */,
 				E1A434722DD5018800BDE071 /* RentManagerAPIClient.swift */,
 				E1A434732DD5018800BDE071 /* TokenManager.swift */,
 				E1A434742DD5018800BDE071 /* URLBuilder.swift */,
@@ -221,21 +226,11 @@
 			path = "Notice Manager";
 			sourceTree = "<group>";
 		};
-		E1A4347B2DD5018800BDE071 /* RM Data Manager  */ = {
-			isa = PBXGroup;
-			children = (
-				E1A434792DD5018800BDE071 /* TenantDataManager.swift */,
-				E1A4347A2DD5018800BDE071 /* TenantTransactionsManager.swift */,
-			);
-			path = "RM Data Manager ";
-			sourceTree = "<group>";
-		};
 		E1A4347C2DD5018800BDE071 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				E1A434752DD5018800BDE071 /* Essential API Manager */,
 				E1A434782DD5018800BDE071 /* Notice Manager */,
-				E1A4347B2DD5018800BDE071 /* RM Data Manager  */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -298,6 +293,7 @@
 				E1A4348D2DD5018800BDE071 /* Rent Increase Notice */,
 				E1A4348F2DD5018800BDE071 /* Special API Tasks */,
 				E1A434902DD5018800BDE071 /* HomeView.swift */,
+				E17A7F412E5F72790056B554 /* LoginView.swift */,
 				E1A434912DD5018800BDE071 /* MainAppView.swift */,
 			);
 			path = Views;
@@ -317,6 +313,7 @@
 				E1A434952DD5018800BDE071 /* ps3877.pdf */,
 				E1A434962DD5018800BDE071 /* rmProApp.entitlements */,
 				E1A434972DD5018800BDE071 /* rmProAppApp.swift */,
+				E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */,
 			);
 			path = rmProApp;
 			sourceTree = "<group>";
@@ -335,6 +332,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */,
 			);
 			name = rmProApp;
 			productName = rmProApp;
@@ -394,7 +394,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1A434992DD5018800BDE071 /* TenantDataManager.swift in Sources */,
 				E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */,
 				E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */,
 				E1A4349C2DD5018800BDE071 /* APIEndpointsFilter.swift in Sources */,
@@ -426,6 +425,7 @@
 				E1A434B52DD5018800BDE071 /* Rent Increase Notice Home.swift in Sources */,
 				E1A434B62DD5018800BDE071 /* RMOccupancyStatus.swift in Sources */,
 				E1A434B72DD5018800BDE071 /* WCRentIncreaseTenant.swift in Sources */,
+				E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */,
 				E1A434B82DD5018800BDE071 /* DocumentsView.swift in Sources */,
 				E1A434B92DD5018800BDE071 /* RMTenant.swift in Sources */,
 				E1A434BA2DD5018800BDE071 /* GetBoxNumbersForUDF.swift in Sources */,
@@ -440,9 +440,9 @@
 				E1A434C32DD5018800BDE071 /* PembrokeResidentsView.swift in Sources */,
 				E1A434C42DD5018800BDE071 /* WCTransaction.swift in Sources */,
 				E1A434C52DD5018800BDE071 /* MainAppView.swift in Sources */,
-				E1A434C62DD5018800BDE071 /* TenantTransactionsManager.swift in Sources */,
 				E1A434C72DD5018800BDE071 /* LabelManager.swift in Sources */,
 				E1A434C82DD5018800BDE071 /* Color+Ext.swift in Sources */,
+				E17A7F422E5F72790056B554 /* LoginView.swift in Sources */,
 				E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */,
 				E1A434CA2DD5018800BDE071 /* HomeView.swift in Sources */,
 			);

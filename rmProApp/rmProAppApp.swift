@@ -5,18 +5,22 @@
 //  Created by William Castellano on 8/7/24.
 //
 
+// rmProAppApp.swift
 import SwiftUI
 
 @main
 struct rmProAppApp: App {
+    @StateObject private var tokenManager = TokenManager.shared
+    
     var body: some Scene {
         WindowGroup {
-            MainAppView()
-//                .onAppear {
-//                    Task {
-//                        await TokenManager.shared.refreshToken()
-//                    }
-//                }
+            if tokenManager.isAuthenticated {
+                MainAppView()
+                    .environmentObject(tokenManager)
+            } else {
+                LoginView()
+                    .environmentObject(tokenManager)
+            }
         }
     }
 }

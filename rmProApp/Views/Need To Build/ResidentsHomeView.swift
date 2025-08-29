@@ -173,7 +173,7 @@ struct ResidentCard : View {
                     Circle()
                         .fill( LinearGradient(colors: [.blue, .black], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .frame(width: 50, height: 50)
-                    Text(tenant.lease?.unit?.name ?? "N/A")
+                    Text(initials(from: tenant.name ?? "N/A"))
                         .font(.system(size: 18, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                 }
@@ -248,4 +248,3 @@ struct FilterSheet: View {
         }
     }
 }
-

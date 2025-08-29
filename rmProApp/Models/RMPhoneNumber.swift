@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-struct RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
+@Model
+final class RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
     static func == (lhs: RMPhoneNumber, rhs: RMPhoneNumber) -> Bool {
         return lhs.id == rhs.id
     }
@@ -37,5 +39,34 @@ struct RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
         case parentID = "ParentID"
         case parentType = "ParentType"
 //        case phoneNumberType = "PhoneNumberType"
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = UUID()
+        self.phoneNumberID = try container.decodeIfPresent(Int.self, forKey: .phoneNumberID)
+        self.phoneNumberTypeID = try container.decodeIfPresent(Int.self, forKey: .phoneNumberTypeID)
+        self.phoneNumber = try container.decodeIfPresent(String.self, forKey: .phoneNumber)
+        self.phoneNumberExtension = try container.decodeIfPresent(String.self, forKey: .phoneNumberExtension)
+        self.strippedPhoneNumber = try container.decodeIfPresent(String.self, forKey: .strippedPhoneNumber)
+        self.isPrimary = try container.decodeIfPresent(Bool.self, forKey: .isPrimary)
+        self.isTextReady = try container.decodeIfPresent(Bool.self, forKey: .isTextReady)
+        self.isOptOut = try container.decodeIfPresent(Bool.self, forKey: .isOptOut)
+        self.parentID = try container.decodeIfPresent(Int.self, forKey: .parentID)
+        self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(phoneNumberID, forKey: .phoneNumberID)
+        try container.encodeIfPresent(phoneNumberTypeID, forKey: .phoneNumberTypeID)
+        try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
+        try container.encodeIfPresent(phoneNumberExtension, forKey: .phoneNumberExtension)
+        try container.encodeIfPresent(strippedPhoneNumber, forKey: .strippedPhoneNumber)
+        try container.encodeIfPresent(isPrimary, forKey: .isPrimary)
+        try container.encodeIfPresent(isTextReady, forKey: .isTextReady)
+        try container.encodeIfPresent(isOptOut, forKey: .isOptOut)
+        try container.encodeIfPresent(parentID, forKey: .parentID)
+        try container.encodeIfPresent(parentType, forKey: .parentType)
     }
 }
