@@ -32,8 +32,9 @@ class TenantDataManager: ObservableObject {
     private let cacheTimeout: TimeInterval = 300 // 5 minutes
     private var cancellables = Set<AnyCancellable>()
     
-    // API Client - Using optimized version
-    private let apiClient = OptimizedAPIClient.shared
+    // API Client and coordination
+    private let apiClient = RentManagerAPIClient.shared
+    private let coordinator = RequestCoordinator.shared
     
     static let shared = TenantDataManager()
     
@@ -138,8 +139,14 @@ class TenantDataManager: ObservableObject {
         }
         
         let (result, _) = await timeAPICall("Base fetch for tenants") {
-            // Use optimized client with high priority for base data
-            await apiClient.request(url: url, responseType: [RMTenant].self, priority: .high) ?? []
+            // Use request coalescing to prevent duplicate calls
+            let tenants = try? await coordinator.coalesceRequest(
+                url: url,
+                responseType: [RMTenant].self
+            ) {
+                await self.apiClient.request(url: url, responseType: [RMTenant].self)
+            }
+            return tenants ?? []
         }
         
         return result
@@ -159,13 +166,13 @@ class TenantDataManager: ObservableObject {
             return nil
         }
         
-        // Use optimized client with caching
-        let tenantData: [RMTenant]? = await apiClient.request(
-            url: url, 
-            responseType: [RMTenant].self,
-            cachePolicy: .useCache,
-            priority: .medium
-        )
+        // Use request coalescing for section data
+        let tenantData: [RMTenant]? = try? await coordinator.coalesceRequest(
+            url: url,
+            responseType: [RMTenant].self
+        ) {
+            await self.apiClient.request(url: url, responseType: [RMTenant].self)
+        }
         
         return tenantData
     }
