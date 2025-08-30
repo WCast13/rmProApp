@@ -17,7 +17,6 @@ struct UnitsView: View {
         VStack {
             Text("units: \(units?.count ?? 0)")
             
-            
             // filter units that have unit tpe id of 12 or user defined value of yes
 //            let filteredUnits = units?.filter { $0.UnitTypeID == 12 || $0.userDefinedValues?.last?.value == "Yes"}
 //            let fpgTenants = units?.filter { $0.currentOccupants?.first?.colorID == 38 || $0.userDefinedValues?.last?.value == "Yes"}
