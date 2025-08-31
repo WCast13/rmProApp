@@ -399,4 +399,71 @@ class TenantDataManager: ObservableObject {
             }
         }
     }
+    
+    // MARK: - POST Operations
+    func createOrUpdateTenant(_ tenant: RMTenant) async throws -> RMTenant? {
+        let embeds = "Balance,Leases,Leases.Unit,Leases.Unit.UnitType,UserDefinedValues"
+        let fields = "Balance,FirstName,LastName,Leases,Name,PropertyID,Status,TenantDisplayID,TenantID,UserDefinedValues"
+        
+        guard let url = URL(string: "https://trieq.api.rentmanager.com/Tenants/?embeds=\(embeds)&fields=\(fields)") else {
+            throw URLError(.badURL)
+        }
+        
+        guard let token = await TokenManager.shared.token else {
+            throw NSError(domain: "TenantDataManager", code: 401, userInfo: [NSLocalizedDescriptionKey: "No API token available"])
+        }
+        
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.addValue(token, forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        request.httpBody = try encoder.encode(tenant)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NSError(domain: "TenantDataManager", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
+        }
+        
+        guard (200...299).contains(httpResponse.statusCode) else {
+            let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw NSError(domain: "TenantDataManager", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: errorMessage])
+        }
+        
+        let decoder = JSONDecoder()
+        let updatedTenant = try decoder.decode(RMTenant.self, from: data)
+        
+        // Update local cache
+        if let tenantID = updatedTenant.tenantID {
+            cacheTenant(updatedTenant, id: String(tenantID))
+            
+            // Update allTenants array if tenant exists
+            if let index = allTenants.firstIndex(where: { $0.tenantID == tenantID }) {
+                allTenants[index] = updatedTenant
+            } else {
+                // Add new tenant to array
+                allTenants.append(updatedTenant)
+            }
+        }
+        
+        return updatedTenant
+    }
+    
+    // Convenience method for updating user-defined values
+    func updateTenantUserDefinedValues(tenantID: Int, userDefinedValues: [RMUserDefinedValue]) async throws -> RMTenant? {
+        // First fetch the existing tenant
+        guard let existingTenant = await fetchSingleTenant(tenantID: String(tenantID)) else {
+            throw NSError(domain: "TenantDataManager", code: 404, userInfo: [NSLocalizedDescriptionKey: "Tenant not found"])
+        }
+        
+        // Update the user defined values
+        var updatedTenant = existingTenant
+        updatedTenant.udfs = userDefinedValues
+        
+        // Send the update
+        return try await createOrUpdateTenant(updatedTenant)
+    }
 }
