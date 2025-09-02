@@ -79,6 +79,19 @@ struct ResidentsHomeView: View {
                     
                     Spacer()
                     
+                    Button(action: {
+                        // Functionality to be added later
+                    }) {
+                        Label("Create Labels", systemImage: "printer.fill")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Color.blue)
+                            .clipShape(Capsule())
+                            .shadow(radius: 2)
+                    }
+                    
                     Button(action: { isShowingFilters.toggle() }) {
                         Image(systemName: "slider.horizontal.3")
                             .font(.title2)
