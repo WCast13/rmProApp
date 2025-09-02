@@ -1,0 +1,13 @@
+# Xcode user-specific files
+*.xcuserstate
+xcuserdata/
+
+# Xcode build files
+build/
+DerivedData/
+
+# CocoaPods
+Pods/
+
+# macOS
+.DS_Store
