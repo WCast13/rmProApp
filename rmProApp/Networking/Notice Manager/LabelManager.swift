@@ -87,7 +87,7 @@ class LabelGeneratorManager {
     private func drawLabel(for unit: RMUnit, tenant: [RMTenant], in rect: CGRect) {
         
         // Determine the text color based on unitType.name
-        let textColor: UIColor
+        var textColor: UIColor
         
         if unit.userDefinedValues?.last?.value == "Yes" {
             textColor = .fireRed
@@ -95,20 +95,20 @@ class LabelGeneratorManager {
             textColor = .black
         }
         
-//        switch unit.unitType?.name {
-////        case "HEI- Regular Rent":
-////            textColor = .black
-////        case "HEI- Fire Protection":
-////            textColor = .fireRed
-//        case "PTP- Pros B - Dry":
-//            textColor = .havenGreen
-//        case "PTP- Pros B - Lake":
-//            textColor = .pembrokeBlue
-//        case "PTP- Pros A":
-//            textColor = .fireRed
-//        default:
-//            textColor = .yellow // Default or for any other types
-//        }
+        switch unit.unitType?.name {
+        case "HEI- Regular Rent":
+            textColor = .black
+        case "HEI- Fire Protection":
+            textColor = .fireRed
+        case "PTP- Pros B - Dry":
+            textColor = .havenGreen
+        case "PTP- Pros B - Lake":
+            textColor = .pembrokeBlue
+        case "PTP- Pros A":
+            textColor = .fireRed
+        default:
+            textColor = .yellow // Default or for any other types
+        }
         
         let contactsForLabel = tenant.first?.contacts?.filter { $0.isShowOnBill == true }
         var namesPortion = ""

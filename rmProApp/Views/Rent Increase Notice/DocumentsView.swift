@@ -15,15 +15,52 @@ struct DocumentsView: View {
     var body: some View {
         
         VStack {
-            List(documents, id: \.self) { url in
-                NavigationLink(value: AppDestination.documentViewer(url)) {
-                    Text(url.lastPathComponent)
+            if documents.isEmpty {
+                VStack(spacing: 20) {
+                    Image(systemName: "doc.text.magnifyingglass")
+                        .font(.system(size: 60))
+                        .foregroundColor(.gray)
+                    Text("No Documents Found")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    Text("Created documents will appear here")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List(documents, id: \.self) { url in
+                    NavigationLink(value: AppDestination.documentViewer(url)) {
+                        HStack {
+                            Image(systemName: iconForFileExtension(url.pathExtension))
+                                .foregroundColor(.accentColor)
+                                .frame(width: 30)
+                            VStack(alignment: .leading) {
+                                Text(url.lastPathComponent)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                if let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
+                                   let fileSize = attributes[.size] as? Int64 {
+                                    Text(formatFileSize(fileSize))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            .onAppear {
-                loadDocuments()
+        }
+        .onAppear {
+            loadDocuments()
+        }
+        .navigationTitle("Documents")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: loadDocuments) {
+                    Image(systemName: "arrow.clockwise")
+                }
             }
-            .navigationTitle("Documents")
         }
     }
     
@@ -32,10 +69,14 @@ struct DocumentsView: View {
         if let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             do {
                 let urls = try fileManager.contentsOfDirectory(at: documentsDirectory, includingPropertiesForKeys: nil)
-                self.documents = urls.filter { $0.pathExtension == "pdf" }
+                self.documents = urls.filter { 
+                    let ext = $0.pathExtension.lowercased()
+                    return ext == "pdf" || ext == "csv" || ext == "txt"
+                }.sorted { $0.lastPathComponent < $1.lastPathComponent }
             } catch {
                 print("Error Loading Documents: \(error)")
             }
+            
         }
     }
 }
@@ -45,11 +86,46 @@ struct DocumentViewerView: View {
     @Binding var navigationPath: NavigationPath
     
     var body: some View {
-        PDFKitRepresentedView(url: documentURL)
-            .navigationTitle(documentURL.lastPathComponent)
-            .navigationBarItems(trailing: Button("Print") {
-                printDocument()
-            })
+        Group {
+            if documentURL.pathExtension.lowercased() == "pdf" {
+                PDFKitRepresentedView(url: documentURL)
+                    .navigationTitle(documentURL.lastPathComponent)
+                    .navigationBarItems(trailing: Button("Print") {
+                        printDocument()
+                    })
+            } else if documentURL.pathExtension.lowercased() == "csv" || documentURL.pathExtension.lowercased() == "txt" {
+                ScrollView {
+                    if let content = try? String(contentsOf: documentURL) {
+                        Text(content)
+                            .font(.system(.body, design: .monospaced))
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        Text("Unable to load file contents")
+                            .foregroundColor(.secondary)
+                            .padding()
+                    }
+                }
+                .navigationTitle(documentURL.lastPathComponent)
+                .navigationBarItems(trailing: Button("Share") {
+                    shareDocument()
+                })
+            } else {
+                VStack {
+                    Image(systemName: "doc")
+                        .font(.system(size: 60))
+                        .foregroundColor(.gray)
+                        .padding()
+                    Text("Preview not available for this file type")
+                        .foregroundColor(.secondary)
+                    Button("Share") {
+                        shareDocument()
+                    }
+                    .padding()
+                }
+                .navigationTitle(documentURL.lastPathComponent)
+            }
+        }
     }
     
     func printDocument() {
@@ -64,6 +140,15 @@ struct DocumentViewerView: View {
         }
         printController.present(animated: true, completionHandler: nil)
     }
+    
+    func shareDocument() {
+        let activityViewController = UIActivityViewController(activityItems: [documentURL], applicationActivities: nil)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityViewController, animated: true, completion: nil)
+        }
+    }
 }
 
 struct PDFKitRepresentedView: UIViewRepresentable {
@@ -77,5 +162,24 @@ struct PDFKitRepresentedView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: PDFView, context: Context) {}
+}
+
+private func iconForFileExtension(_ ext: String) -> String {
+    switch ext.lowercased() {
+    case "pdf":
+        return "doc.fill"
+    case "csv":
+        return "tablecells"
+    case "txt":
+        return "doc.text"
+    default:
+        return "doc"
+    }
+}
+
+private func formatFileSize(_ bytes: Int64) -> String {
+    let formatter = ByteCountFormatter()
+    formatter.countStyle = .file
+    return formatter.string(fromByteCount: bytes)
 }
 

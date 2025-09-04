@@ -65,67 +65,8 @@ struct ResidentsHomeView: View {
         let havenResidents = tenantDataManager.allUnitTenants.filter { $0.propertyID == 3 }
         let pembrokeResidents = tenantDataManager.allUnitTenants.filter { $0.propertyID == 12 }
         
-        print("=== LABEL AND FORM GENERATION TEST ===")
-        print("Creating labels for Haven residents: \(havenResidents.count)")
-        print("Creating labels for Pembroke residents: \(pembrokeResidents.count)")
-        
-        print("\n--- Haven Residents ---")
-        for (index, resident) in havenResidents.prefix(5).enumerated() {
-            print("  \(index + 1). \(resident.name ?? "Unknown") - Unit: \(resident.lease?.unit?.name ?? "N/A")")
-        }
-        if havenResidents.count > 5 {
-            print("  ... and \(havenResidents.count - 5) more")
-        }
-        
-        print("\n--- Pembroke Residents ---")
-        for (index, resident) in pembrokeResidents.prefix(5).enumerated() {
-            print("  \(index + 1). \(resident.name ?? "Unknown") - Unit: \(resident.lease?.unit?.name ?? "N/A")")
-        }
-        if pembrokeResidents.count > 5 {
-            print("  ... and \(pembrokeResidents.count - 5) more")
-        }
-        
-        print("\nGenerating PS3877 forms for Haven...")
-        print("✓ PS3877 forms for Haven generated successfully")
-        
-        print("\nGenerating PS3877 forms for Pembroke...")
-        print("✓ PS3877 forms for Pembroke generated successfully")
-        
-        print("\n=== TEST COMPLETED SUCCESSFULLY ===")
-        print("Total labels created: \(havenResidents.count + pembrokeResidents.count)")
-        print("Total PS3877 forms created: 2 (one per property)")
-        
-        showDocumentsAlert = true
+//        showDocumentsAlert = true
     }
-    
-    #if DEBUG
-    private func runLabelGenerationTest() {
-        print("\n========================================")
-        print("RUNNING LABEL GENERATION TEST")
-        print("========================================\n")
-        
-        let testHavenCount = tenantDataManager.allUnitTenants.filter { $0.propertyID == 3 }.count
-        let testPembrokeCount = tenantDataManager.allUnitTenants.filter { $0.propertyID == 12 }.count
-        
-        print("Test Setup:")
-        print("- Haven residents found: \(testHavenCount)")
-        print("- Pembroke residents found: \(testPembrokeCount)")
-        
-        if testHavenCount == 0 && testPembrokeCount == 0 {
-            print("\n⚠️ WARNING: No residents found for testing")
-            print("Make sure tenant data is loaded properly")
-        } else {
-            print("\n✅ Test data available")
-            print("Executing label generation function...")
-            
-            createLabelsAndPS3877Forms()
-        }
-        
-        print("\n========================================")
-        print("TEST RUN COMPLETE")
-        print("========================================\n")
-    }
-    #endif
     
     var body: some View {
         
@@ -161,19 +102,6 @@ struct ResidentsHomeView: View {
                         .clipShape(Capsule())
                         .shadow(radius: 2)
                     }
-                    
-                    #if DEBUG
-                    Button(action: { 
-                        runLabelGenerationTest()
-                    }) {
-                        Image(systemName: "testtube.2")
-                            .font(.system(size: 16))
-                            .foregroundColor(.orange)
-                            .padding(8)
-                            .background(Circle().fill(Color.white.opacity(0.8)))
-                            .shadow(radius: 2)
-                    }
-                    #endif
                     
                     Button(action: { isShowingFilters.toggle() }) {
                         Image(systemName: "slider.horizontal.3")
@@ -216,7 +144,7 @@ struct ResidentsHomeView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(filteredResidents, id: \.id) { tenant in
-                            ResidentCard(tenant: tenant, navigationPath: $navigationPath)
+                            ResidentCardV2(tenant: tenant, navigationPath: $navigationPath)
                                 .padding(.horizontal)
                                 .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
@@ -262,7 +190,7 @@ struct FilterChipView: View {
     }
 }
 
-// Resident Card
+// Resident Card (legacy, kept for reference; not used in the list anymore)
 struct ResidentCard : View {
     let tenant: WCLeaseTenant
     @Binding var navigationPath: NavigationPath
@@ -295,7 +223,10 @@ struct ResidentCard : View {
                     }
                     
                     if let balance = tenant.openBalance, balance > 0 {
-                        Text("Balance: $\(balance)")
+                        // Avoid deprecated interpolation with Decimal by using a localized format style.
+                        // We bridge Decimal to NSDecimalNumber/NSNumber for format style support.
+                        let number = balance as NSDecimalNumber
+                        (Text("Balance: ") + Text(number as Decimal.FormatStyle.Currency.FormatInput, format: .currency(code: "USD")))
                             .font(.system(size: 18, weight: .medium, design: .rounded))
                             .foregroundColor(.red)
                     }
@@ -315,6 +246,144 @@ struct ResidentCard : View {
     }
 }
 
+// New Resident Card with Fire Protection toggle
+struct ResidentCardV2: View {
+    let tenant: WCLeaseTenant
+    @Binding var navigationPath: NavigationPath
+    @EnvironmentObject private var tenantDataManager: TenantDataManager
+    
+    @State private var isFireProtMember: Bool = false
+    @State private var isUpdatingFireProt: Bool = false
+    @State private var updateError: Bool = false
+    
+    private var initialsText: String {
+        initials(from: tenant.name ?? "N/A")
+    }
+    
+    private var unitNameText: String? {
+        tenant.lease?.unit?.name
+    }
+    
+    private var positiveBalanceText: Text? {
+        guard let balance = tenant.openBalance, balance > 0 else { return nil }
+        let number = balance as NSDecimalNumber
+        let formatted = Text(number as Decimal.FormatStyle.Currency.FormatInput, format: .currency(code: "USD"))
+        return Text("Balance: ") + formatted
+    }
+    
+    var body: some View {
+        Button(action: {
+            navigationPath.append(AppDestination.residentDetails(tenant))
+        }) {
+            HStack(alignment: .center, spacing: 12) {
+                // Avatar
+                ZStack {
+                    Circle()
+                        .fill(LinearGradient(colors: [.blue, .black], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .frame(width: 50, height: 50)
+                    Text(initialsText)
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                }
+                
+                // Details
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Text(tenant.name ?? "N/A")
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            .foregroundColor(.primary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                        
+                        Spacer(minLength: 8)
+                        
+                        // Fire Protection toggle button
+                        fireProtectionButton
+                    }
+                    
+                    if let unitName = unitNameText {
+                        Text("Unit: \(unitName)")
+                            .font(.system(size: 14, design: .rounded))
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                    
+                    if let balanceText = positiveBalanceText {
+                        balanceText
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .foregroundColor(.red)
+                    }
+                }
+                
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 16))
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color(.systemBackground))
+                    .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 2)
+            )
+        }
+        .buttonStyle(.plain)
+        .onAppear {
+//            isFireProtMember = computeFireProtectionMembership(from: tenant)
+        }
+        .alert("Update Failed", isPresented: $updateError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("We couldn't update Fire Protection Group membership. Please try again.")
+        }
+    }
+    
+    private var fireProtectionButton: some View {
+        Button {
+            Task {
+                await toggleFireProtection()
+            }
+        } label: {
+            HStack(spacing: 6) {
+                if isUpdatingFireProt {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.white)
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: isFireProtMember ? "shield.checkerboard" : "shield")
+                        .imageScale(.small)
+                }
+                Text("Fire Prot.")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(
+                Capsule()
+                    .fill(isFireProtMember ? Color.green.opacity(0.9) : Color.gray.opacity(0.3))
+            )
+            .foregroundColor(isFireProtMember ? .white : .primary)
+        }
+        .buttonStyle(.plain)
+        .disabled(isUpdatingFireProt || tenant.tenantID == nil)
+        .accessibilityLabel("Toggle Fire Protection Group membership")
+        .accessibilityValue(isFireProtMember ? "Member" : "Not a member")
+    }
+    
+    private func computeFireProtectionMembership(from tenant: WCLeaseTenant) -> Bool {
+        guard let udfs = tenant.udfs else { return false }
+        // UDF 59: "HEI- Fire Protection Approved 2025" with "Yes"/"No"
+        return udfs.contains { $0.userDefinedFieldID == 59 && ($0.value?.localizedCaseInsensitiveCompare("Yes") == .orderedSame) }
+    }
+    
+    private func toggleFireProtection() async {
+        guard let id = tenant.tenantID else { return }
+        let isMember = tenant.udfs?.contains { $0.userDefinedFieldID == 59 }.description == "No" ? false : true
+       
+        TenantDataManager.shared.updateFireProtectionGroup(tenantID: id, isMember: isMember)
+    }
+}
 
 private func initials(from name: String) -> String {
    let components = name.split(separator: " ")

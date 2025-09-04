@@ -47,6 +47,38 @@ class RentManagerAPIClient {
         }
     }
     
+    // MARK: Generic POST helper (JSON body, raw response)
+    func post(url: URL, body: [String: Any]) async -> (success: Bool, data: Data?, statusCode: Int) {
+        let token = await TokenManager.shared.token ?? ""
+        
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.httpMethod = "POST"
+        request.addValue(token, forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+            print(request.httpBody ?? "")
+        } catch {
+            print("❌ POST encode error: \(error.localizedDescription)")
+            return (false, nil, -1)
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse else {
+                print("❌ Invalid POST response")
+                return (false, data, -1)
+            }
+                let text = String(data: data, encoding: .utf8) ?? ""
+                print("❌ POST failed [\(http.statusCode)]: \(text)")
+            return (false, data, http.statusCode)
+        } catch {
+            print("❌ POST request error: \(error.localizedDescription)")
+            return (false, nil, -1)
+        }
+    }
+    
 // MARK: Site Type Change- Fire Protection Group to Regular Rent
     
     func fpgToRegularRent(unit: RMUnit) async {
@@ -89,3 +121,4 @@ class RentManagerAPIClient {
         }
     }
 }
+

@@ -39,6 +39,9 @@ struct MainAppView: View {
                         ViolationBuilderView(navigationPath: $navigationPath, unit: unit)
                     case .specialTask:
                         GetBoxNumbersForUDF(navigationPath: $navigationPath)
+                    case .contentView:
+                        // Present your existing ContentView and pass the NavigationPath binding
+                        ContentView(navigationPath: $navigationPath)
                     }
                 }
         }
@@ -64,4 +67,6 @@ enum AppDestination: Hashable {
     case residentDetails(WCLeaseTenant)
     case noticesBuilder(RMUnit)
     case specialTask
+    case contentView // NEW: Route to legacy ContentView
 }
+

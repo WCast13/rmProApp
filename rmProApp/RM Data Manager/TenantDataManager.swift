@@ -337,4 +337,34 @@ class TenantDataManager: ObservableObject {
         
         return leaseTenant
     }
+    
+    // MARK: - Fire Protection Group membership (UDF 59)
+    /// Updates the tenant's Fire Protection Group membership by posting a UserDefinedValue with UserDefinedFieldID 59.
+    /// - Parameters:
+    ///   - tenantID: The tenant's ID.
+    ///   - isMember: Pass true to add to the group, false to remove.
+    /// - Returns: Bool indicating success.
+    func updateFireProtectionGroup(tenantID: Int, isMember: Bool) {
+        
+        let parameters = "{\"TenantID\": \(tenantID),\"PropertyID\": 3,\"UserDefinedValues\": [{\"UserDefinedValueID\": 8947,\"UserDefinedFieldID\": 59,\"Name\": \"HEI- Fire Protection Approved 2025\",\"Value\": \"Yes\"}]}"
+        let postData = parameters.data(using: .utf8)
+
+        var request = URLRequest(url: URL(string: "https://trieq.api.rentmanager.com/Tenants/?embeds=Balance%2CLeases%2CLeases.Unit%2CLeases.Unit.UnitType%2CUserDefinedValues&fields=Balance%2CFirstName%2CLastName%2CLeases%2CName%2CPropertyID%2CStatus%2CTenantDisplayID%2CTenantID%2CUserDefinedValues")!,timeoutInterval: Double.infinity)
+        request.addValue("\(TokenManager.shared.token!)", forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()
+    }
 }
+
