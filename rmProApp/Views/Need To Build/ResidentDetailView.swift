@@ -57,6 +57,8 @@ struct ResidentDetailView: View {
                 
                 tenant.addresses = await addresses
                 tenant.contacts = await contacts
+                
+                print(tenant.udfs?.first ?? "NA")
             }
         }
         .padding()

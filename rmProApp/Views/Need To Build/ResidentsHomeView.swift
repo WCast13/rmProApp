@@ -20,12 +20,12 @@ struct ResidentsHomeView: View {
         case haven = "Haven"
         case pembroke = "Pembroke"
         case delinquent = "Delinquent"
-        case fireProtectionGroup = "Fire Protection Group"
+        case fireProtectionGroup = "Fire Protection Group 25"
+        case fireProtectionGroup26 = "Fire Protection Group 26"
         case ptpA = "Prospectus A"
         case ptpWater = "Prospectus B - Lake"
         case ptpDry = "Prospectus B - Dry"
         case loans = "Loans"
-        
         
         var id: String { rawValue }
     }
@@ -47,7 +47,9 @@ struct ResidentsHomeView: View {
             case .delinquent:
                 return matchesSearch && (tenant.openBalance ?? 0) > 0
             case .fireProtectionGroup:
-                return matchesSearch && tenant.lease?.unit?.unitType?.name == "HEI- Fire Protection"
+                return matchesSearch && tenant.udfs?.filter { $0.userDefinedFieldID == 59 }.first?.value == "Yes"
+            case .fireProtectionGroup26:
+                return matchesSearch && tenant.udfs?.filter { $0.userDefinedFieldID == 64 }.first?.value == "Yes"
             case .ptpA:
                 return matchesSearch && tenant.lease?.unit?.unitType?.name == "PTP- Pros A"
             case .ptpWater:
@@ -87,22 +89,6 @@ struct ResidentsHomeView: View {
                     
                     Spacer()
                     
-                    Button(action: { 
-                        createLabelsAndPS3877Forms()
-                    }) {
-                        HStack(spacing: 4) {
-                            Image(systemName: "tag.fill")
-                            Text("Create Labels")
-                        }
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.accentColor)
-                        .clipShape(Capsule())
-                        .shadow(radius: 2)
-                    }
-                    
                     Button(action: { isShowingFilters.toggle() }) {
                         Image(systemName: "slider.horizontal.3")
                             .font(.title2)
@@ -114,6 +100,8 @@ struct ResidentsHomeView: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
+                
+                Text("Resident Count: \(filteredResidents.count)")
             
                 // Search Bar
                 HStack {

@@ -215,14 +215,8 @@ extension TenantEmbeds {
     static let udfEmbeds: [TenantEmbeds] = [.userDefinedValues]
     static let historyEmbeds: [TenantEmbeds] = [.history, .historyCalls, .historyEviction, .historyEvictionNotes, .historyViolationNotes]
     static let loanEmbeds: [TenantEmbeds] = [.loans]
-    
     static let transactionsEmbeds: [TenantEmbeds] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
     
-   
-    
-    
-    
-
 }
 
 extension TenantFields {
@@ -243,14 +237,13 @@ extension TenantFields {
              .balance, .colorID, .comment, .firstName, .lastName, .name, .openBalance, .openReceivables, .propertyID, .securityDepositHeld, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID
         ]
     
-    static let leaseFields: [TenantFields] = [.leases, tenantID, .firstName, .lastName, .name]
-    static let addressFields: [TenantFields] = [.addresses]
-    static let contactFields: [TenantFields] = [.contacts]
-    static let udfFields: [TenantFields] = [.userDefinedValues]
-    static let historyFields: [TenantFields] = [.history, .historyCalls, .historyNotes, .historyEviction, .historyEvictionNotes]
-    static let loanFields: [TenantFields] = [.loans]
-    
-    static let transactionsFields: [TenantFields] = [.charges, .payments, .paymentReversals]
+    static let leaseFields: [TenantFields] = [.leases, .tenantID, .firstName, .lastName, .name]
+    static let addressFields: [TenantFields] = [.addresses, .tenantID]
+    static let contactFields: [TenantFields] = [.contacts, .tenantID]
+    static let udfFields: [TenantFields] = [.userDefinedValues, .tenantID]
+    static let historyFields: [TenantFields] = [.history, .historyCalls, .historyNotes, .historyEviction, .historyEvictionNotes, .tenantID]
+    static let loanFields: [TenantFields] = [.loans, .tenantID]
+    static let transactionsFields: [TenantFields] = [.charges, .payments, .paymentReversals, .tenantID]
     
     
     /*

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F3F2E5F71E30056B554 /* KeychainService.swift */; };
 		E17A7F422E5F72790056B554 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F412E5F72790056B554 /* LoginView.swift */; };
 		E17C43272DEFA082005E3ACC /* NewRedidentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */; };
+		E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */; };
+		E1980FC12E69E83A00B8A386 /* TenantTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */; };
 		E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4345F2DD5018800BDE071 /* RMLease.swift */; };
 		E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434552DD5018800BDE071 /* TenantParams.swift */; };
 		E1A4349C2DD5018800BDE071 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */; };
@@ -82,6 +84,8 @@
 		E17A7F3F2E5F71E30056B554 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		E17A7F412E5F72790056B554 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
+		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
+		E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
@@ -137,10 +141,6 @@
 		E1A434972DD5018800BDE071 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "RM Data Manager"; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		E117D0442E688FBB00925291 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -175,6 +175,15 @@
 				E117D0472E688FBB00925291 /* rmProAppTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E1980FBF2E69E83A00B8A386 /* RM Data Manager 2 */ = {
+			isa = PBXGroup;
+			children = (
+				E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */,
+				E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */,
+			);
+			path = "RM Data Manager 2";
 			sourceTree = "<group>";
 		};
 		E1A434562DD5018800BDE071 /* APIParameters */ = {
@@ -248,6 +257,7 @@
 		E1A4347C2DD5018800BDE071 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				E1980FBF2E69E83A00B8A386 /* RM Data Manager 2 */,
 				E1A434752DD5018800BDE071 /* Essential API Manager */,
 				E1A434782DD5018800BDE071 /* Notice Manager */,
 			);
@@ -332,7 +342,6 @@
 				E1A434952DD5018800BDE071 /* ps3877.pdf */,
 				E1A434962DD5018800BDE071 /* rmProApp.entitlements */,
 				E1A434972DD5018800BDE071 /* rmProAppApp.swift */,
-				E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */,
 			);
 			path = rmProApp;
 			sourceTree = "<group>";
@@ -371,9 +380,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				E17A7F3A2E5F6F1B0056B554 /* RM Data Manager */,
 			);
 			name = rmProApp;
 			productName = rmProApp;
@@ -481,6 +487,8 @@
 				E1A434B32DD5018800BDE071 /* ContentView.swift in Sources */,
 				E1A434B42DD5018800BDE071 /* RMUnitType.swift in Sources */,
 				E1A434B52DD5018800BDE071 /* Rent Increase Notice Home.swift in Sources */,
+				E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */,
+				E1980FC12E69E83A00B8A386 /* TenantTransactionsManager.swift in Sources */,
 				E1A434B62DD5018800BDE071 /* RMOccupancyStatus.swift in Sources */,
 				E1A434B72DD5018800BDE071 /* WCRentIncreaseTenant.swift in Sources */,
 				E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */,

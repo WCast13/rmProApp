@@ -37,6 +37,7 @@ class TenantDataManager: ObservableObject {
         case paymentReversals
         case recurringCharges
         case userDefinedValues
+        case loans
     }
     
     // MARK: Temporary Timing Function
@@ -51,12 +52,15 @@ class TenantDataManager: ObservableObject {
     
     // MARK: Fetch Tenants- Haven/Pembroke
     func fetchTenants() async {
-    
+        
         await allTenants = fetchTenantBase()
+        await fetchSection(for: allTenants, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
+        
         await fetchSection(for: allTenants, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
         await fetchSection(for: allTenants, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
         await fetchSection(for: allTenants, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
-//        await fetchSection(for: allTenants, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
+        await fetchSection(for: allTenants, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
+        
         
         await UnitDataManager.shared.loadUnitsWithBasicData()
         buildRentIncreaseTenants()
@@ -121,6 +125,8 @@ class TenantDataManager: ObservableObject {
             existing.recurringChargeSummaries = newData.recurringChargeSummaries
         case .userDefinedValues:
             existing.udfs = newData.udfs
+        case .loans:
+            existing.loans = newData.loans
         }
         
         allTenants[index] = existing
@@ -346,7 +352,7 @@ class TenantDataManager: ObservableObject {
     /// - Returns: Bool indicating success.
     func updateFireProtectionGroup(tenantID: Int, isMember: Bool) {
         
-        let parameters = "{\"TenantID\": \(tenantID),\"PropertyID\": 3,\"UserDefinedValues\": [{\"UserDefinedValueID\": 8947,\"UserDefinedFieldID\": 59,\"Name\": \"HEI- Fire Protection Approved 2025\",\"Value\": \"Yes\"}]}"
+        let parameters = "{\"TenantID\": \(tenantID),\"PropertyID\": 3,\"UserDefinedValues\": [{\"UserDefinedValueID\": 8947,\"UserDefinedFieldID\": 64,\"Name\": \"HEI- Fire Protection Approved 2026\",\"Value\": \"Yes\"}]}"
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://trieq.api.rentmanager.com/Tenants/?embeds=Balance%2CLeases%2CLeases.Unit%2CLeases.Unit.UnitType%2CUserDefinedValues&fields=Balance%2CFirstName%2CLastName%2CLeases%2CName%2CPropertyID%2CStatus%2CTenantDisplayID%2CTenantID%2CUserDefinedValues")!,timeoutInterval: Double.infinity)
