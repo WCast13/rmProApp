@@ -82,7 +82,7 @@ class TenantDataManager: ObservableObject {
         return result
     }
     
-    private func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async {
+     func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async -> [RMTenant] {
         
         let embedsString = embeds.map(\.rawValue).joined(separator: ",")
         let fieldsString = fields.map(\.rawValue).joined(separator: ",")
@@ -93,7 +93,7 @@ class TenantDataManager: ObservableObject {
         
         guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: embedsString, fields: fieldsString, filters: filters) else {
             print("❌ Failed to build section URL")
-            return
+            return []
         }
         
         let tenantData: [RMTenant] = await RentManagerAPIClient.shared.request(url: url, responseType: [RMTenant].self) ?? []
@@ -101,12 +101,13 @@ class TenantDataManager: ObservableObject {
         for newData in tenantData {
             mergeTenant(newData: newData, section: section)
         }
+         return tenantData
     }
     
     private func mergeTenant(newData: RMTenant, section: TenantDataSection) {
         
         guard let newID = newData.tenantID, let index = allTenants.firstIndex(where: { $0.tenantID == newID }) else { return }
-        var existing = allTenants[index]
+        let existing = allTenants[index]
         
         switch section {
         case .leases:
@@ -130,7 +131,6 @@ class TenantDataManager: ObservableObject {
         }
         
         allTenants[index] = existing
-//        print(allTenants.count)
     }
     
     // MARK: Get Single Tenant- Details
@@ -348,11 +348,31 @@ class TenantDataManager: ObservableObject {
     /// Updates the tenant's Fire Protection Group membership by posting a UserDefinedValue with UserDefinedFieldID 59.
     /// - Parameters:
     ///   - tenantID: The tenant's ID.
-    ///   - isMember: Pass true to add to the group, false to remove.
-    /// - Returns: Bool indicating success.
-    func updateFireProtectionGroup(tenantID: Int, isMember: Bool) {
+    ///   - isFPGResident: desired final state; true -> "Yes", false -> "No".
+    func updateFireProtectionGroup(tenantID: Int, isFPGResident: Bool) {
+        // Map desired final state directly
+        let yesNo = isFPGResident ? "Yes" : "No"
+        print("\nDesired Yes/No Value: \(yesNo)\n")
         
-        let parameters = "{\"TenantID\": \(tenantID),\"PropertyID\": 3,\"UserDefinedValues\": [{\"UserDefinedValueID\": 8947,\"UserDefinedFieldID\": 64,\"Name\": \"HEI- Fire Protection Approved 2026\",\"Value\": \"Yes\"}]}"
+        // IMPORTANT: align to the same UDF you read from.
+        // Using FieldID 59 and Name "HEI- Fire Protection Approved 2025"
+        // If your API requires the specific existing UserDefinedValueID, supply it; otherwise it can be omitted.
+        let parameters = """
+        {
+          "TenantID": \(tenantID),
+          "PropertyID": 3,
+          "UserDefinedValues": [
+            {
+              "UserDefinedFieldID": 64,
+              "Name": "HEI- Fire Protection Approved 2026",
+              "Value": "\(yesNo)"
+            }
+          ]
+        }
+        """
+        
+        print("Parameters: \(parameters)\n")
+        
         let postData = parameters.data(using: .utf8)
 
         var request = URLRequest(url: URL(string: "https://trieq.api.rentmanager.com/Tenants/?embeds=Balance%2CLeases%2CLeases.Unit%2CLeases.Unit.UnitType%2CUserDefinedValues&fields=Balance%2CFirstName%2CLastName%2CLeases%2CName%2CPropertyID%2CStatus%2CTenantDisplayID%2CTenantID%2CUserDefinedValues")!,timeoutInterval: Double.infinity)
@@ -367,10 +387,10 @@ class TenantDataManager: ObservableObject {
             print(String(describing: error))
             return
           }
-          print(String(data: data, encoding: .utf8)!)
+          // Optionally log or decode response for success check
+          // print(String(data: data, encoding: .utf8)!)
         }
 
         task.resume()
     }
 }
-

@@ -13,6 +13,7 @@
 		E17C43272DEFA082005E3ACC /* NewRedidentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */; };
 		E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */; };
 		E1980FC12E69E83A00B8A386 /* TenantTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */; };
+		E1980FC32E6A209B00B8A386 /* ResidentCardV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FC22E6A209B00B8A386 /* ResidentCardV2.swift */; };
 		E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4345F2DD5018800BDE071 /* RMLease.swift */; };
 		E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434552DD5018800BDE071 /* TenantParams.swift */; };
 		E1A4349C2DD5018800BDE071 /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */; };
@@ -86,6 +87,7 @@
 		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
 		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
 		E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
+		E1980FC22E6A209B00B8A386 /* ResidentCardV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentCardV2.swift; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				E1A434852DD5018800BDE071 /* ResidentDetailView.swift */,
 				E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */,
 				E1A434862DD5018800BDE071 /* ResidentsHomeView.swift */,
+				E1980FC22E6A209B00B8A386 /* ResidentCardV2.swift */,
 				E1A434872DD5018800BDE071 /* ViolationBuilderView.swift */,
 			);
 			path = "Need To Build";
@@ -459,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1A4349A2DD5018800BDE071 /* RMLease.swift in Sources */,
+				E1980FC32E6A209B00B8A386 /* ResidentCardV2.swift in Sources */,
 				E1A4349B2DD5018800BDE071 /* TenantParams.swift in Sources */,
 				E1A4349C2DD5018800BDE071 /* APIEndpointsFilter.swift in Sources */,
 				E1A4349D2DD5018800BDE071 /* RMPhoneNumber.swift in Sources */,
