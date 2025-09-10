@@ -48,8 +48,14 @@ struct MainAppView: View {
         .environmentObject(tenantDataManager)
         .onAppear {
             Task {
-                await tokenManager.checkAndRefreshToken()
-                await tenantDataManager.fetchTenants()
+                // Only fetch if not already authenticated to avoid duplicate calls
+                if !tokenManager.isAuthenticated {
+                    await tokenManager.checkAndRefreshToken()
+                }
+                // Only fetch tenants if we don't have them already
+                if tenantDataManager.allTenants.isEmpty {
+                    await tenantDataManager.fetchTenants()
+                }
             }
         }
     }
@@ -69,4 +75,3 @@ enum AppDestination: Hashable {
     case specialTask
     case contentView // NEW: Route to legacy ContentView
 }
-

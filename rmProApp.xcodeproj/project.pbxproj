@@ -86,6 +86,7 @@
 		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
 		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
 		E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
+		E19B1A092E71EF1700980921 /* rmProAppTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = rmProAppTests.xctestplan; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 		E15501292C63D252000A0726 = {
 			isa = PBXGroup;
 			children = (
+				E19B1A092E71EF1700980921 /* rmProAppTests.xctestplan */,
 				E1A434982DD5018800BDE071 /* rmProApp */,
 				E161555D2D9D914600F7D658 /* Notes */,
 				E15501332C63D252000A0726 /* Products */,

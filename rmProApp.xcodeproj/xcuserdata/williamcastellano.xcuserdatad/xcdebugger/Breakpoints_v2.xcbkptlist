@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "E7E6692F-DC3F-4B44-921D-808DA6BF054A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rmProApp/Networking/Notice Manager/LabelManager.swift"
@@ -56,7 +56,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2E310472-9059-4490-BA30-1EED121223E0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rmProApp/Networking/Notice Manager/LabelManager.swift"
@@ -72,7 +72,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "1F0DCC34-7DE4-4EE9-A279-02A0FAA7AA85"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "rmProApp/Networking/Notice Manager/LabelManager.swift"
@@ -81,6 +81,22 @@
             startingLineNumber = "54"
             endingLineNumber = "54"
             landmarkName = "generatePDFLabels(units:tenants:saveTo:templatePDF:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "37336EEC-66DC-4C8F-B7F4-39185BAC4214"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "rmProApp/Networking/Notice Manager/LabelManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "drawLabel(for:tenant:in:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

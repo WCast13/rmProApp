@@ -16,9 +16,19 @@ class TokenManager: ObservableObject {
     @Published var isAuthenticated = false
     @Published var authenticationError: AuthError?
     
-    private var refreshTimer: Timer?
+    private var timerCancellable: AnyCancellable?
+    private var refreshTask: Task<Void, Never>?
+    private var tokenExpirationDate: Date?
+    private let tokenLifetime: TimeInterval = 15 * 60 // 15 minutes
     private let tokenEndpoint = "https://trieq.api.rentmanager.com/Authentication/AuthorizeUser/"
     private let keychain = KeychainService()
+    
+    private lazy var urlSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 30
+        return URLSession(configuration: config)
+    }()
     
     static let shared = TokenManager()
     
@@ -43,10 +53,8 @@ class TokenManager: ObservableObject {
     }
     
     private init() {
-        // Check for existing credentials on init
-        Task {
-            await checkAndRefreshToken()
-        }
+        // TokenManager is initialized but won't auto-fetch tokens
+        // Call checkAndRefreshToken() manually when needed
     }
     
     // MARK: - Public Authentication Methods
@@ -66,7 +74,8 @@ class TokenManager: ObservableObject {
                 try keychain.saveCredentials(username: username, password: password)
             }
             
-            // Start refresh timer
+            // Set token expiration and start refresh timer
+            self.tokenExpirationDate = Date().addingTimeInterval(tokenLifetime)
             startTokenRefreshTimer()
             
             return true
@@ -80,10 +89,13 @@ class TokenManager: ObservableObject {
     /// Sign out and clear credentials
     func signOut() {
         token = nil
+        tokenExpirationDate = nil
         isAuthenticated = false
         authenticationError = nil
-        refreshTimer?.invalidate()
-        refreshTimer = nil
+        timerCancellable?.cancel()
+        timerCancellable = nil
+        refreshTask?.cancel()
+        refreshTask = nil
         
         // Optionally clear stored credentials
         try? keychain.deleteCredentials()
@@ -97,12 +109,37 @@ class TokenManager: ObservableObject {
             return
         }
         
-        await refreshToken()
+        await refreshTokenIfNeeded()
     }
     
     // MARK: - Private Token Management
     
+    private func shouldRefreshToken() -> Bool {
+        guard let expirationDate = tokenExpirationDate else { return true }
+        return Date().addingTimeInterval(60) > expirationDate // Refresh 1 min before expiry
+    }
+    
+    private func refreshTokenIfNeeded() async {
+        guard shouldRefreshToken() else { return }
+        await refreshToken()
+    }
+    
     private func refreshToken() async {
+        // Prevent duplicate refresh requests
+        if let existingTask = refreshTask {
+            await existingTask.value
+            return
+        }
+        
+        refreshTask = Task {
+            await performTokenRefresh()
+            refreshTask = nil
+        }
+        
+        await refreshTask?.value
+    }
+    
+    private func performTokenRefresh() async {
         guard let credentials = keychain.getCredentials() else {
             authenticationError = .missingCredentials
             isAuthenticated = false
@@ -116,11 +153,12 @@ class TokenManager: ObservableObject {
             )
             
             self.token = newToken
+            self.tokenExpirationDate = Date().addingTimeInterval(tokenLifetime)
             self.isAuthenticated = true
             self.authenticationError = nil
             
             // Ensure timer is running
-            if refreshTimer == nil {
+            if timerCancellable == nil {
                 startTokenRefreshTimer()
             }
         } catch {
@@ -145,7 +183,7 @@ class TokenManager: ObservableObject {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await urlSession.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw AuthError.networkError("Invalid response")
@@ -171,21 +209,17 @@ class TokenManager: ObservableObject {
     }
     
     private func startTokenRefreshTimer() {
-        refreshTimer?.invalidate()
+        timerCancellable?.cancel()
         
-        refreshTimer = Timer.scheduledTimer(withTimeInterval: 13 * 60, repeats: true) { _ in
-            Task { @MainActor in
-                await self.refreshToken()
+        timerCancellable = Timer.publish(every: 13 * 60, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                Task { await self.refreshTokenIfNeeded() }
             }
-        }
-        
-        // Also add to RunLoop to ensure it works
-        if let timer = refreshTimer {
-            RunLoop.main.add(timer, forMode: .common)
-        }
     }
     
     deinit {
-        refreshTimer?.invalidate()
+        timerCancellable?.cancel()
+        refreshTask?.cancel()
     }
 }

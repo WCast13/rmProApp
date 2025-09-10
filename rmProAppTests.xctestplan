@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "B82A29DF-A755-4435-A014-8D6B5FEB6773",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:rmProApp.xcodeproj",
+        "identifier" : "E117D0462E688FBB00925291",
+        "name" : "rmProAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

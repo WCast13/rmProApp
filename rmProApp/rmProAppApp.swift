@@ -18,7 +18,7 @@ struct rmProAppApp: App {
                 MainAppView()
                     .environmentObject(tokenManager)
             } else {
-                LoginView()
+                MainAppView()
                     .environmentObject(tokenManager)
             }
         }

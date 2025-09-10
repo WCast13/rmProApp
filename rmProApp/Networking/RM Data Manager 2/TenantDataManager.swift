@@ -373,4 +373,3 @@ class TenantDataManager: ObservableObject {
         task.resume()
     }
 }
-

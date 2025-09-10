@@ -89,16 +89,23 @@ class LabelGeneratorManager {
         // Determine the text color based on unitType.name
         var textColor: UIColor
         
-        if unit.userDefinedValues?.last?.value == "Yes" {
+        let currentUDF = unit.userDefinedValues?
+            .first(where: { $0.userDefinedFieldID == 67 })?
+            .name
+        
+        print("\n")
+        print(unit.name ?? "")
+        print(unit.userDefinedValues?.count ?? 0)
+        print(currentUDF ?? "N/a")
+        
+        if currentUDF == "HEI- Fire Protection Approved 2026" {
             textColor = .fireRed
         } else {
             textColor = .black
         }
         
-        switch unit.unitType?.name {
-        case "HEI- Regular Rent":
-            textColor = .black
-        case "HEI- Fire Protection":
+        switch currentUDF {
+        case "HEI- Fire Protection Approved 2026":
             textColor = .fireRed
         case "PTP- Pros B - Dry":
             textColor = .havenGreen
@@ -107,8 +114,24 @@ class LabelGeneratorManager {
         case "PTP- Pros A":
             textColor = .fireRed
         default:
-            textColor = .yellow // Default or for any other types
+            textColor = .black // Default or for any other types
         }
+        
+        
+//        switch unit.unitType?.name {
+//        case "HEI- Regular Rent":
+//            textColor = .black
+//        case "HEI- Fire Protection":
+//            textColor = .fireRed
+//        case "PTP- Pros B - Dry":
+//            textColor = .havenGreen
+//        case "PTP- Pros B - Lake":
+//            textColor = .pembrokeBlue
+//        case "PTP- Pros A":
+//            textColor = .fireRed
+//        default:
+//            textColor = .yellow // Default or for any other types
+//        }
         
         let contactsForLabel = tenant.first?.contacts?.filter { $0.isShowOnBill == true }
         var namesPortion = ""
