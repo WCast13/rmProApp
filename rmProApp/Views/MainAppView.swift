@@ -48,12 +48,8 @@ struct MainAppView: View {
         .environmentObject(tenantDataManager)
         .onAppear {
             Task {
-                // Only fetch if not already authenticated to avoid duplicate calls
-                if !tokenManager.isAuthenticated {
-                    await tokenManager.checkAndRefreshToken()
-                }
-                // Only fetch tenants if we don't have them already
-                if tenantDataManager.allTenants.isEmpty {
+                // Only fetch tenants if authenticated and we don't have them already
+                if tokenManager.isAuthenticated && tenantDataManager.allTenants.isEmpty {
                     await tenantDataManager.fetchTenants()
                 }
             }

@@ -15,6 +15,7 @@ class TokenManager: ObservableObject {
     @Published var token: String?
     @Published var isAuthenticated = false
     @Published var authenticationError: AuthError?
+    @Published var isAuthenticating = false
     
     private var timerCancellable: AnyCancellable?
     private var refreshTask: Task<Void, Never>?
@@ -37,6 +38,7 @@ class TokenManager: ObservableObject {
         case invalidCredentials
         case networkError(String)
         case tokenRefreshFailed
+        case authenticationInProgress
         
         var errorDescription: String? {
             switch self {
@@ -48,19 +50,30 @@ class TokenManager: ObservableObject {
                 return "Network error: \(message)"
             case .tokenRefreshFailed:
                 return "Failed to refresh authentication token"
+            case .authenticationInProgress:
+                return "Authentication already in progress"
             }
         }
     }
     
     private init() {
         // TokenManager is initialized but won't auto-fetch tokens
-        // Call checkAndRefreshToken() manually when needed
+        // Call initializeAuthentication() on app startup
     }
     
     // MARK: - Public Authentication Methods
     
     /// Authenticate with username and password
     func authenticate(username: String, password: String, saveCredentials: Bool = true) async -> Bool {
+        // Prevent multiple simultaneous authentication attempts
+        guard !isAuthenticating else {
+            authenticationError = .authenticationInProgress
+            return false
+        }
+        
+        isAuthenticating = true
+        authenticationError = nil
+        
         do {
             // Try to get token with provided credentials
             let token = try await fetchToken(username: username, password: password)
@@ -78,10 +91,12 @@ class TokenManager: ObservableObject {
             self.tokenExpirationDate = Date().addingTimeInterval(tokenLifetime)
             startTokenRefreshTimer()
             
+            isAuthenticating = false
             return true
         } catch {
             self.authenticationError = error as? AuthError ?? .networkError(error.localizedDescription)
             self.isAuthenticated = false
+            isAuthenticating = false
             return false
         }
     }
@@ -91,13 +106,14 @@ class TokenManager: ObservableObject {
         token = nil
         tokenExpirationDate = nil
         isAuthenticated = false
+        isAuthenticating = false
         authenticationError = nil
         timerCancellable?.cancel()
         timerCancellable = nil
         refreshTask?.cancel()
         refreshTask = nil
         
-        // Optionally clear stored credentials
+        // Clear stored credentials
         try? keychain.deleteCredentials()
     }
     
@@ -110,6 +126,18 @@ class TokenManager: ObservableObject {
         }
         
         await refreshTokenIfNeeded()
+    }
+    
+    /// Initialize authentication on app startup
+    func initializeAuthentication() async {
+        // Check if we have stored credentials and try to authenticate
+        if keychain.hasStoredCredentials {
+            await checkAndRefreshToken()
+        } else {
+            // No credentials stored, user needs to log in
+            isAuthenticated = false
+            authenticationError = .missingCredentials
+        }
     }
     
     // MARK: - Private Token Management
@@ -162,8 +190,10 @@ class TokenManager: ObservableObject {
                 startTokenRefreshTimer()
             }
         } catch {
+            // If refresh fails, sign out the user
             self.authenticationError = error as? AuthError ?? .tokenRefreshFailed
             self.isAuthenticated = false
+            // Don't clear credentials on refresh failure - user can try again
         }
     }
     
