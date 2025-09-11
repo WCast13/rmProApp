@@ -86,7 +86,7 @@
 		E17C43262DEFA082005E3ACC /* NewRedidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRedidentDetail.swift; sourceTree = "<group>"; };
 		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
 		E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
-		E19B1A092E71EF1700980921 /* rmProAppTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = rmProAppTests.xctestplan; sourceTree = "<group>"; };
+		E19B1A092E71EF1700980921 /* rmProAppTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = rmProAppTests.xctestplan; sourceTree = "<group>"; };
 		E1A434542DD5018800BDE071 /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E1A434552DD5018800BDE071 /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
@@ -179,13 +179,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E1980FBF2E69E83A00B8A386 /* RM Data Manager 2 */ = {
+		E1980FBF2E69E83A00B8A386 /* RM Data Manager */ = {
 			isa = PBXGroup;
 			children = (
 				E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */,
 				E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */,
 			);
-			path = "RM Data Manager 2";
+			path = "RM Data Manager";
 			sourceTree = "<group>";
 		};
 		E1A434562DD5018800BDE071 /* APIParameters */ = {
@@ -259,7 +259,7 @@
 		E1A4347C2DD5018800BDE071 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E1980FBF2E69E83A00B8A386 /* RM Data Manager 2 */,
+				E1980FBF2E69E83A00B8A386 /* RM Data Manager */,
 				E1A434752DD5018800BDE071 /* Essential API Manager */,
 				E1A434782DD5018800BDE071 /* Notice Manager */,
 			);
