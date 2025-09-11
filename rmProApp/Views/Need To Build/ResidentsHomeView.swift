@@ -63,13 +63,6 @@ struct ResidentsHomeView: View {
         .sorted { $0.lease?.unit?.name ?? "" < $1.lease?.unit?.name ?? "" }
     }
     
-    private func createLabelsAndPS3877Forms() {
-        let havenResidents = tenantDataManager.allUnitTenants.filter { $0.propertyID == 3 }
-        let pembrokeResidents = tenantDataManager.allUnitTenants.filter { $0.propertyID == 12 }
-        
-//        showDocumentsAlert = true
-    }
-    
     var body: some View {
         
         // Background Gradient
@@ -101,7 +94,27 @@ struct ResidentsHomeView: View {
                 .padding(.horizontal)
                 .padding(.top, 10)
                 
-                Text("Resident Count: \(filteredResidents.count)")
+                HStack {
+                    Text("Resident Count: \(filteredResidents.count)")
+                    
+                    Spacer()
+                    
+                    Button("Look for Duplicates") {
+                        for resident in filteredResidents {
+                            let currentUnit = resident.unit?.name ?? "0"
+                            let idCount = filteredResidents.filter { $0.unit?.name ?? "" == currentUnit }.count
+                            
+                            print("\(currentUnit): \(idCount)")
+                            
+                            if idCount > 1 {
+                                
+                                print("Duplicate Found: \(resident.unit?.name ?? "")\n \(resident.name ?? "")\n")
+                            }
+                            
+                        }
+                    }
+                }
+                
             
                 // Search Bar
                 HStack {
@@ -111,6 +124,7 @@ struct ResidentsHomeView: View {
                         .textFieldStyle(.plain)
                         .font(.body)
                         .frame(minHeight: 50)
+                        .padding(.horizontal)
                 }
                 
                 // Filter Chips
@@ -139,6 +153,8 @@ struct ResidentsHomeView: View {
                     }
                     .padding(.top, 10)
                 }
+                .padding(.horizontal)
+                
             }
         }
         .sheet(isPresented: $isShowingFilters) {
