@@ -36,6 +36,7 @@ struct ResidentDetailView: View {
                 }
                 
                 /*
+                 
                  Text("Balance", tenant.balance ?? "$0.00")
                                 Text("Primary Contact", tenant.primaryContact?.firstName ?? "N/A")
                                 Text("Secondary Contact", tenant.contacts?.dropFirst().first?.firstName ?? "N/A")

@@ -94,28 +94,11 @@ struct ResidentsHomeView: View {
                 .padding(.horizontal)
                 .padding(.top, 10)
                 
-                HStack {
-                    Text("Resident Count: \(filteredResidents.count)")
-                    
-                    Spacer()
-                    
-                    Button("Look for Duplicates") {
-                        for resident in filteredResidents {
-                            let currentUnit = resident.unit?.name ?? "0"
-                            let idCount = filteredResidents.filter { $0.unit?.name ?? "" == currentUnit }.count
-                            
-                            print("\(currentUnit): \(idCount)")
-                            
-                            if idCount > 1 {
-                                
-                                print("Duplicate Found: \(resident.unit?.name ?? "")\n \(resident.name ?? "")\n")
-                            }
-                            
-                        }
-                    }
-                }
-                
             
+                Text("Resident Count: \(filteredResidents.count)")
+
+                
+                
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")

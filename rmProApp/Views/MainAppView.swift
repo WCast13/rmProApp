@@ -34,7 +34,7 @@ struct MainAppView: View {
                     case .pembrokeResidents:
                         PembrokeResidentsView(navigationPath: $navigationPath)
                     case .residentDetails(let tenant):
-                        ResidentDetailView(navigationPath: $navigationPath, tenant: tenant)
+                        NewResidentDetailView(navigationPath: $navigationPath, tenant: tenant)
                     case .noticesBuilder(let unit):
                         ViolationBuilderView(navigationPath: $navigationPath, unit: unit)
                     case .specialTask:
