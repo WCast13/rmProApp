@@ -99,23 +99,23 @@ class LabelGeneratorManager {
         print(currentUDF ?? "N/a")
         
         if currentUDF == "HEI- Fire Protection Approved 2026" {
-            textColor = .fireRed
+            textColor = .black
         } else {
             textColor = .black
         }
         
-        switch currentUDF {
-        case "HEI- Fire Protection Approved 2026":
-            textColor = .fireRed
-        case "PTP- Pros B - Dry":
-            textColor = .havenGreen
-        case "PTP- Pros B - Lake":
-            textColor = .pembrokeBlue
-        case "PTP- Pros A":
-            textColor = .fireRed
-        default:
-            textColor = .black // Default or for any other types
-        }
+//        switch currentUDF {
+//        case "HEI- Fire Protection Approved 2026":
+//            textColor = .fireRed
+//        case "PTP- Pros B - Dry":
+//            textColor = .havenGreen
+//        case "PTP- Pros B - Lake":
+//            textColor = .pembrokeBlue
+//        case "PTP- Pros A":
+//            textColor = .fireRed
+//        default:
+//            textColor = .black // Default or for any other types
+//        }
         
         
 //        switch unit.unitType?.name {

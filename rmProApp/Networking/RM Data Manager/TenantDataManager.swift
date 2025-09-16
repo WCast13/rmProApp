@@ -15,15 +15,21 @@ class TenantDataManager: ObservableObject {
     @Published var allTenants: [RMTenant] = []
     @Published var singleTenant: RMTenant?
     @Published var allUnitTenants: [WCLeaseTenant] = []
-    
+
     // TODO: Dashboard Filters
     @Published var tenantsInDeliquency: [RMTenant]?
     @Published var tenantsInEviction: [RMTenant]? // TODO: Need RMEviction
     @Published var tenantPaymentReturns: [RMTenant]? // TODO: Might Not Need
     @Published var rentIncreaseTenants: [WCRentIncreaseTenant] = []
-    
+
+    // MARK: Caching and Performance
+    private var tenantCache: [String: RMTenant] = [:]
+    private var lastFetchTime: Date?
+    private let cacheTimeout: TimeInterval = 300 // 5 minutes
+    private var isCurrentlyFetching = false
+
     static let shared = TenantDataManager()
-    
+
     private init() {}
     
     
@@ -51,19 +57,60 @@ class TenantDataManager: ObservableObject {
     }
     
     // MARK: Fetch Tenants- Haven/Pembroke
-    func fetchTenants() async {
-        
-        await allTenants = fetchTenantBase()
-        await fetchSection(for: allTenants, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
-        
-        await fetchSection(for: allTenants, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
-        await fetchSection(for: allTenants, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
-        await fetchSection(for: allTenants, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
-        await fetchSection(for: allTenants, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
-        
-        
-        await UnitDataManager.shared.loadUnitsWithBasicData()
+    func fetchTenants(forceRefresh: Bool = false) async {
+        // Check if we should use cached data
+        if !forceRefresh, let lastFetch = lastFetchTime,
+           Date().timeIntervalSince(lastFetch) < cacheTimeout,
+           !allTenants.isEmpty {
+            print("📋 Using cached tenant data")
+            return
+        }
+
+        // Prevent concurrent fetches
+        if isCurrentlyFetching {
+            print("⏳ Fetch already in progress, waiting...")
+            return
+        }
+
+        isCurrentlyFetching = true
+        defer { isCurrentlyFetching = false }
+
+        let startTime = Date()
+
+        // 1. Fetch base tenant data first
+        allTenants = await fetchTenantBase()
+
+        // 2. Fetch sections concurrently for better performance
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask {
+                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
+            }
+            group.addTask {
+                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
+            }
+            group.addTask {
+                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
+            }
+            group.addTask {
+                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
+            }
+            group.addTask {
+                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
+            }
+
+            // 3. Load units concurrently with other sections
+            group.addTask {
+                await UnitDataManager.shared.loadUnitsWithBasicData()
+            }
+        }
+
+        // 4. Update cache and build derived data
+        updateTenantCache()
         buildRentIncreaseTenants()
+        lastFetchTime = Date()
+
+        let totalTime = Date().timeIntervalSince(startTime)
+        print("🚀 Total fetch time: \(totalTime) seconds")
     }
     
     private func fetchTenantBase() async -> [RMTenant] {
@@ -83,23 +130,28 @@ class TenantDataManager: ObservableObject {
     }
     
     private func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async {
-        
+
         let embedsString = embeds.map(\.rawValue).joined(separator: ",")
         let fieldsString = fields.map(\.rawValue).joined(separator: ",")
-        
+
         let filters = [
             RMFilter(key: "Status", operation: "ne", value: "Past")
         ]
-        
+
         guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: embedsString, fields: fieldsString, filters: filters) else {
             print("❌ Failed to build section URL")
             return
         }
-        
-        let tenantData: [RMTenant] = await RentManagerAPIClient.shared.request(url: url, responseType: [RMTenant].self) ?? []
-        
-        for newData in tenantData {
-            mergeTenant(newData: newData, section: section)
+
+        let (tenantData, duration) = await timeAPICall("Section \(section)") {
+            await RentManagerAPIClient.shared.request(url: url, responseType: [RMTenant].self) ?? []
+        }
+
+        // Batch merge operations for better performance
+        await MainActor.run {
+            for newData in tenantData {
+                mergeTenant(newData: newData, section: section)
+            }
         }
     }
     
@@ -133,19 +185,49 @@ class TenantDataManager: ObservableObject {
 //        print(allTenants.count)
     }
     
+    // MARK: Cache Management
+    private func updateTenantCache() {
+        tenantCache.removeAll()
+        for tenant in allTenants {
+            if let tenantID = tenant.tenantID {
+                tenantCache[String(tenantID)] = tenant
+            }
+        }
+    }
+
+    private func getCachedTenant(id: String) -> RMTenant? {
+        return tenantCache[id]
+    }
+
     // MARK: Get Single Tenant- Details
-    func fetchSingleTenant(tenantID: String) async -> RMTenant! {
+    func fetchSingleTenant(tenantID: String) async -> RMTenant? {
+        // Check cache first
+        if let cachedTenant = getCachedTenant(id: tenantID) {
+            print("📋 Using cached tenant: \(tenantID)")
+            singleTenant = cachedTenant
+            return cachedTenant
+        }
+
+        // If not in cache, fetch from API
         let fullEmbedsString = TenantEmbeds.fullEmbeds.map { $0.rawValue }.joined(separator: ",")
         let fullFieldsString = TenantFields.fullFields.map { $0.rawValue }.joined(separator: ",")
-        
-        let singleTenantUrl = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: fullEmbedsString, fields: fullFieldsString, id: tenantID)
-        
-        if let url = singleTenantUrl {
-            
-            singleTenant = await RentManagerAPIClient.shared.request(url: url, responseType: RMTenant.self)
-            
+
+        guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: fullEmbedsString, fields: fullFieldsString, id: tenantID) else {
+            print("❌ Failed to build single tenant URL")
+            return nil
         }
-        return singleTenant
+
+        let (tenant, duration) = await timeAPICall("Single tenant fetch") {
+            await RentManagerAPIClient.shared.request(url: url, responseType: RMTenant.self)
+        }
+
+        if let tenant = tenant {
+            singleTenant = tenant
+            // Update cache with full tenant data
+            tenantCache[tenantID] = tenant
+        }
+
+        return tenant
     }
     
     func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
