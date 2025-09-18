@@ -14,6 +14,7 @@ struct RentIncreaseNoticeBuilder: View {
         
         NavigationView {
             VStack {
+                HomeButton(title: "Labels & PS3877 (Legacy ContentView)", destination: AppDestination.contentView)
                 HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
             }
             .padding(.horizontal)
@@ -21,5 +22,4 @@ struct RentIncreaseNoticeBuilder: View {
             .navigationTitle("Home")
         }
     }
-    
 }

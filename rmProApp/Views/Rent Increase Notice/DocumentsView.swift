@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PDFKit
+import UIKit
 
 struct DocumentsView: View {
     @Binding var navigationPath: NavigationPath
@@ -90,8 +91,10 @@ struct DocumentViewerView: View {
             if documentURL.pathExtension.lowercased() == "pdf" {
                 PDFKitRepresentedView(url: documentURL)
                     .navigationTitle(documentURL.lastPathComponent)
-                    .navigationBarItems(trailing: Button("Print") {
-                        printDocument()
+                    .navigationBarItems(trailing: HStack {
+                        Button("Share") {
+                            shareDocument()
+                        }
                     })
             } else if documentURL.pathExtension.lowercased() == "csv" || documentURL.pathExtension.lowercased() == "txt" {
                 ScrollView {
