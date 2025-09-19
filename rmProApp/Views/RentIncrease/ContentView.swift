@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-/*
+
  struct ContentView: View {
  //    @State private var properties: [RMProperty]?
      @State private var tenants: [RMTenant]?
@@ -81,7 +81,7 @@ import Combine
          }
      }
  }
- */
+
 
 
 
