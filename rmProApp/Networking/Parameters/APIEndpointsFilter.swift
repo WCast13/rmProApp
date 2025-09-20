@@ -31,6 +31,7 @@ enum APIEndpoint: String {
     case screenings = "Screenings"
     case tenants = "Tenants"
     case units = "Units"
+    case userDefinedFields = "UserDefinedFields"
     case vendors = "Vendors"
 }
 

@@ -7,6 +7,7 @@
 
 // rmProAppApp.swift
 import SwiftUI
+import SwiftData
 
 @main
 struct rmProAppApp: App {
@@ -18,7 +19,7 @@ struct rmProAppApp: App {
             await TokenManager.shared.initializeAuthentication()
         }
     }
-    
+
     var body: some Scene {
         WindowGroup {
             Group {

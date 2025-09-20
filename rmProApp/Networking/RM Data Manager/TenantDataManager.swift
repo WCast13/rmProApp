@@ -79,23 +79,24 @@ class TenantDataManager: ObservableObject {
 
         // 1. Fetch base tenant data first
         allTenants = await fetchTenantBase()
+        let tenantsSnapshot = self.allTenants
 
         // 2. Fetch sections concurrently for better performance
         await withTaskGroup(of: Void.self) { group in
             group.addTask {
-                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
+                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
             }
             group.addTask {
-                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
+                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
             }
             group.addTask {
-                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
+                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
             }
             group.addTask {
-                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
+                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
             }
             group.addTask {
-                await self.fetchSection(for: self.allTenants, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
+                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
             }
 
             // 3. Load units concurrently with other sections
@@ -148,10 +149,8 @@ class TenantDataManager: ObservableObject {
         }
 
         // Batch merge operations for better performance
-        await MainActor.run {
-            for newData in tenantData {
-                mergeTenant(newData: newData, section: section)
-            }
+        for newData in tenantData {
+            mergeTenant(newData: newData, section: section)
         }
     }
     
@@ -455,3 +454,4 @@ class TenantDataManager: ObservableObject {
         task.resume()
     }
 }
+

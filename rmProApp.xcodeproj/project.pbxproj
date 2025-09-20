@@ -50,6 +50,8 @@
 		E11AEC242E7CF6270082FC7B /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC222E7CF6270082FC7B /* ps3877.pdf */; };
 		E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */; };
 		E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */; };
+		E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */; };
+		E11AEC312E7ED4A70082FC7B /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */; };
 		E161555E2D9D914600F7D658 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = E161555D2D9D914600F7D658 /* Notes */; };
 		E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F3F2E5F71E30056B554 /* KeychainService.swift */; };
 		E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */; };
@@ -110,6 +112,8 @@
 		E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Avery 5160 Template PDF.pdf"; sourceTree = "<group>"; };
 		E11AEC222E7CF6270082FC7B /* ps3877.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ps3877.pdf; sourceTree = "<group>"; };
 		E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppTests.swift; sourceTree = "<group>"; };
+		E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMDataManager.swift; sourceTree = "<group>"; };
+		E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E161555D2D9D914600F7D658 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		E17A7F3F2E5F71E30056B554 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */,
 				E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */,
 				E11AEBA42E7CEED60082FC7B /* UnitDataManager.swift */,
+				E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */,
+				E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */,
 			);
 			path = "RM Data Manager";
 			sourceTree = "<group>";
@@ -478,8 +484,10 @@
 				E11AEC022E7CF12B0082FC7B /* GetBoxNumbersForUDF.swift in Sources */,
 				E11AEC042E7CF12B0082FC7B /* DocumentsView.swift in Sources */,
 				E11AEC082E7CF12B0082FC7B /* HavenResidentsView.swift in Sources */,
+				E11AEC312E7ED4A70082FC7B /* SwiftDataManager.swift in Sources */,
 				E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */,
 				E11AEC1E2E7CF12B0082FC7B /* PembrokeResidentsView.swift in Sources */,
+				E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */,
 				E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */,
 				E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */,
 				E11AEBA22E7CEE660082FC7B /* APIEndpointsFilter.swift in Sources */,

@@ -9,10 +9,9 @@ import SwiftUI
 import Combine
 
  struct ContentView: View {
- //    @State private var properties: [RMProperty]?
+ 
      @State private var tenants: [RMTenant]?
      @State private var units: [RMUnit]?
- //    @State private var contacts: [RMContact]?
      @State private var community: String = "Haven Lake Estates"
      @Binding var navigationPath: NavigationPath
      
@@ -42,7 +41,6 @@ import Combine
                      let csvURL = documentsDirectory.appendingPathComponent("Units.csv")
 
                      LabelGeneratorManager.shared.generateCSVFile(units: filteredUnits!, tenants: filteredTenants!, saveTo: csvURL)
-
                  }
                  
                  Spacer()
@@ -62,13 +60,14 @@ import Combine
                  Spacer()
              }
              
-             if let units = units {
-                 List(units) { unit in
-                     MailingLabelView(unit: unit)
-                 }
-             } else {
-                 ProgressView("Loading Units...")
-             }
+             
+//             if let units = units {
+//                 List(units) { unit in
+//                     MailingLabelView(unit: unit)
+//                 }
+//             } else {
+//                 ProgressView("Loading Units...")
+//             }
          }
          .onAppear {
              Task {
@@ -81,19 +80,3 @@ import Combine
          }
      }
  }
-
-
-
-
-/*
- UNITS ITERATION- For Labels
- 
- https://trieq.api.rentmanager.com/Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType,Leases,Leases.Tenant&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType,Leases")
- 
- /Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType&filters=Property.IsActive,eq,true&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType
- 
- /Units?embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType,Leases,Leases.Tenant&filters=PropertyID,in,(3%2C12)&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType,Leases
- 
- /Units?embeds=Leases,Leases.Tenant&fields=Leases,Name
- */
-
