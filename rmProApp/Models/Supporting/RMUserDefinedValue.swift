@@ -22,6 +22,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
     var updateUserID: Int?
     var createUserID: Int?
     var lastSyncDate: Date?
+    var parentType: String?
 
     init(userDefinedValueID: Int? = nil, userDefinedFieldID: Int? = nil, parentID: Int? = nil,
          name: String? = nil, value: String? = nil, dateValue: String? = nil,
@@ -39,6 +40,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.updateUserID = updateUserID
         self.createUserID = createUserID
         self.lastSyncDate = Date()
+        self.parentType = parentType
     }
 
     // MARK: - Codable Implementation
@@ -53,6 +55,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         case fieldType = "FieldType"
         case updateUserID = "UpdateUserID"
         case createUserID = "CreateUserID"
+        case parentType = "ParentType"
     }
 
     required init(from decoder: Decoder) throws {
@@ -69,6 +72,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.updateUserID = try container.decodeIfPresent(Int.self, forKey: .updateUserID)
         self.createUserID = try container.decodeIfPresent(Int.self, forKey: .createUserID)
         self.lastSyncDate = Date()
+        self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -83,6 +87,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         try container.encodeIfPresent(fieldType, forKey: .fieldType)
         try container.encodeIfPresent(updateUserID, forKey: .updateUserID)
         try container.encodeIfPresent(createUserID, forKey: .createUserID)
+        try container.encodeIfPresent(parentType, forKey: .parentType)
     }
 
     // MARK: - Hashable Implementation
