@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RentIncreaseNoticeBuilder: View {
     @Binding var navigationPath: NavigationPath
@@ -17,7 +18,6 @@ struct RentIncreaseNoticeBuilder: View {
     
     var body: some View {
         
-        NavigationStack(path: $navigationPath) {
             VStack {
                 HomeButton(title: "Labels & PS3877 (Legacy ContentView)", destination: AppDestination.contentView)
                 HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
@@ -44,18 +44,27 @@ struct RentIncreaseNoticeBuilder: View {
             .padding(.horizontal)
             .padding(.bottom)
             .navigationTitle("Home")
-        }
+        
         .onAppear() {
             Task {
-                allUDFs = try! SwiftDataManager.shared.load(
-                    of: RMUserDefinedValue.self,
-                    where: #Predicate { $0.parentType == "Tenant" }
-                )
-                
-                if allUDFs.isEmpty {
+                do {
+                    // Try to load from SwiftData first
+                    let localUDFs = try SwiftDataManager.shared.load(
+                        of: RMUserDefinedValue.self,
+                        where: #Predicate { $0.parentType == "Tenant" }
+                    )
+
+                    if localUDFs.isEmpty {
+                        // Fallback to API if no local data
+                        allUDFs = await RMDataManager.shared.loadUserDefinedValues()
+                        try? SwiftDataManager.shared.save(allUDFs)
+                    } else {
+                        allUDFs = localUDFs
+                    }
+                } catch {
+                    // If SwiftData fails (context not set), just load from API
+                    print("SwiftData not available, loading from API: \(error)")
                     allUDFs = await RMDataManager.shared.loadUserDefinedValues()
-                    try? SwiftDataManager.shared.save(allUDFs)
-                    
                 }
             }
         }
