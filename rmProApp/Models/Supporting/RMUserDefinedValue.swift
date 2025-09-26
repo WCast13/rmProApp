@@ -23,11 +23,12 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
     var createUserID: Int?
     var lastSyncDate: Date?
     var parentType: String?
+    var updateFrequency: TimeInterval? // Update frequency in seconds
 
     init(userDefinedValueID: Int? = nil, userDefinedFieldID: Int? = nil, parentID: Int? = nil,
          name: String? = nil, value: String? = nil, dateValue: String? = nil,
          updateDate: String? = nil, fieldType: String? = nil, updateUserID: Int? = nil,
-         createUserID: Int? = nil) {
+         createUserID: Int? = nil, updateFrequency: TimeInterval? = 86400 * 60) { // Default 24 hours
         self.id = UUID()
         self.userDefinedValueID = userDefinedValueID
         self.userDefinedFieldID = userDefinedFieldID
@@ -41,6 +42,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.createUserID = createUserID
         self.lastSyncDate = Date()
         self.parentType = parentType
+        self.updateFrequency = updateFrequency
     }
 
     // MARK: - Codable Implementation
@@ -73,6 +75,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.createUserID = try container.decodeIfPresent(Int.self, forKey: .createUserID)
         self.lastSyncDate = Date()
         self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
+        self.updateFrequency = 86400 // Default 24 hours for API data
     }
 
     func encode(to encoder: Encoder) throws {
@@ -97,5 +100,22 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+
+    // MARK: - Cache Management
+
+    /// Check if this UDF data is stale based on updateFrequency
+    func isStale() -> Bool {
+        guard let lastSync = lastSyncDate,
+              let frequency = updateFrequency else {
+            return true
+        }
+
+        return Date().timeIntervalSince(lastSync) > frequency
+    }
+
+    /// Update the last sync date to current time
+    func updateSyncDate() {
+        lastSyncDate = Date()
     }
 }

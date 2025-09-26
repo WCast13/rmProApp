@@ -48,36 +48,22 @@ struct RentIncreaseNoticeBuilder: View {
         
         .onAppear() {
             Task {
-                do {
-                    // Try to load from SwiftData first
-                    let localUDFs = try SwiftDataManager.shared.load(
-                        of: RMUserDefinedValue.self,
-                        where: #Predicate { $0.parentType == "Unit" }
-                    )
+                // Use the new cached UDF system
+                allUDFs = RMDataManager.shared.getCachedUDFs(for: "Unit")
 
-                    if localUDFs.isEmpty {
-                        // Fallback to API if no local data
-                        allUDFs = await RMDataManager.shared.loadUserDefinedValues()
-                        try? SwiftDataManager.shared.save(allUDFs)
-                    } else {
-                        allUDFs = localUDFs
-                    }
-
-                    // Initialize selectedUDFId with first UDF if available
-                    if selectedUDFId == nil && !allUDFs.isEmpty {
-                        selectedUDFId = allUDFs.first?.userDefinedFieldID
-                    }
-                } catch {
-                    // If SwiftData fails (context not set), just load from API
-                    print("SwiftData not available, loading from API: \(error)")
-                    allUDFs = await RMDataManager.shared.loadUserDefinedValues()
-                    try? SwiftDataManager.shared.save(allUDFs)
-
-                    // Initialize selectedUDFId with first UDF if available
-                    if selectedUDFId == nil && !allUDFs.isEmpty {
-                        selectedUDFId = allUDFs.first?.userDefinedFieldID
-                    }
+                // If no cached UDFs, fallback to API
+                if allUDFs.isEmpty {
+                    print("No cached Unit UDFs found, loading from API...")
+                    let freshUDFs = await RMDataManager.shared.loadUserDefinedValues()
+                    allUDFs = freshUDFs.filter { $0.parentType == "Unit" }
                 }
+
+                // Initialize selectedUDFId with first UDF if available
+                if selectedUDFId == nil && !allUDFs.isEmpty {
+                    selectedUDFId = allUDFs.first?.userDefinedFieldID
+                }
+
+                print("📋 Loaded \(allUDFs.count) Unit UDFs for picker")
             }
         }
     }

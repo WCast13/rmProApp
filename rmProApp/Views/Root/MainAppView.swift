@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainAppView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var navigationPath = NavigationPath()
     @StateObject private var tenantDataManager = TenantDataManager.shared
     @StateObject private var tokenManager = TokenManager.shared
@@ -48,12 +50,28 @@ struct MainAppView: View {
         .environmentObject(tenantDataManager)
         .onAppear {
             Task {
+                // Initialize UDFs cache on startup
+                await initializeStartupData()
+
                 // Only fetch tenants if authenticated and we don't have them already
                 if tokenManager.isAuthenticated && tenantDataManager.allTenants.isEmpty {
                     await tenantDataManager.fetchTenants()
                 }
             }
         }
+    }
+
+    // MARK: - Startup Initialization
+
+    @MainActor
+    private func initializeStartupData() async {
+        // Set up SwiftData context for the data manager
+        SwiftDataManager.shared.setModelContext(modelContext)
+
+        // Initialize UDFs cache
+        print("🚀 Initializing startup data...")
+        let _ = await RMDataManager.shared.loadUDFsOnStartup()
+        print("✅ Startup data initialization complete")
     }
 }
 
