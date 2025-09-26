@@ -14,12 +14,12 @@ struct RentIncreaseNoticeBuilder: View {
     @State private var selectedCommunity: String = "Haven Lake Estates"
     @State private var nameOfFile: String = ""
     @State private var allUDFs: [RMUserDefinedValue] = []
-    @State private var selectedUDFId: Int = 0
+    @State private var selectedUDFId: Int?
     
     var body: some View {
         
             VStack {
-                HomeButton(title: "Labels & PS3877 (Legacy ContentView)", destination: AppDestination.contentView)
+//                HomeButton(title: "Labels & PS3877 (Legacy ContentView)", destination: AppDestination.contentView)
                 HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
                 
                 Text("Create Rent Increase Notice")
@@ -34,8 +34,9 @@ struct RentIncreaseNoticeBuilder: View {
                     
                     if selectedCommunity == "Haven Lake Estates" {
                         Picker("UDF", selection: $selectedUDFId) {
-                            ForEach(allUDFs) { udf in
-                                Text(udf.name ?? "").tag(udf.userDefinedValueID)
+                            Text("Select a UDF").tag(nil as Int?)
+                            ForEach(allUDFs, id: \.userDefinedFieldID) { udf in
+                                Text(udf.name ?? "Unnamed").tag(udf.userDefinedFieldID as Int?)
                             }
                         }
                     }
@@ -51,7 +52,7 @@ struct RentIncreaseNoticeBuilder: View {
                     // Try to load from SwiftData first
                     let localUDFs = try SwiftDataManager.shared.load(
                         of: RMUserDefinedValue.self,
-                        where: #Predicate { $0.parentType == "Tenant" }
+                        where: #Predicate { $0.parentType == "Unit" }
                     )
 
                     if localUDFs.isEmpty {
@@ -61,10 +62,21 @@ struct RentIncreaseNoticeBuilder: View {
                     } else {
                         allUDFs = localUDFs
                     }
+
+                    // Initialize selectedUDFId with first UDF if available
+                    if selectedUDFId == nil && !allUDFs.isEmpty {
+                        selectedUDFId = allUDFs.first?.userDefinedFieldID
+                    }
                 } catch {
                     // If SwiftData fails (context not set), just load from API
                     print("SwiftData not available, loading from API: \(error)")
                     allUDFs = await RMDataManager.shared.loadUserDefinedValues()
+                    try? SwiftDataManager.shared.save(allUDFs)
+
+                    // Initialize selectedUDFId with first UDF if available
+                    if selectedUDFId == nil && !allUDFs.isEmpty {
+                        selectedUDFId = allUDFs.first?.userDefinedFieldID
+                    }
                 }
             }
         }

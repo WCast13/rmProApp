@@ -15,6 +15,7 @@ class TenantDataManager: ObservableObject {
     @Published var allTenants: [RMTenant] = []
     @Published var singleTenant: RMTenant?
     @Published var allUnitTenants: [WCLeaseTenant] = []
+    @Published var allUnits : [RMUnit] = []
 
     // TODO: Dashboard Filters
     @Published var tenantsInDeliquency: [RMTenant]?
@@ -101,7 +102,7 @@ class TenantDataManager: ObservableObject {
 
             // 3. Load units concurrently with other sections
             group.addTask {
-                await UnitDataManager.shared.loadUnitsWithBasicData()
+                await RMDataManager.shared.loadUnits()
             }
         }
 
@@ -314,45 +315,6 @@ class TenantDataManager: ObservableObject {
         self.rentIncreaseTenants = rentIncreaseTenants
     }
     
-    
-    /* ARCHIVED:
-     func buildTranasactions(tenantID: Int) async {
-         let tenant = pembrokeTenants.filter { $0.tenantID == tenantID }.first
-         print("Start Build Transactions")
-         print("***************************************")
-         print(tenant?.tenantDisplayID ?? 0)
-         print(tenant?.name ?? "")
-         let charges = tenant?.charges ?? []
-         let payments = tenant?.payments ?? []
-         let paymentReversals = tenant?.paymentReversals ?? []
-         
-         let charge = charges.first
-         print(charge?.amount ?? 0.0)
-         print(charge?.amountAllocated ?? 0.0)
-         print(charge?.accountType ?? "")
-         print(charge?.comment ?? "")
-         print(charge?.transactionDate ?? Date())
-         print(charge?.isFullyAllocated ?? false)
-         print(charge?.chargeTypeID ?? 0)
-         
-         let payment = payments.first
-         print(payment?.amount ?? 0.0)
-         print(payment?.accountType ?? "")
-         print(payment?.amountAllocated ?? 0.0)
-         print(payment?.comment ?? "")
-         print(payment?.isFullyAllocated ?? false)
-         print(payment?.reversalDate ?? Date())
-         print(payment?.reversalType ?? "")
-         print(payment?.transactionDate ?? Date())
-         print(payment?.transactionType ?? "")
-         
-         print(charges.count)
-         print(payments.count)
-         print(paymentReversals.count)
-         
-     }
-     */
-    
     func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
         let leaseTenant = WCLeaseTenant(
             accountGroupID: tenant.accountGroupID,
@@ -431,6 +393,7 @@ class TenantDataManager: ObservableObject {
     ///   - tenantID: The tenant's ID.
     ///   - isMember: Pass true to add to the group, false to remove.
     /// - Returns: Bool indicating success.
+    // TODO: - Need to fix Function
     func updateFireProtectionGroup(tenantID: Int, isMember: Bool) {
         
         let parameters = "{\"TenantID\": \(tenantID),\"PropertyID\": 3,\"UserDefinedValues\": [{\"UserDefinedValueID\": 8947,\"UserDefinedFieldID\": 64,\"Name\": \"HEI- Fire Protection Approved 2026\",\"Value\": \"Yes\"}]}"

@@ -32,7 +32,6 @@
 		E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEB9E2E7CEE660082FC7B /* TenantParams.swift */; };
 		E11AEBA22E7CEE660082FC7B /* APIEndpointsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEB9D2E7CEE660082FC7B /* APIEndpointsFilter.swift */; };
 		E11AEBA32E7CEE660082FC7B /* UnitParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEB9F2E7CEE660082FC7B /* UnitParams.swift */; };
-		E11AEBA52E7CEED60082FC7B /* UnitDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBA42E7CEED60082FC7B /* UnitDataManager.swift */; };
 		E11AEBEB2E7CF12B0082FC7B /* UnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBCC2E7CF12B0082FC7B /* UnitsView.swift */; };
 		E11AEBEF2E7CF12B0082FC7B /* Rent Increase Notice Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */; };
 		E11AEBF02E7CF12B0082FC7B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBB72E7CF12B0082FC7B /* ContentView.swift */; };
@@ -94,7 +93,6 @@
 		E11AEB9D2E7CEE660082FC7B /* APIEndpointsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpointsFilter.swift; sourceTree = "<group>"; };
 		E11AEB9E2E7CEE660082FC7B /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E11AEB9F2E7CEE660082FC7B /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
-		E11AEBA42E7CEED60082FC7B /* UnitDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataManager.swift; sourceTree = "<group>"; };
 		E11AEBB72E7CF12B0082FC7B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E11AEBB82E7CF12B0082FC7B /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
 		E11AEBB92E7CF12B0082FC7B /* GetBoxNumbersForUDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBoxNumbersForUDF.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 			children = (
 				E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */,
 				E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */,
-				E11AEBA42E7CEED60082FC7B /* UnitDataManager.swift */,
 				E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */,
 				E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */,
 			);
@@ -466,7 +463,6 @@
 				E11AEB982E7CEDFF0082FC7B /* RMRecurringCharges.swift in Sources */,
 				E11AEB992E7CEDFF0082FC7B /* RMRecurringChargesSummary.swift in Sources */,
 				E11AEB9A2E7CEDFF0082FC7B /* RMSecurityDepositSummary.swift in Sources */,
-				E11AEBA52E7CEED60082FC7B /* UnitDataManager.swift in Sources */,
 				E11AEB9B2E7CEDFF0082FC7B /* RMCharge.swift in Sources */,
 				E11AEB9C2E7CEDFF0082FC7B /* RMChargeType.swift in Sources */,
 				E1A434BE2DD5018800BDE071 /* EncodeDecodeHelpers.swift in Sources */,

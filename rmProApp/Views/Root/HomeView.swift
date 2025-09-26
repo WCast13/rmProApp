@@ -18,9 +18,6 @@ struct HomeView: View {
             HomeButton(title: "Rent Increase Builder", destination: AppDestination.contentView)
             HomeButton(title: "Rent Increase Builder Home", destination: AppDestination.rentIncreaseBuilder)
             HomeButton(title: "Residents Home View", destination: AppDestination.residentsHome)
-            HomeButton(title: "Dashboard", destination: AppDestination.home)
-//            HomeButton(title: "Resident List", destination: AppDestination.residentDetails)
-            HomeButton(title: "Test", destination: AppDestination.rentIncreaseBuilder)
             
             HStack {
                 Spacer()
