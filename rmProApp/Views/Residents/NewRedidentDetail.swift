@@ -62,6 +62,34 @@ struct NewResidentDetailView: View {
             tenant.transactions = await TenantTransactionsManager.shared.processTransactions(tenant: tenant)
         }
     }
+    
+    func createLoan() async {
+        // Create Site
+
+
+    }
+
+    func createNewUnit() {
+        let parameters = "{\n    \"PropertyID\": 8,\n    \"Name\": \"_TEST- Loan\",\n    \"UnitTypeID\": 6\n}"
+        let postData = parameters.data(using: .utf8)
+
+        var request = URLRequest(url: URL(string: "https://trieq.api.rentmanager.com/Units")!,timeoutInterval: Double.infinity)
+        request.addValue("PTuF664fnnq5yjDji3ue2_7BFtXRwJ1vFvbaOPvEZ4P6KeDX-6RYyIKhAaHD53P_g-_QJRGmRHhqY1iJvnpTdtOcgd6K3t7D_qhPUGXMqEs=", forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+          guard let data = data else {
+            print(String(describing: error))
+            return
+          }
+          print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()
+    }
 }
 
 // MARK: - Header View
