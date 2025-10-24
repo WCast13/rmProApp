@@ -16,6 +16,14 @@ struct NewResidentDetailView: View {
     
     var body: some View {
         ScrollView {
+            
+            Button("Create GVH Unit") {
+                Task {
+                    try? await createNewUnit(name: "Test Unit - GVH")
+                }
+            }
+            
+            
             VStack(spacing: 20) {
                 // Header with Quick Actions
                 HeaderView(tenant: tenant)
@@ -65,373 +73,161 @@ struct NewResidentDetailView: View {
     
     func createLoan() async {
         // Create Site
+        var newUnit: CreatedUnitResponse? = nil
+        
+        Task {
+            newUnit = try? await createNewUnit(name: "_XXX Test - Loan\(Int.random(in: 1...305))")
+        }
+        
+        // Auto Update
+        let reference = "10203" // Need last loan reference number and increase by 1- SwiftData
+        
+        // Doesnt Change
+        let propertyID: Int = 8 // Always the same
+        let accountID: Int = tenant.accountGroupMasterTenantID ?? 0
+        let paymentDay: Int = 15
+        let startingPaymentNumber: Int = 0
+        let interestMethod: String = "Straight"
+        let principalChargeTypeID: Int = 16
+        let interestChargeTypeID: Int = 38
+        let prepayChargeTypeID: Int = 16
+        let paymentNumber: Int = 1
+        let unitID = newUnit?.unitID ?? 0
+        
+        
+        // Ask in Form
+        let originalPrincipal: Double = 137488.23
+        let downPayment: Double = 130000.00
+        let term: Int = 300
+        let paymentAmount: Double = 458.30
+        let interestRate: Double = 6.045
+        
 
-
+        // Format Date - From Picker Input
+        let closeDate: Date = Calendar.current.date(byAdding: .year, value: -100, to: Date())!
+        let loanDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+        let paymentStartDate: Date = Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+        
+        
+        
+        
+        
+        
+        
+        /*
+         {
+             "Reference": "10203", // Create
+             "PropertyID": 8,
+             "AccountID": 2671, // Lookup from Tenant
+             "OriginalPrincipal": 137488.23,
+             "DownPayment": 130000.00,
+             "CloseDate": "1234-01-10T00:00:00",
+             "LoanDate": "1934-01-10T00:00:00",
+             "PaymentStartDate": "2024-02-15T00:00:00",
+             "PaymentDay": 15,
+             "StartingPaymentNumber": 0,
+             "Term": 300,
+             "InterestMethod": "Straight",
+             "UnitID": 1337,
+             "PrincipalChargeTypeID": 16,
+             "InterestChargeTypeID": 38,
+             "PrepayChargeTypeID": 16,
+                 "LoanRates": [
+                 {
+                     "PaymentAmount": 928.33,
+                     "PaymentNumber": 1,
+                     "InterestRate": 6.5000
+                 }
+             ]
+         }
+         */
+        
+        
     }
 
-    func createNewUnit() {
-        let parameters = "{\n    \"PropertyID\": 8,\n    \"Name\": \"_TEST- Loan\",\n    \"UnitTypeID\": 6\n}"
-        let postData = parameters.data(using: .utf8)
+    func createNewUnit(name: String = "Test - Loan\(Int.random(in: 1...305))") async throws -> CreatedUnitResponse {
+        // Create request payload using the struct
+        let requestBody = CreateUnitRequest(
+            propertyID: 8,
+            name: "_T- Loan \(Int.random(in: 1...305))",
+            unitTypeID: 6
+        )
 
-        var request = URLRequest(url: URL(string: "https://trieq.api.rentmanager.com/Units")!,timeoutInterval: Double.infinity)
-        request.addValue("PTuF664fnnq5yjDji3ue2_7BFtXRwJ1vFvbaOPvEZ4P6KeDX-6RYyIKhAaHD53P_g-_QJRGmRHhqY1iJvnpTdtOcgd6K3t7D_qhPUGXMqEs=", forHTTPHeaderField: "X-RM12Api-ApiToken")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        // Encode to JSON properly
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(requestBody)
 
+        // Configure request
+        guard let url = URL(string: "https://trieq.api.rentmanager.com/Units") else {
+            print("invariant: invalid URL")
+            throw UnitCreationError.invalidURL
+        }
+
+        let apiKey = TokenManager.shared.token ?? ""
+        print("API: Key: \(apiKey)")
+
+        var request = URLRequest(url: url, timeoutInterval: 30.0)
         request.httpMethod = "POST"
-        request.httpBody = postData
+        request.setValue(apiKey, forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
 
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-          guard let data = data else {
-            print(String(describing: error))
-            return
-          }
-          print(String(data: data, encoding: .utf8)!)
-        }
+        // Perform request
+        let (data, response) = try await URLSession.shared.data(for: request)
 
-        task.resume()
+        print("Response: \(String(decoding: data, as: UTF8.self))")
+
+        // Decode response
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let createdUnit = try decoder.decode(CreatedUnitResponse.self, from: data)
+
+        print("Created Unit: \(createdUnit)")
+
+        return createdUnit
     }
 }
 
-// MARK: - Header View
-struct HeaderView: View {
-    let tenant: WCLeaseTenant
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("\(tenant.primaryContact?.firstName ?? "Resident") \(tenant.primaryContact?.lastName ?? "")")
-                .font(.largeTitle.bold())
-                .foregroundColor(.primary)
-            Text("Unit: \(tenant.unit?.name ?? "N/A")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
-            // Quick Action Buttons
-            HStack(spacing: 12) {
-                ActionButton(title: "Add Charge", icon: "plus.circle", action: {})
-                ActionButton(title: "Start Violation", icon: "exclamationmark.triangle", action: {})
-                ActionButton(title: "Add Note", icon: "note.text", action: {})
-            }
-            .padding(.top, 8)
-        }
-        .padding(.vertical, 12)
+// MARK: - Unit Creation Models
+struct CreateUnitRequest: Codable {
+    let propertyID: Int
+    let name: String
+    let unitTypeID: Int
+
+    enum CodingKeys: String, CodingKey {
+        case propertyID = "PropertyID"
+        case name = "Name"
+        case unitTypeID = "UnitTypeID"
     }
 }
 
-// MARK: - Information Card
-struct InformationCard: View {
-    let tenant: WCLeaseTenant
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Resident Information")
-                .font(.title3.bold())
-                .foregroundColor(.primary)
-                .padding(.horizontal)
-            
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 16),
-                GridItem(.flexible(), spacing: 16)
-            ], spacing: 16) {
-                InfoItem(label: "Unit #", value: tenant.unit?.name ?? "N/A")
-                InfoItem(label: "Balance", value: tenant.balance?.formatted() ?? "$0.00")
-                InfoItem(label: "Primary Contact", value: tenant.primaryContact?.firstName ?? "N/A")
-                InfoItem(label: "Secondary Contact", value: tenant.contacts?.dropFirst().first?.firstName ?? "N/A")
-                InfoItem(label: "Move In", value: tenant.lease?.moveInDate ?? "N/A")
-                InfoItem(label: "Site Type", value: tenant.unit?.unitType?.name ?? "N/A")
-                InfoItem(label: "Security Deposit", value: "$\(tenant.securityDepositHeld ?? 0)")
-//                InfoItem(label: "Mailbox #", value: tenant./*mailboxNumber*/ ?? "N/A")
-            }
-            .padding()
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color(.systemGray5), lineWidth: 1)
-            )
-        }
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+struct CreatedUnitResponse: Codable {
+    let unitID: Int?
+    let name: String?
+    let propertyID: Int?
+    let unitTypeID: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case unitID = "UnitID"
+        case name = "Name"
+        case propertyID = "PropertyID"
+        case unitTypeID = "UnitTypeID"
     }
 }
 
-// MARK: - Addresses Card
-struct AddressesCard: View {
-    let tenant: WCLeaseTenant
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Addresses")
-                .font(.title3.bold())
-                .foregroundColor(.primary)
-                .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 12) {
-                if let address = tenant.lease?.unit?.addresses?.first {
-                    AddressItem(street: address.street, city: address.city, state: address.state, zip: address.postalCode)
-                } else {
-                    Text("No address available")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-            }
-            .padding()
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color(.systemGray5), lineWidth: 1)
-            )
-        }
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-    }
-}
+enum UnitCreationError: LocalizedError {
+    case invalidURL
+    case invalidResponse
+    case httpError(statusCode: Int)
 
-// MARK: - Contacts Card
-struct ContactsCard: View {
-    let contacts: [RMContact]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Contact Details")
-                .font(.title3.bold())
-                .foregroundColor(.primary)
-                .padding(.horizontal)
-            
-            if contacts.isEmpty {
-                Text("No contacts available")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding()
-            } else {
-                VStack(spacing: 12) {
-                    ForEach(contacts) { contact in
-                        ContactItem(contact: contact)
-                    }
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color(.systemGray5), lineWidth: 1)
-                )
-            }
-        }
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-    }
-}
-
-// MARK: - Lease Card
-struct LeaseCard: View {
-    let leases: [RMLease]
-    let recurringCharges: [RMRecurringCharges]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Lease Details")
-                .font(.title3.bold())
-                .foregroundColor(.primary)
-                .padding(.horizontal)
-            
-            if leases.isEmpty {
-                Text("No lease information available")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding()
-            } else {
-                VStack(alignment: .leading, spacing: 16) {
-                    ForEach(leases) { lease in
-                        LeaseItem(lease: lease, recurringCharges: recurringCharges)
-                    }
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color(.systemGray5), lineWidth: 1)
-                )
-            }
-        }
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-    }
-}
-
-// MARK: - Transactions Card
-struct TransactionsCard: View {
-    let transactions: [WCTransaction]
-    let isLoading: Bool
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Transactions")
-                .font(.title3.bold())
-                .foregroundColor(.primary)
-                .padding(.horizontal)
-            
-            if isLoading {
-                ProgressView()
-                    .padding()
-            } else if transactions.isEmpty {
-                Text("No transactions available")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding()
-            } else {
-                VStack(spacing: 12) {
-                    ForEach(transactions.prefix(5)) { transaction in
-                        TransactionItem(transaction: transaction)
-                    }
-                    if transactions.count > 5 {
-                        Button("View All Transactions") {
-                            // Navigate to full transactions view
-                        }
-                        .font(.subheadline.bold())
-                        .foregroundColor(.accentColor)
-                        .padding(.top, 8)
-                    }
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color(.systemGray5), lineWidth: 1)
-                )
-            }
-        }
-        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-    }
-}
-
-// MARK: - Reusable Components
-struct InfoItem: View {
-    let label: String
-    let value: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text(value)
-                .font(.subheadline.bold())
-                .foregroundColor(.primary)
-        }
-    }
-}
-
-struct AddressItem: View {
-    let street: String?
-    let city: String?
-    let state: String?
-    let zip: String?
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(street ?? "N/A")
-                .font(.subheadline.bold())
-            Text("\(city ?? ""), \(state ?? "") \(zip ?? "")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 4)
-    }
-}
-
-struct ContactItem: View {
-    let contact: RMContact
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("\(contact.firstName ?? "") \(contact.lastName ?? "")")
-                .font(.subheadline.bold())
-            Text("Phone: \(contact.phoneNumbers.first(where: { $0.phoneNumberID == 3 })?.phoneNumber ?? "N/A")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            Text("Email: \(contact.email ?? "N/A")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-}
-
-struct LeaseItem: View {
-    let lease: RMLease
-    let recurringCharges: [RMRecurringCharges]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Unit: \(lease.unit?.name ?? "N/A")")
-                .font(.subheadline.bold())
-            Text("Move In: \(lease.moveInDate ?? "N/A")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            Text("Move Out: \(lease.moveOutDate ?? "N/A")")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            if !recurringCharges.isEmpty {
-                Text("Recurring Charges:")
-                    .font(.subheadline.bold())
-                ForEach(recurringCharges) { charge in
-                    HStack {
-                        Text(charge.chargeType?.description ?? "N/A")
-                        Spacer()
-                        Text("$\(charge.amount ?? 0)")
-                    }
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                }
-            }
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-}
-
-struct TransactionItem: View {
-    let transaction: WCTransaction
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(transaction.comment ?? "Transaction")
-                    .font(.subheadline.bold())
-                Text(transaction.transactionDate ?? "N/A")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            Spacer()
-            Text("$\(transaction.amount ?? 0)")
-                .font(.subheadline.bold())
-                .foregroundColor(transaction.amount ?? 0 >= 0 ? .green : .red)
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-}
-
-struct ActionButton: View {
-    let title: String
-    let icon: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(systemName: icon)
-                Text(title)
-            }
-            .font(.subheadline.bold())
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(Color.accentColor.opacity(0.1))
-            .foregroundColor(.accentColor)
-            .clipShape(Capsule())
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "Invalid API URL"
+        case .invalidResponse:
+            return "Invalid response from server"
+        case .httpError(let statusCode):
+            return "HTTP error with status code: \(statusCode)"
         }
     }
 }
