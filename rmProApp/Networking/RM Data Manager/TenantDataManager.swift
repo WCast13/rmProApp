@@ -318,6 +318,7 @@ class TenantDataManager: ObservableObject {
     func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
         let leaseTenant = WCLeaseTenant(
             accountGroupID: tenant.accountGroupID,
+            accountGroupMasterTenantID: tenant.accountGroupMasterTenantID,
             addresses: tenant.addresses,
             allLeases: tenant.leases,
             balance: tenant.balance,

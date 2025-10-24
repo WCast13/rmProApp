@@ -91,6 +91,7 @@ enum TenantEmbeds: String, CaseIterable {
 enum TenantFields: String, CaseIterable {
     case accountStatements = "AccountStatements"
     case accountType = "AccountType"
+    case accountGroupMasterTenantID = "AccountGroupMasterTenantID"
     case addresses = "Addresses"
     case appointments = "Appointments"
     case balance = "Balance"
@@ -230,7 +231,7 @@ extension TenantFields {
     ]
 
     static let baseFields: [TenantFields] = [
-         .balance, .colorID, .comment, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues
+        .accountGroupMasterTenantID, .balance, .colorID, .comment, .firstName, .lastName, .leases, .loans, .name, .openBalance, .openReceivables, .propertyID,  .recurringChargeSummaries, .securityDepositHeld, .status, .tenantDisplayID, .tenantID, .updateDate, .updateUserID, .userDefinedValues
     ]
     
     static let bareFields: [TenantFields] = [

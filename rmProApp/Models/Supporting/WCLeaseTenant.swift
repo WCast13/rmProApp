@@ -17,6 +17,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     init(
         id: UUID = UUID(),
         accountGroupID: Int? = nil,
+        accountGroupMasterTenantID: Int? = nil,
         addresses: [RMAddress]? = nil,
         allLeases: [RMLease]? = nil,
         balance: Decimal? = nil,
@@ -85,6 +86,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     ) {
         self.id = id
         self.accountGroupID = accountGroupID
+        self.accountGroupMasterTenantID = accountGroupMasterTenantID
         self.addresses = addresses
         self.allLeases = allLeases
         self.balance = balance
@@ -154,6 +156,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     
     var id: UUID = UUID()
     var accountGroupID: Int?
+    var accountGroupMasterTenantID: Int?
     var addresses: [RMAddress]?
     var allLeases: [RMLease]?
     var balance: Decimal?
@@ -226,6 +229,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = UUID()
         self.accountGroupID = try? container.decode(Int.self, forKey: .accountGroupID)
+        self.accountGroupMasterTenantID = try? container.decode(Int.self, forKey: .accountGroupMasterTenantID)
         self.balance = try? container.decode(Decimal.self, forKey: .balance)
         self.addresses = try? container.decode([RMAddress].self, forKey: .addresses)
         self.allLeases = try? container.decode([RMLease].self, forKey: .allLeases)
@@ -297,6 +301,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(accountGroupID, forKey: .accountGroupID)
+        try container.encodeIfPresent(accountGroupMasterTenantID, forKey: .accountGroupMasterTenantID)
         try container.encodeIfPresent(balance, forKey: .balance)
         try container.encodeIfPresent(addresses, forKey: .addresses)
         try container.encodeIfPresent(allLeases, forKey: .allLeases)
@@ -366,6 +371,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     
     enum CodingKeys: String, CodingKey {
         case accountGroupID = "AccountGroupID"
+        case accountGroupMasterTenantID = "AccountGroupMasterTenantID"
         case balance = "Balance"
         case addresses = "Addresses"
         case allLeases = "Leases"

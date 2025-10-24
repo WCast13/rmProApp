@@ -14,6 +14,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
     
     var id = UUID()
     var accountGroupID: Int?
+    var accountGroupMasterTenantID: Int?
     var balance: Decimal?
     var charges: [RMCharge]?
     var chargeTypes: [RMChargeType]?
@@ -84,6 +85,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
     
     enum CodingKeys: String, CodingKey {
         case accountGroupID = "AccountGroupID"
+        case accountGroupMasterTenantID = "AccountGroupMasterTenantID"
         case balance = "Balance"
         case charges = "Charges"
         case checkPayeeName = "CheckPayeeName"
@@ -157,6 +159,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = UUID()
         self.accountGroupID = try container.decodeIfPresent(Int.self, forKey: .accountGroupID)
+        self.accountGroupMasterTenantID = try container.decodeIfPresent(Int.self, forKey: .accountGroupMasterTenantID)
         self.balance = try container.decodeIfPresent(Decimal.self, forKey: .balance)
         self.charges = try container.decodeIfPresent([RMCharge].self, forKey: .charges)
         self.chargeTypes = try container.decodeIfPresent([RMChargeType].self, forKey: .chargeTypes)
@@ -225,6 +228,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(accountGroupID, forKey: .accountGroupID)
+        try container.encodeIfPresent(accountGroupMasterTenantID, forKey: .accountGroupMasterTenantID)
         try container.encodeIfPresent(balance, forKey: .balance)
         try container.encodeIfPresent(charges, forKey: .charges)
         try container.encodeIfPresent(chargeTypes, forKey: .chargeTypes)
