@@ -49,7 +49,7 @@ class RentManagerAPIClient {
     
     // MARK: Generic POST helper (JSON body, raw response)
     // TODO: Fix this function or delete it
-    func post(url: URL, body: [String: Any]) async -> (success: Bool, data: Data?, statusCode: Int) {
+    func postRequest(url: URL, body: [String: Any]) async -> (success: Bool, data: Data?, statusCode: Int) {
         let token = await TokenManager.shared.token ?? ""
         
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)

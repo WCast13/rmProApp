@@ -53,11 +53,6 @@ class RMDataManager: ObservableObject {
         print("Vacant Units: \(vacantUnits.count)")
     }
     
-    /*
-     {{baseURL}}/Units?filters={{propertyIDFilter}}&embeds=CurrentOccupants,PrimaryAddress,Property.Addresses,UnitType,Leases,Leases.Tenant,UserDefinedValues&fields=CurrentOccupants,Name,PrimaryAddress,PropertyID,UnitType,Leases,UserDefinedValues
-     */
-    
-    
     func loadUserDefinedValues() async -> [RMUserDefinedValue] {
         let userDefinedFieldsURL = URLBuilder.shared.buildURL(endpoint: .userDefinedFields)!
 
