@@ -60,6 +60,7 @@ class LabelGeneratorManager {
                     let labelRect = CGRect(x: currentX, y: currentY, width: labelWidth, height: labelHeight)
                     
                     let tenant = tenants.filter { $0.tenantID == unit.currentOccupants?.first?.tenantID }
+                    
                     drawLabel(for: unit, tenant: tenant, in: labelRect)
                     
                     
@@ -118,20 +119,20 @@ class LabelGeneratorManager {
         }
         
         
-        //        switch unit.unitType?.name {
-        //        case "HEI- Regular Rent":
-        //            textColor = .black
-        //        case "HEI- Fire Protection":
-        //            textColor = .fireRed
-        //        case "PTP- Pros B - Dry":
-        //            textColor = .havenGreen
-        //        case "PTP- Pros B - Lake":
-        //            textColor = .pembrokeBlue
-        //        case "PTP- Pros A":
-        //            textColor = .fireRed
-        //        default:
-        //            textColor = .yellow // Default or for any other types
-        //        }
+                switch unit.unitType?.name {
+                case "HEI- Regular Rent":
+                    textColor = .black
+                case "HEI- Fire Protection":
+                    textColor = .fireRed
+                case "PTP- Pros B - Dry":
+                    textColor = .havenGreen
+                case "PTP- Pros B - Lake":
+                    textColor = .pembrokeBlue
+                case "PTP- Pros A":
+                    textColor = .fireRed
+                default:
+                    textColor = .yellow // Default or for any other types
+                }
         
         let contactsForLabel = tenant.first?.contacts?.filter { $0.isShowOnBill == true }
         var namesPortion = ""
