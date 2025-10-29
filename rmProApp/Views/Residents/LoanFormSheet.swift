@@ -19,6 +19,7 @@ struct LoanFormSheet: View {
     @Binding var closeDate: Date
     @Binding var loanDate: Date
     @Binding var paymentStartDate: Date
+    @Binding var isCreating: Bool
     var onSubmit: () -> Void
 
     var body: some View {
@@ -83,11 +84,15 @@ struct LoanFormSheet: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .disabled(isCreating)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-        
-                    Button("Create") {
-                        onSubmit()
+                    if isCreating {
+                        ProgressView()
+                    } else {
+                        Button("Create") {
+                            onSubmit()
+                        }
                     }
                 }
             }

@@ -16,37 +16,27 @@ struct NewResidentDetailView: View {
     @State private var isLoadingTransactions = false
     
     // Loan form state variables
+    @State private var loanName: String = ""
     @State private var showLoanForm = false
-    @State private var loanName = ""
-    @State private var originalPrincipal = 2000000.0
-    @State private var downPayment = 100000.0
-    @State private var term = 100
-    @State private var paymentAmount = 10000.0
-    @State private var interestRate = 10.0
+    @State private var originalPrincipal = 0.0
+    @State private var downPayment = 0.0
+    @State private var term = 300
+    @State private var paymentAmount = 0.0
+    @State private var interestRate = 6.5
     @State private var closeDate = Date()
     @State private var loanDate = Date()
     @State private var paymentStartDate = Date()
+    @State private var newUnitID: Int?
     
-    @State private var newUnitID: Int = 0
+    @State private var isCreatingLoan = false
+    @State private var loanCreationError: String?
+    @State private var showSuccessAlert = false
     
     var body: some View {
         ScrollView {
             
             Button("Create New Loan") {
-                Task {
-                    let createdUnit = try? await createNewUnit(name: "\(tenant.unit?.name ?? "New Unit")- Loan")
-                    newUnitID = createdUnit?.unitID ?? 0
-                    print("✅ Unit created with ID: \(newUnitID)")
-                }
-                
-                Task {
-                    try? await addLeaseForLoan(unitID: newUnitID)
-                    print("✅ Lease created successfully")
-                    
-                }
-                
                 showLoanForm = true
-
             }
             
             VStack(spacing: 20) {
@@ -92,11 +82,30 @@ struct NewResidentDetailView: View {
                 closeDate: $closeDate,
                 loanDate: $loanDate,
                 paymentStartDate: $paymentStartDate,
-                onSubmit: { Task {
-                    try await createLoan()
-                }
+                isCreating: $isCreatingLoan,
+                onSubmit: {
+                    Task {
+                        await createNewUnit()
+                        await createNewLease()
+                        await createNewLoan()
+                        showSuccessAlert = true
+                    }
                 }
             )
+        }
+        .alert("Success!", isPresented: $showSuccessAlert) {
+            Button("OK") {
+                showLoanForm = false
+            }
+        } message: {
+            Text("Loan created successfully!")
+        }
+        .alert("Error", isPresented: .constant(loanCreationError != nil)) {
+            Button("OK") {
+                loanCreationError = nil
+            }
+        } message: {
+            Text(loanCreationError ?? "Unknown error")
         }
     }
     
@@ -112,160 +121,70 @@ struct NewResidentDetailView: View {
             tenant.transactions = await TenantTransactionsManager.shared.processTransactions(tenant: tenant)
         }
     }
-    
-    func createLoan() async throws {
-//        // STEP 1: Create Unit and await completion
-//        print("📦 Step 1: Creating unit...")
-//        let newUnit = try await createNewUnit(name: "_XXX Test - Loan\(Int.random(in: 1...305))")
-//        print("✅ Unit created with ID: \(newUnit.unitID ?? 0)")
-//        
-//        guard let unitID = newUnit.unitID else {
-//            throw UnitCreationError.invalidResponse
-//        }
-//        
-//        // STEP 2: Create Lease using the unit ID and await completion
-//        print("📄 Step 2: Creating lease for unit \(unitID)...")
-//        try await addLeaseForLoan(unitID: unitID)
-//        print("✅ Lease created successfully")
-//        
-        // STEP 3: Create Loan using the unit ID
-        print("💰 Step 3: Creating loan...")
+  
+    func createNewUnit() async {
+        let newUnitName = "\(tenant.unit?.name ?? "") - Loan"
+        let unitFilter = RMDataManager.shared.unitsWithBasicData.filter { $0.name == newUnitName }
         
-        let closeDateShort = closeDate.formatted(date: .numeric, time: .omitted)
-        let loanDateShort = loanDate.formatted(date: .numeric, time: .omitted)
-        let paymentStartDateShort = paymentStartDate.formatted(date: .numeric, time: .omitted)
-        
-        print("Close Date: \(closeDateShort)")
-        print("Loan Date: \(loanDateShort)")
-        print("Payment Start Date: \(paymentStartDateShort)")
-        
-        let loanRate = LoanRate(
-            paymentAmount: paymentAmount,
-            paymentNumber: 1,
-            interestRate: interestRate
-        )
-        
-        let requestBody = CreateLoanRequest(
-            reference: "\(Int.random(in: 1000...3500))",
-            propertyID: 8,
-            accountID: tenant.accountGroupMasterTenantID ?? 0,
-            originalPrincipal: originalPrincipal,
-            downPayment: downPayment,
-            closeDate: closeDateShort,
-            loanDate: loanDateShort,
-            paymentStartDate: paymentStartDateShort,
-            paymentDay: 15,
-            startingPaymentNumber: 0,
-            term: term,
-            interestMethod: "Straight",
-            unitID: newUnitID,
-            principalChargeTypeID: 16,
-            interestChargeTypeID: 38,
-            prepayChargeTypeID: 16,
-            loanRates: [ loanRate ]
-        )
-        
-        // Send loan creation request
-        guard let loanURL = URL(string: "https://trieq.api.rentmanager.com/Loans/") else {
-            throw LoanCreationError.invalidURL
+        if unitFilter.isEmpty {
+            let url = URL(string: "https://trieq.api.rentmanager.com/Units")
+            guard let newURL = url else { return }
+
+            let requestBody = CreateUnitRequest(name: newUnitName)
+            // API returns an array, so we decode as [CreateUnitResponse] and get the first item
+            if let response = await RentManagerAPIClient.shared.postRequest(url: newURL, body: requestBody, responseType: [CreateUnitResponse].self),
+               let createdUnit = response.first {
+                print("Unit created with ID: \(createdUnit.unitID)")
+                newUnitID = createdUnit.unitID
+                print("New Unit ID: \(newUnitID ?? 0)")
+            }
+        } else {
+            newUnitID = unitFilter.first?.unitID ?? 0
+            print("New Unit ID: \(newUnitID ?? 0)")
         }
-        
-        let encoder = JSONEncoder()
-        let jsonData = try encoder.encode(requestBody)
-        
-        if let jsonString = String(data: jsonData, encoding: .utf8) {
-            print("Loan Request JSON: \(jsonString)")
-        }
-        
-        let apiKey = TokenManager.shared.token ?? ""
-        var request = URLRequest(url: loanURL, timeoutInterval: 30.0)
-        request.httpMethod = "POST"
-        request.setValue(apiKey, forHTTPHeaderField: "X-RM12Api-ApiToken")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        print("Loan Response: \(String(decoding: data, as: UTF8.self))")
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw LoanCreationError.invalidResponse
-        }
-        
-        guard (200...299).contains(httpResponse.statusCode) else {
-            throw LoanCreationError.httpError(statusCode: httpResponse.statusCode)
-        }
-        
-        print("✅ Loan created successfully!")
-        print("🎉 All steps completed: Unit ➡️ Lease ➡️ Loan")
     }
     
-    func createNewUnit(name: String = "Test - Loan\(Int.random(in: 1...305))") async throws -> CreatedUnitResponse {
+    func createNewLease() async {
+        let url = URL(string: "https://trieq.api.rentmanager.com/Leases")
+        guard let newURL = url else { return }
+        let tenantID: Int = tenant.tenantID ?? 0
+        let unitID = newUnitID ?? 0
         
-        guard let url = URL(string: "https://trieq.api.rentmanager.com/Units") else {
-            print("invariant: invalid URL")
-            throw UnitCreationError.invalidURL
-        }
+        let moveInDateString = closeDate.toRentManagerAPIString()
+        let activeLeaseRenewal = ActiveLeaseRenewal()
         
-        let body: [String: Any] = [
-            "PropertyID": 8,
-            "Name": "_T- Loan \(Int.random(in: 1...305))",
-            "UnitTypeID": 6
-        ]
+        let requestBody = CreateLeaseRequest(tenantID: tenantID, unitID: unitID, moveInDate: moveInDateString, activeLeaseRenewal: activeLeaseRenewal)
         
-        let result = await RentManagerAPIClient.shared.postRequest(url: url, body: body)
+        let status = await RentManagerAPIClient.shared.postRequest(url: newURL, body: requestBody)
+        print(status)
+    }
+    
+    func createNewLoan() async {
+        let url = URL(string: "https://trieq.api.rentmanager.com/Loans")
+        guard let newURL = url else { return }
+        let tenantID: Int = tenant.tenantID ?? 0
+        let unitID = newUnitID ?? 0
         
-        guard result.success, let data = result.data else {
-            throw UnitCreationError.httpError(statusCode: result.statusCode)
-        }
+        let closeDateString = closeDate.toRentManagerAPIString()
+        let loanDateString = loanDate.toRentManagerAPIString()
+        let paymentStartDateString = paymentStartDate.toRentManagerAPIString()
         
-        let decoder = JSONDecoder()
-        let createdUnit = try decoder.decode(CreatedUnitResponse.self, from: data)
+        let loanRate = LoanRates(paymentAmount: paymentAmount, interestRate: interestRate)
         
-        return createdUnit
+        let loanRequest = CreateLoanRequest(reference: "100", unitID: unitID, accountID: tenantID, originalPrincipal: originalPrincipal, downPayment: downPayment, closeDate: closeDateString, loanDate: loanDateString, paymentStartDate: paymentStartDateString, term: term, loanRates: [loanRate])
+        
+        let status = await RentManagerAPIClient.shared.postRequest(url: newURL, body: loanRequest)
+        print(status)
         
     }
     
-    func addLeaseForLoan(unitID: Int) async throws {
-        guard let url = URL(string: "https://trieq.api.rentmanager.com/Leases") else {
-            throw LeaseCreationError.invalidURL
-        }
-        
-        guard let tenantID = tenant.tenantID, tenantID > 0 else {
-            throw LeaseCreationError.invalidTenantID
-        }
-        
-        let moveInDate = "01/01/1990"
-        
-        print("Creating lease - TenantID: \(tenantID), UnitID: \(unitID)")
-        
-        let body: [String: Any] = [
-            "TenantID": tenantID,
-            "UnitID": unitID,
-            "MoveInDate": moveInDate,
-            "ActiveLeaseRenewal": []
-        ]
-        
-        let result = await RentManagerAPIClient.shared.postRequest(url: url, body: body)
-        
-        print("Lease Response - Status: \(result.statusCode), Success: \(result.success)")
-        
-        if let data = result.data {
-            print("Lease Response Data: \(String(decoding: data, as: UTF8.self))")
-        }
-        
-        guard result.success else {
-            throw LeaseCreationError.httpError(statusCode: result.statusCode)
-        }
-    }
 }
 
-// MARK: - Unit Creation Models
-struct CreateUnitRequest: Codable {
-    let propertyID: Int
+struct CreateUnitRequest: Encodable {
+    let propertyID: Int = 8
     let name: String
-    let unitTypeID: Int
-    
+    let unitTypeID: Int = 6
+
     enum CodingKeys: String, CodingKey {
         case propertyID = "PropertyID"
         case name = "Name"
@@ -273,149 +192,92 @@ struct CreateUnitRequest: Codable {
     }
 }
 
-struct CreatedUnitResponse: Codable {
-    let unitID: Int?
-    let name: String?
-    let propertyID: Int?
-    let unitTypeID: Int?
-    
+struct CreateUnitResponse: Decodable {
+    let unitID: Int
+    let name: String
+
     enum CodingKeys: String, CodingKey {
         case unitID = "UnitID"
         case name = "Name"
-        case propertyID = "PropertyID"
-        case unitTypeID = "UnitTypeID"
     }
 }
 
-enum UnitCreationError: LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case httpError(statusCode: Int)
+struct CreateLeaseRequest: Encodable {
+    let tenantID: Int
+    let unitID: Int
+    let moveInDate: String
+    let activeLeaseRenewal: ActiveLeaseRenewal?
     
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid API URL"
-        case .invalidResponse:
-            return "Invalid response from server"
-        case .httpError(let statusCode):
-            return "HTTP error with status code: \(statusCode)"
-        }
+    enum CodingKeys: String, CodingKey {
+        case tenantID = "TenantID"
+        case unitID = "UnitID"
+        case moveInDate = "MoveInDate"
+        case activeLeaseRenewal = "ActiveLeaseRenewal"
     }
 }
 
-enum LeaseCreationError: LocalizedError {
-    case invalidURL
-    case invalidTenantID
-    case httpError(statusCode: Int)
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid API URL for lease creation"
-        case .invalidTenantID:
-            return "Invalid tenant ID"
-        case .httpError(let statusCode):
-            return "Lease creation HTTP error with status code: \(statusCode)"
-        }
-    }
-}
+struct ActiveLeaseRenewal: Encodable { }
 
-// MARK: - Loan Creation Models
-struct CreateLoanRequest: Codable {
+struct CreateLoanRequest: Encodable {
     let reference: String
-    let propertyID: Int
+    let propertyID: Int = 8
+    let unitID: Int
     let accountID: Int
     let originalPrincipal: Double
     let downPayment: Double
     let closeDate: String
     let loanDate: String
     let paymentStartDate: String
-    let paymentDay: Int
-    let startingPaymentNumber: Int
+    let paymentDay: Int = 15
+    let startingPaymentNumber: Int = 0
     let term: Int
-    let interestMethod: String
-    let unitID: Int
-    let principalChargeTypeID: Int
-    let interestChargeTypeID: Int
-    let prepayChargeTypeID: Int
-    let loanRates: [LoanRate]
-
+    let interestMethod: String = "Straight"
+    let principalChargeTypeID: Int = 16
+    let interestChargeTypeID: Int = 38
+    let prepayChargeTypeID: Int = 16
+    let loanRates: [LoanRates]
+    
     enum CodingKeys: String, CodingKey {
-        case reference = "Reference"
-        case propertyID = "PropertyID"
-        case accountID = "AccountID"
+        case reference
+        case propertyID
+        case accountID
         case originalPrincipal = "OriginalPrincipal"
-        case downPayment = "DownPayment"
-        case closeDate = "CloseDate"
-        case loanDate = "LoanDate"
-        case paymentStartDate = "PaymentStartDate"
-        case paymentDay = "PaymentDay"
+        case downPayment
+        case closeDate
+        case loanDate
+        case paymentStartDate
+        case paymentDay
         case startingPaymentNumber = "StartingPaymentNumber"
-        case term = "Term"
-        case interestMethod = "InterestMethod"
+        case term
+        case interestMethod
         case unitID = "UnitID"
         case principalChargeTypeID = "PrincipalChargeTypeID"
         case interestChargeTypeID = "InterestChargeTypeID"
         case prepayChargeTypeID = "PrepayChargeTypeID"
-        case loanRates = "LoanRates"
+        case loanRates
     }
 }
 
-struct LoanRate: Codable {
+struct LoanRates: Encodable {
     let paymentAmount: Double
-    let paymentNumber: Int
+    let paymentNumber: Int = 1
     let interestRate: Double
     
     enum CodingKeys: String, CodingKey {
-        case paymentAmount = "PaymentAmount"
-        case paymentNumber = "PaymentNumber"
-        case interestRate = "InterestRate"
+        case paymentAmount
+        case paymentNumber
+        case interestRate
     }
 }
 
-struct CreatedLoanResponse: Codable {
-    let loanID: Int?
-    let reference: String?
-    let propertyID: Int?
-    let accountID: Int?
-    let unitID: Int?
-    let originalPrincipal: Double?
-    let downPayment: Double?
-    let term: Int?
-    let status: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case loanID = "LoanID"
-        case reference = "Reference"
-        case propertyID = "PropertyID"
-        case accountID = "AccountID"
-        case unitID = "UnitID"
-        case originalPrincipal = "OriginalPrincipal"
-        case downPayment = "DownPayment"
-        case term = "Term"
-        case status = "Status"
-    }
-}
-
-enum LoanCreationError: LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case httpError(statusCode: Int)
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid API URL for loan creation"
-        case .invalidResponse:
-            return "Invalid response from loan server"
-        case .httpError(let statusCode):
-            return "Loan creation HTTP error with status code: \(statusCode)"
-        }
-    }
-}
-
-
+/*
+ {
+     "TenantID": 838,
+     "UnitID": 1346,
+     "MoveInDate": "1941-12-06T00:00:00",
+     "ActiveLeaseRenewal": {}
+ }
+ */
 
 
 /*
@@ -445,10 +307,3 @@ enum LoanCreationError: LocalizedError {
  ]
  }
  */
-
-
-
-// MARK: - Loan Creation Model
-
-
-

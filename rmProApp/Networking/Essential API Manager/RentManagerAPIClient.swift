@@ -47,39 +47,117 @@ class RentManagerAPIClient {
         }
     }
     
-    // MARK: Generic POST helper (JSON body, raw response)
-    // TODO: Fix this function or delete it
-    func postRequest(url: URL, body: [String: Any]) async -> (success: Bool, data: Data?, statusCode: Int) {
-        let token = await TokenManager.shared.token ?? ""
-        
+    // MARK: Generic POST request with Codable types
+    func postRequest<T: Decodable, B: Encodable>(url: URL, body: B, responseType: T.Type) async -> T? {
+        guard let token = await TokenManager.shared.token else {
+            print("❌ Token is nil")
+            return nil
+        }
+
         var request = URLRequest(url: url, timeoutInterval: Double.infinity)
         request.httpMethod = "POST"
         request.addValue(token, forHTTPHeaderField: "X-RM12Api-ApiToken")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
-            print(request.httpBody ?? "")
+            request.httpBody = try JSONEncoder().encode(body)
         } catch {
             print("❌ POST encode error: \(error.localizedDescription)")
-            return (false, nil, -1)
+            return nil
         }
-        
+
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
+
             guard let http = response as? HTTPURLResponse else {
                 print("❌ Invalid POST response")
-                return (false, data, -1)
+                return nil
             }
+
+            // Check for success status codes (200-299)
+            guard (200...299).contains(http.statusCode) else {
                 let text = String(data: data, encoding: .utf8) ?? ""
                 print("❌ POST failed [\(http.statusCode)]: \(text)")
-            return (false, data, http.statusCode)
+                return nil
+            }
+
+            // Debug: Print raw response
+            let responseText = String(data: data, encoding: .utf8) ?? ""
+            print("✅ POST success [\(http.statusCode)]. Response: \(responseText)")
+
+            // Handle empty responses
+            if data.isEmpty {
+                print("⚠️ Response is empty, cannot decode to \(T.self)")
+                return nil
+            }
+
+            let decodedData = try JSONDecoder().decode(responseType, from: data)
+            return decodedData
+
+        } catch let DecodingError.dataCorrupted(context) {
+            print("❌ Data corrupted: \(context.debugDescription)")
+            return nil
+        } catch let DecodingError.keyNotFound(key, context) {
+            print("❌ Key '\(key.stringValue)' not found: \(context.debugDescription)")
+            return nil
+        } catch let DecodingError.typeMismatch(type, context) {
+            print("❌ Type '\(type)' mismatch: \(context.debugDescription)")
+            return nil
+        } catch let DecodingError.valueNotFound(type, context) {
+            print("❌ Value '\(type)' not found: \(context.debugDescription)")
+            return nil
         } catch {
             print("❌ POST request error: \(error.localizedDescription)")
-            return (false, nil, -1)
+            return nil
         }
     }
-    
+
+    // MARK: POST request without response decoding (returns success/failure only)
+    func postRequest<B: Encodable>(url: URL, body: B) async -> Bool {
+        guard let token = await TokenManager.shared.token else {
+            print("❌ Token is nil")
+            return false
+        }
+
+        var request = URLRequest(url: url, timeoutInterval: Double.infinity)
+        request.httpMethod = "POST"
+        request.addValue(token, forHTTPHeaderField: "X-RM12Api-ApiToken")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+        } catch {
+            print("❌ POST encode error: \(error.localizedDescription)")
+            return false
+        }
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            guard let http = response as? HTTPURLResponse else {
+                print("❌ Invalid POST response")
+                return false
+            }
+
+            // Check for success status codes (200-299)
+            let success = (200...299).contains(http.statusCode)
+
+            if success {
+                let responseText = String(data: data, encoding: .utf8) ?? ""
+                print("✅ POST success [\(http.statusCode)]. Response: \(responseText)")
+            } else {
+                let text = String(data: data, encoding: .utf8) ?? ""
+                print("❌ POST failed [\(http.statusCode)]: \(text)")
+            }
+
+            return success
+
+        } catch {
+            print("❌ POST request error: \(error.localizedDescription)")
+            return false
+        }
+    }
+
 // MARK: Site Type Change- Fire Protection Group to Regular Rent
     
     func fpgToRegularRent(unit: RMUnit) async {

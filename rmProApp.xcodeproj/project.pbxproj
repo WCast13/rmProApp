@@ -46,7 +46,6 @@
 		E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC62E7CF12B0082FC7B /* HomeView.swift */; };
 		E11AEC1E2E7CF12B0082FC7B /* PembrokeResidentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC12E7CF12B0082FC7B /* PembrokeResidentsView.swift */; };
 		E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC72E7CF12B0082FC7B /* LoginView.swift */; };
-		E11AEC242E7CF6270082FC7B /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC222E7CF6270082FC7B /* ps3877.pdf */; };
 		E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */; };
 		E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */; };
 		E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */; };
@@ -68,6 +67,8 @@
 		E1A434C82DD5018800BDE071 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434572DD5018800BDE071 /* Color+Ext.swift */; };
 		E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */; };
 		E1A434CB2DD5018800BDE071 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1A434932DD5018800BDE071 /* Assets.xcassets */; };
+		E1E0F11B2EB14FDB00382044 /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E1E0F11A2EB14FDB00382044 /* ps3877.pdf */; };
+		E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,7 +112,6 @@
 		E11AEBC82E7CF12B0082FC7B /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		E11AEBCC2E7CF12B0082FC7B /* UnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsView.swift; sourceTree = "<group>"; };
 		E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Avery 5160 Template PDF.pdf"; sourceTree = "<group>"; };
-		E11AEC222E7CF6270082FC7B /* ps3877.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ps3877.pdf; sourceTree = "<group>"; };
 		E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppTests.swift; sourceTree = "<group>"; };
 		E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMDataManager.swift; sourceTree = "<group>"; };
 		E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
@@ -134,6 +134,8 @@
 		E1A434932DD5018800BDE071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1A434962DD5018800BDE071 /* rmProApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rmProApp.entitlements; sourceTree = "<group>"; };
 		E1A434972DD5018800BDE071 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
+		E1E0F11A2EB14FDB00382044 /* ps3877.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ps3877.pdf; sourceTree = "<group>"; };
+		E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,7 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */,
-				E11AEC222E7CF6270082FC7B /* ps3877.pdf */,
+				E1E0F11A2EB14FDB00382044 /* ps3877.pdf */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -312,7 +314,6 @@
 		E1A4345A2DD5018800BDE071 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E1A434572DD5018800BDE071 /* Color+Ext.swift */,
 				E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */,
 				E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */,
 			);
@@ -364,6 +365,7 @@
 		E1A434982DD5018800BDE071 /* rmProApp */ = {
 			isa = PBXGroup;
 			children = (
+				E1F5077D2EB2B51E002A3F2E /* Extensions */,
 				E1A4345A2DD5018800BDE071 /* Assets */,
 				E1A434712DD5018800BDE071 /* Models */,
 				E1A4347C2DD5018800BDE071 /* Networking */,
@@ -374,6 +376,15 @@
 				E11AEC232E7CF6270082FC7B /* Templates */,
 			);
 			path = rmProApp;
+			sourceTree = "<group>";
+		};
+		E1F5077D2EB2B51E002A3F2E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */,
+				E1A434572DD5018800BDE071 /* Color+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,9 +446,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1A434CB2DD5018800BDE071 /* Assets.xcassets in Resources */,
-				E11AEC242E7CF6270082FC7B /* ps3877.pdf in Resources */,
 				E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */,
 				E161555E2D9D914600F7D658 /* Notes in Resources */,
+				E1E0F11B2EB14FDB00382044 /* ps3877.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +512,7 @@
 				E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */,
 				E11AEBA32E7CEE660082FC7B /* UnitParams.swift in Sources */,
 				E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */,
+				E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */,
 				E11AEB8F2E7CEDDF0082FC7B /* WCTransaction.swift in Sources */,
 				E11AEB902E7CEDDF0082FC7B /* RMPaymentReversal.swift in Sources */,
 				E11AEB912E7CEDDF0082FC7B /* RMPayment.swift in Sources */,

@@ -23,7 +23,6 @@ class URLBuilder {
             urlComponents.path += "/\(id)"
         }
         
-        
         if let embeds = embeds {
             queryItems.append(URLQueryItem(name: "embeds", value: embeds))
         }

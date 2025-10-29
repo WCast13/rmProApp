@@ -19,7 +19,7 @@ class RMDataManager: ObservableObject {
     
     func loadUnitsWithBasicData() async {
         let unitEmbeds: [UnitEmbedOption] = [ .addresses, .isVacant, .leases, .unitType]
-        let unitFields: [UnitFieldOption] = [ .addresses, .leases, .name, .unitType, .isVacant, .propertyID]
+        let unitFields: [UnitFieldOption] = [ .addresses, .leases, .name, .unitType, .isVacant, .propertyID, .unitID]
         
         let fullEmbedsString = unitEmbeds.map { $0.rawValue }.joined(separator: ",")
         let fullFieldsString = unitFields.map { $0.rawValue }.joined(separator: ",")
@@ -37,7 +37,7 @@ class RMDataManager: ObservableObject {
     
     func loadUnits() async {
         let unitEmbeds: [UnitEmbedOption] = [ .addresses, .currentOccupants, .isVacant, .primaryAddress, .property, .property_Addresses, .leases_Tenant, .leases, .unitType]
-        let unitFields: [UnitFieldOption] = [ .addresses, .currentOccupants, .isVacant, .leases, .name, .primaryAddress, .property, .propertyID, .unitType, .userDefinedValues]
+        let unitFields: [UnitFieldOption] = [ .addresses, .currentOccupants, .isVacant, .leases, .name, .primaryAddress, .property, .propertyID, .unitType, .userDefinedValues, .unitID]
         
         let fullEmbedsString = unitEmbeds.map { $0.rawValue }.joined(separator: ",")
         let fullFieldsString = unitFields.map { $0.rawValue }.joined(separator: ",")
