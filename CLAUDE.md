@@ -77,7 +77,6 @@ xcodebuild test -project rmProApp.xcodeproj -scheme rmProApp \
 
 ## Repo gotchas
 
-- **Duplicate file on disk:** `rmProApp/Date+Extensions.swift` and `rmProApp/Extensions/Date+Extensions.swift` contain identical content. Only `Date+Extensions.swift` (file ref `E1F5077E2EB2B51E002A3F2E` in `project.pbxproj`) is in the Xcode target — editing the `Extensions/` copy changes nothing. Consolidate before adding new extensions.
 - **Misnamed folder:** `rmProApp/Assets/` is **source code** (`EncodeDecodeHelpers.swift`, `SwiftUIAssets.swift`), not an asset catalog. The real asset catalog is `Assets.xcassets/`.
 - **`TODO:` comments in `TenantDataManager` and model files describe intentional future work** (dashboard filters, SwiftData-based delta sync of tenant data — see the bottom half of `Notes` at the repo root for the plan). They are not bugs to chase unless specifically asked.
 - **CI pins `macos-latest` + `Xcode_15.0.app` + iOS 17.0 simulator** (`.github/workflows/tests.yml`) while the project's deployment target is iOS 17.6. Local builds on newer Xcode should still succeed; if CI fails after an Xcode upgrade, bump the runner's `xcode-select` path and the simulator OS string together.

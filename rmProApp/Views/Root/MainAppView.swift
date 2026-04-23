@@ -31,10 +31,6 @@ struct MainAppView: View {
                         DocumentViewerView(documentURL: url, navigationPath: $navigationPath)
                     case .residentsHome:
                         ResidentsHomeView(navigationPath: $navigationPath)
-                    case .havenResidents:
-                        HavenResidentsView(navigationPath: $navigationPath)
-                    case .pembrokeResidents:
-                        PembrokeResidentsView(navigationPath: $navigationPath)
                     case .residentDetails(let tenant):
                         NewResidentDetailView(navigationPath: $navigationPath, tenant: tenant)
                     case .noticesBuilder(let unit):
@@ -82,8 +78,6 @@ enum AppDestination: Hashable {
     case documents
     case documentViewer(URL)
     case residentsHome
-    case havenResidents
-    case pembrokeResidents
     case residentDetails(WCLeaseTenant)
     case noticesBuilder(RMUnit)
     case specialTask

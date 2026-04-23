@@ -32,12 +32,14 @@ struct LoginView: View {
                 // Username Field
                 TextField("Username", text: $username)
                     .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                
+                    .textContentType(.username)
+
                 // Password Field
                 SecureField("Password", text: $password)
                     .textFieldStyle(.roundedBorder)
+                    .textContentType(.password)
                 
                 // Save Credentials Toggle
                 Toggle("Remember me", isOn: $saveCredentials)

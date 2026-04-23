@@ -48,5 +48,18 @@ There are multiple changes I would like to make to the fetching of and persistan
 
 The initial API call is the same as it currently is, the data just needs to be saved in SwiftData. The contacts, addresses, loans and all other information needs to be fetched in the background and saved into swiftData.
 
- 
+
+Update Fire Protection Units (moved from UnitsView.swift comment)
+
+Version 1-
+    List sites- Manually Update with Button
+
+1. Import CSV
+2. Lookup Sites to Edit
+    - FPG to Normal
+    - Normal to FPG
+
+Post Request-
+
+
 

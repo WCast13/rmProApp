@@ -42,9 +42,7 @@
 		E11AEC012E7CF12B0082FC7B /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC82E7CF12B0082FC7B /* MainAppView.swift */; };
 		E11AEC022E7CF12B0082FC7B /* GetBoxNumbersForUDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBB92E7CF12B0082FC7B /* GetBoxNumbersForUDF.swift */; };
 		E11AEC042E7CF12B0082FC7B /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBB82E7CF12B0082FC7B /* DocumentsView.swift */; };
-		E11AEC082E7CF12B0082FC7B /* HavenResidentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBBF2E7CF12B0082FC7B /* HavenResidentsView.swift */; };
 		E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC62E7CF12B0082FC7B /* HomeView.swift */; };
-		E11AEC1E2E7CF12B0082FC7B /* PembrokeResidentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC12E7CF12B0082FC7B /* PembrokeResidentsView.swift */; };
 		E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC72E7CF12B0082FC7B /* LoginView.swift */; };
 		E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */; };
 		E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */; };
@@ -103,9 +101,7 @@
 		E11AEBBA2E7CF12B0082FC7B /* MailingLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingLabelView.swift; sourceTree = "<group>"; };
 		E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
 		E11AEBBD2E7CF12B0082FC7B /* ViolationBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViolationBuilderView.swift; sourceTree = "<group>"; };
-		E11AEBBF2E7CF12B0082FC7B /* HavenResidentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HavenResidentsView.swift; sourceTree = "<group>"; };
 		E11AEBC02E7CF12B0082FC7B /* NewResidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewResidentDetail.swift; sourceTree = "<group>"; };
-		E11AEBC12E7CF12B0082FC7B /* PembrokeResidentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PembrokeResidentsView.swift; sourceTree = "<group>"; };
 		E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsHomeView.swift; sourceTree = "<group>"; };
 		E11AEBC62E7CF12B0082FC7B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E11AEBC72E7CF12B0082FC7B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -225,10 +221,8 @@
 		E11AEBC52E7CF12B0082FC7B /* Residents */ = {
 			isa = PBXGroup;
 			children = (
-				E11AEBBF2E7CF12B0082FC7B /* HavenResidentsView.swift */,
 				E11AEBC02E7CF12B0082FC7B /* NewResidentDetail.swift */,
 				E13677D72EABFD61002AE5B1 /* ResidentDetailSections.swift */,
-				E11AEBC12E7CF12B0082FC7B /* PembrokeResidentsView.swift */,
 				E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */,
 				E13677D52EABFD16002AE5B1 /* ResidentHelperComponets.swift */,
 				E13677D92EAC8186002AE5B1 /* LoanFormSheet.swift */,
@@ -500,11 +494,9 @@
 				E11AEC012E7CF12B0082FC7B /* MainAppView.swift in Sources */,
 				E11AEC022E7CF12B0082FC7B /* GetBoxNumbersForUDF.swift in Sources */,
 				E11AEC042E7CF12B0082FC7B /* DocumentsView.swift in Sources */,
-				E11AEC082E7CF12B0082FC7B /* HavenResidentsView.swift in Sources */,
 				E13677D62EABFD16002AE5B1 /* ResidentHelperComponets.swift in Sources */,
 				E11AEC312E7ED4A70082FC7B /* SwiftDataManager.swift in Sources */,
 				E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */,
-				E11AEC1E2E7CF12B0082FC7B /* PembrokeResidentsView.swift in Sources */,
 				E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */,
 				E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */,
 				E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */,
