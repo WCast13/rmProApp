@@ -25,8 +25,7 @@ struct LoanFormSheet: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Loan Information")) {
-                    TextField("Loan Name", text: $unitName)
+                Section(header: Text("New Loan for \(unitName)")) {
 
                     HStack {
                         Text("Original Principal")
@@ -71,10 +70,13 @@ struct LoanFormSheet: View {
 
                 Section(header: Text("Dates")) {
                     DatePicker("Close Date", selection: $closeDate, displayedComponents: .date)
+                        .pickerStyle(.wheel)
 
                     DatePicker("Loan Date", selection: $loanDate, displayedComponents: .date)
+                        .pickerStyle(.wheel)
 
                     DatePicker("Payment Start Date", selection: $paymentStartDate, displayedComponents: .date)
+                        .pickerStyle(.wheel)
                 }
             }
             .navigationTitle("Create Loan")
