@@ -50,10 +50,10 @@ struct RentIncreaseNoticeBuilder: View {
                 // Use the new cached UDF system
                 allUDFs = RMDataManager.shared.getCachedUDFs(for: "Unit")
 
-                // If no cached UDFs, fallback to API
+                // If no cached UDFs, trigger a sync via the repository
                 if allUDFs.isEmpty {
-                    print("No cached Unit UDFs found, loading from API...")
-                    let freshUDFs = await RMDataManager.shared.loadUserDefinedValues()
+                    print("No cached Unit UDFs found, syncing from API...")
+                    let freshUDFs = await UDFRepository.shared.syncUDFs()
                     allUDFs = freshUDFs.filter { $0.parentType == "Unit" }
                 }
 
