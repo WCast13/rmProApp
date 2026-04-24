@@ -32,62 +32,81 @@ final class ResidentDetailViewModel {
             return
         }
 
-        guard let charges = transactionData.charges, !charges.isEmpty,
-              let payments = transactionData.payments, !payments.isEmpty,
-              let paymentReversals = transactionData.paymentReversals else {
-            return
-        }
+        let charges = transactionData.charges ?? []
+        let payments = transactionData.payments ?? []
+        let paymentReversals = transactionData.paymentReversals ?? []
 
         tenant.charges = charges
         tenant.payments = payments
         tenant.paymentReversals = paymentReversals
-        tenant.transactions = buildTransactions(charges: charges, payments: payments)
+        tenant.transactions = buildTransactions(
+            charges: charges,
+            payments: payments,
+            reversals: paymentReversals
+        )
     }
 
-    // NOTE: preserves the existing (likely broken) N×M merge from the old
-    // TenantTransactionsManager.processTransactions. Fixing the merge is a
-    // separate scope — see WCTransaction.swift.
-    private func buildTransactions(charges: [RMCharge], payments: [RMPayment]) -> [WCTransaction] {
+    /// Merge charges, payments, and payment reversals into a single
+    /// timeline. One `WCTransaction` per source row — each with its own
+    /// identity — sorted by transactionDate descending (ISO-8601 strings
+    /// order correctly as lexical sorts).
+    private func buildTransactions(
+        charges: [RMCharge],
+        payments: [RMPayment],
+        reversals: [RMPaymentReversal]
+    ) -> [WCTransaction] {
         var result: [WCTransaction] = []
-        var scratch = WCTransaction()
+        result.reserveCapacity(charges.count + payments.count + reversals.count)
 
         for charge in charges {
-            scratch.chargeID = charge.id
-            scratch.chargeTypeID = charge.chargeTypeID
-            scratch.chargeType = charge.chargeType
-            scratch.propertyID = charge.propertyID
-            scratch.unitID = charge.unitID
-
-            for payment in payments {
-                scratch.paymentID = payment.id
-                scratch.paymentReversalDate = payment.reversalDate
-                scratch.paymentReversalType = payment.reversalType
-
-                if charge.transactionType == "Charge" {
-                    scratch.unitID = charge.unitID
-                    scratch.accountID = charge.accountID
-                    scratch.amount = charge.amount
-                    scratch.transactionDate = charge.transactionDate
-                    scratch.createDate = charge.createDate
-                    scratch.updateDate = charge.updateDate
-                    scratch.comment = charge.comment
-                    scratch.transactionType = charge.transactionType
-                    scratch.isFullyAllocated = charge.isFullyAllocated
-                    scratch.amountAllocated = charge.amountAllocated
-                } else {
-                    scratch.accountID = payment.accountID
-                    scratch.amount = payment.amount
-                    scratch.transactionDate = payment.transactionDate
-                    scratch.createDate = payment.createDate
-                    scratch.updateDate = payment.updateDate
-                    scratch.comment = payment.comment
-                    scratch.transactionType = payment.transactionType
-                    scratch.isFullyAllocated = payment.isFullyAllocated
-                    scratch.amountAllocated = payment.amountAllocated
-                }
-                result.append(scratch)
-            }
+            result.append(WCTransaction(
+                chargeID: charge.id,
+                chargeTypeID: charge.chargeTypeID,
+                chargeType: charge.chargeType,
+                unitID: charge.unitID,
+                propertyID: charge.propertyID,
+                accountID: charge.accountID,
+                amount: charge.amount,
+                transactionDate: charge.transactionDate,
+                createDate: charge.createDate,
+                updateDate: charge.updateDate,
+                comment: charge.comment,
+                transactionType: charge.transactionType,
+                amountAllocated: charge.amountAllocated,
+                isFullyAllocated: charge.isFullyAllocated
+            ))
         }
-        return result
+
+        for payment in payments {
+            result.append(WCTransaction(
+                accountID: payment.accountID,
+                amount: payment.amount,
+                transactionDate: payment.transactionDate,
+                createDate: payment.createDate,
+                updateDate: payment.updateDate,
+                comment: payment.comment,
+                transactionType: payment.transactionType,
+                amountAllocated: payment.amountAllocated,
+                isFullyAllocated: payment.isFullyAllocated,
+                paymentID: payment.id,
+                paymentReversalDate: payment.reversalDate,
+                paymentReversalType: payment.reversalType
+            ))
+        }
+
+        for reversal in reversals {
+            result.append(WCTransaction(
+                accountID: reversal.accountID,
+                transactionDate: reversal.reversalDate,
+                createDate: reversal.createDate,
+                comment: reversal.reversalReason,
+                transactionType: "Reversal",
+                paymentID: reversal.paymentID,
+                paymentReversalDate: reversal.reversalDate,
+                paymentReversalType: reversal.reversalType
+            ))
+        }
+
+        return result.sorted { ($0.transactionDate ?? "") > ($1.transactionDate ?? "") }
     }
 }
