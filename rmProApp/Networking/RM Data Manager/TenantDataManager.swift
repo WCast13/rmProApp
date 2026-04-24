@@ -10,15 +10,13 @@ import Foundation
 @Observable
 @MainActor
 class TenantDataManager {
-    // MARK: Main Tenant Groups
-    var havenTenants: [RMTenant] = []
-    var pembrokeTenants: [RMTenant] = []
     var allTenants: [RMTenant] = []
     var allUnitTenants: [WCLeaseTenant] = []
-    var allUnits: [RMUnit] = []
     var rentIncreaseTenants: [WCRentIncreaseTenant] = []
 
-    // MARK: Caching and Performance
+    // Short-lived guard against duplicate session-level fetches. Delta sync
+    // lives in TenantRepository; this just prevents a second tap on the
+    // home screen from kicking off another top-level fetch mid-flight.
     private var lastFetchTime: Date?
     private let cacheTimeout: TimeInterval = 300 // 5 minutes
     private var isCurrentlyFetching = false
@@ -26,42 +24,16 @@ class TenantDataManager {
     static let shared = TenantDataManager()
 
     private init() {}
-    
-    
-    // Enum representing different tenant data categories that may be updated
-    enum TenantDataSection {
-        case leases
-        case contacts
-        case addresses
-        case charges
-        case payments
-        case paymentReversals
-        case recurringCharges
-        case userDefinedValues
-        case loans
-    }
-    
-    // MARK: Temporary Timing Function
-    // Temporary Function- time api calls
-    private func timeAPICall<T>(_ label: String, _ operation: () async -> T) async -> (result: T, duration: TimeInterval) {
-        let startTime = Date()
-        let result = await operation()
-        let duration = Date().timeIntervalSince(startTime)
-        print("\(label): \(duration) seconds")
-        return (result, duration)
-    }
-    
-    // MARK: Fetch Tenants- Haven/Pembroke
+
     func fetchTenants(forceRefresh: Bool = false) async {
-        // Check if we should use cached data
-        if !forceRefresh, let lastFetch = lastFetchTime,
+        if !forceRefresh,
+           let lastFetch = lastFetchTime,
            Date().timeIntervalSince(lastFetch) < cacheTimeout,
            !allTenants.isEmpty {
             print("📋 Using cached tenant data")
             return
         }
 
-        // Prevent concurrent fetches
         if isCurrentlyFetching {
             print("⏳ Fetch already in progress, waiting...")
             return
@@ -72,137 +44,62 @@ class TenantDataManager {
 
         let startTime = Date()
 
-        // Delegate base tenant sync (hydrate, delta/full fetch, merge, persist,
-        // markSynced) to TenantRepository. Section merges below still run here
-        // since they don't have repositories yet.
-        allTenants = await TenantRepository.shared.syncBase(forceRefresh: forceRefresh)
+        // Hydrated tenants (base + leases + contacts + addresses + loans + UDFs)
+        // come from TenantRepository. Units load in parallel via UnitRepository.
+        async let hydrated = TenantRepository.shared.syncFull(forceRefresh: forceRefresh)
+        async let _ = RMDataManager.shared.loadUnits()
+        allTenants = await hydrated
 
-        let tenantsSnapshot = self.allTenants
-
-        // 2. Fetch sections concurrently for better performance
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask {
-                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields, section: .userDefinedValues)
-            }
-            group.addTask {
-                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields, section: .leases)
-            }
-            group.addTask {
-                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields, section: .contacts)
-            }
-            group.addTask {
-                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields, section: .addresses)
-            }
-            group.addTask {
-                await self.fetchSection(for: tenantsSnapshot, embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields, section: .loans)
-            }
-
-            // 3. Load units concurrently with other sections
-            group.addTask {
-                await RMDataManager.shared.loadUnits()
-            }
-        }
-
-        // 4. Build derived data
         buildRentIncreaseTenants()
         lastFetchTime = Date()
 
-        let totalTime = Date().timeIntervalSince(startTime)
-        print("🚀 Total fetch time: \(totalTime) seconds")
+        print("🚀 Total fetch time: \(Date().timeIntervalSince(startTime)) seconds")
     }
-    
-    private func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async {
-        let request = GetTenantsRequest(embeds: embeds, fields: fields)
 
-        let (tenantData, duration) = await timeAPICall("Section \(section)") {
-            do {
-                return try await RMAPIClient.shared.send(request)
-            } catch {
-                print("❌ fetchSection \(section) failed: \(error.localizedDescription)")
-                return []
-            }
-        }
-
-        for newData in tenantData {
-            mergeTenant(newData: newData, section: section)
-        }
-    }
-    
-    private func mergeTenant(newData: RMTenant, section: TenantDataSection) {
-        
-        guard let newID = newData.tenantID, let index = allTenants.firstIndex(where: { $0.tenantID == newID }) else { return }
-        var existing = allTenants[index]
-        
-        switch section {
-        case .leases:
-            existing.leases = newData.leases
-        case .contacts:
-            existing.contacts = newData.contacts
-        case .charges:
-            existing.charges = newData.charges
-        case .payments:
-            existing.payments = newData.payments
-        case .paymentReversals:
-            existing.paymentReversals = newData.paymentReversals
-        case .addresses:
-            existing.addresses = newData.addresses
-        case .recurringCharges:
-            existing.recurringChargeSummaries = newData.recurringChargeSummaries
-        case .userDefinedValues:
-            existing.udfs = newData.udfs
-        case .loans:
-            existing.loans = newData.loans
-        }
-        
-        allTenants[index] = existing
-//        print(allTenants.count)
-    }
-    
     // MARK: Generate Rent Increase Tenants for Mailing Labels
+
     func buildRentIncreaseTenants() {
-        var rentIncreaseTenants: [WCRentIncreaseTenant] = []
-        
+        var rentIncrease: [WCRentIncreaseTenant] = []
+        var leaseTenants: [WCLeaseTenant] = []
+
         for tenant in allTenants {
             guard let leases = tenant.leases else { continue }
-            
             let activeLeases = leases.filter { $0.moveOutDate == nil }
             if activeLeases.isEmpty { continue }
-            
+
             for lease in activeLeases {
                 guard let unit = lease.unit, let address = unit.addresses?.first else { continue }
-                
-                if lease.unit?.unitType?.name == "Loan" {
-                    continue
-                }
-                
-                var rentIncreaseTenant = WCRentIncreaseTenant()
-                rentIncreaseTenant.unitName = unit.name ?? "No Unit Name"
-                rentIncreaseTenant.city = address.city ?? "No City"
-                rentIncreaseTenant.state = address.state ?? "No State"
-                rentIncreaseTenant.postalCode = address.postalCode ?? "No Zip"
-                
+                if lease.unit?.unitType?.name == "Loan" { continue }
+
+                var entry = WCRentIncreaseTenant()
+                entry.unitName = unit.name ?? "No Unit Name"
+                entry.city = address.city ?? "No City"
+                entry.state = address.state ?? "No State"
+                entry.postalCode = address.postalCode ?? "No Zip"
+
+                // Haven stores addresses as "<street>\r\n<box>"; Pembroke is single-line.
+                // Breaking this split silently puts the box number mid-address on labels.
                 if tenant.propertyID == 3, let streetParts = address.street?.components(separatedBy: "\r\n") {
-                    rentIncreaseTenant.street = streetParts.first ?? "No Street"
-                    rentIncreaseTenant.boxNumber = streetParts.last ?? "No Box"
+                    entry.street = streetParts.first ?? "No Street"
+                    entry.boxNumber = streetParts.last ?? "No Box"
                 } else {
-                    rentIncreaseTenant.street = address.street ?? "No Street"
-                    rentIncreaseTenant.boxNumber = ""
+                    entry.street = address.street ?? "No Street"
+                    entry.boxNumber = ""
                 }
-                
-                rentIncreaseTenant.contacts = tenant.contacts?.filter { $0.isShowOnBill == true } ?? []
-                rentIncreaseTenants.append(rentIncreaseTenant)
-                
-                let tenantToAdd: WCLeaseTenant = makeLeaseTenants(tenant: tenant, lease: lease)
-                
-                allUnitTenants.append(tenantToAdd)
+
+                entry.contacts = tenant.contacts?.filter { $0.isShowOnBill == true } ?? []
+                rentIncrease.append(entry)
+
+                leaseTenants.append(makeLeaseTenants(tenant: tenant, lease: lease))
             }
         }
-        
-        self.rentIncreaseTenants = rentIncreaseTenants
+
+        self.rentIncreaseTenants = rentIncrease
+        self.allUnitTenants = leaseTenants
     }
-    
+
     func makeLeaseTenants(tenant: RMTenant, lease: RMLease) -> WCLeaseTenant {
-        let leaseTenant = WCLeaseTenant(
+        WCLeaseTenant(
             accountGroupID: tenant.accountGroupID,
             accountGroupMasterTenantID: tenant.accountGroupMasterTenantID,
             addresses: tenant.addresses,
@@ -236,7 +133,7 @@ class TenantDataManager {
             lastContact: tenant.lastContact,
             lastName: tenant.lastName,
             lastNameFirstName: tenant.lastNameFirstName,
-            lease: lease, // Set the single lease
+            lease: lease,
             loans: tenant.loans,
             name: tenant.name,
             openBalance: tenant.openBalance,
@@ -264,14 +161,11 @@ class TenantDataManager {
             totalEmails: tenant.totalEmails,
             totalVisits: tenant.totalVisits,
             udfs: tenant.udfs,
-            unit: lease.unit, // Use the unit from the lease
+            unit: lease.unit,
             updateDate: tenant.updateDate,
             updateUserID: tenant.updateUserID,
             webMessage: tenant.webMessage,
             primaryContact: tenant.primaryContact
         )
-        
-        return leaseTenant
     }
 }
-

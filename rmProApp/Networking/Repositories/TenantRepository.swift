@@ -67,14 +67,62 @@ actor TenantRepository {
         cache
     }
 
-    /// Replace the cache wholesale. Needed by the legacy data manager while
-    /// section merges (leases/udfs/contacts/etc.) still live there.
-    /// Will be removed when section fetches move into their own repositories.
-    func overwriteCache(_ tenants: [RMTenant]) {
-        cache = tenants
+    /// `syncBase` plus the section hydration step: run the 5 nested embed
+    /// fetches (leases, contacts, addresses, loans, UDFs) concurrently and
+    /// merge each back into the cache. Returns the hydrated list.
+    ///
+    /// Note: the section fetches are in-memory only — they don't re-persist
+    /// through SwiftData. The base rows are the persistence surface.
+    func syncFull(forceRefresh: Bool = false) async -> [RMTenant] {
+        let base = await syncBase(forceRefresh: forceRefresh)
+        return await hydrateSections(base)
     }
 
     // MARK: - Private helpers
+
+    private enum Section {
+        case leases, contacts, addresses, loans, userDefinedValues
+    }
+
+    private func hydrateSections(_ base: [RMTenant]) async -> [RMTenant] {
+        await withTaskGroup(of: (Section, [RMTenant]).self) { group in
+            group.addTask { (.userDefinedValues, await self.fetchSection(embeds: TenantEmbeds.udfEmbeds, fields: TenantFields.udfFields)) }
+            group.addTask { (.leases, await self.fetchSection(embeds: TenantEmbeds.leaseEmbeds, fields: TenantFields.leaseFields)) }
+            group.addTask { (.contacts, await self.fetchSection(embeds: TenantEmbeds.contactsEmbeds, fields: TenantFields.contactFields)) }
+            group.addTask { (.addresses, await self.fetchSection(embeds: TenantEmbeds.addressEmbeds, fields: TenantFields.addressFields)) }
+            group.addTask { (.loans, await self.fetchSection(embeds: TenantEmbeds.loanEmbeds, fields: TenantFields.loanFields)) }
+
+            for await (section, fetched) in group {
+                for newData in fetched {
+                    merge(newData: newData, section: section)
+                }
+            }
+        }
+        return cache
+    }
+
+    private func fetchSection(embeds: [TenantEmbeds], fields: [TenantFields]) async -> [RMTenant] {
+        do {
+            return try await RMAPIClient.shared.send(GetTenantsRequest(embeds: embeds, fields: fields))
+        } catch {
+            print("❌ TenantRepository fetchSection failed: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    private func merge(newData: RMTenant, section: Section) {
+        guard let newID = newData.tenantID,
+              let index = cache.firstIndex(where: { $0.tenantID == newID }) else { return }
+        var existing = cache[index]
+        switch section {
+        case .leases:             existing.leases = newData.leases
+        case .contacts:           existing.contacts = newData.contacts
+        case .addresses:          existing.addresses = newData.addresses
+        case .loans:              existing.loans = newData.loans
+        case .userDefinedValues:  existing.udfs = newData.udfs
+        }
+        cache[index] = existing
+    }
 
     private func fetchFromAPI(deltaFilter: RMFilter?) async -> [RMTenant] {
         var filters: [RMFilter] = [RMFilter(key: "Status", operation: "ne", value: "Past")]
