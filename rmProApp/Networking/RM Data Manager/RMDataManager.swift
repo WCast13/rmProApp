@@ -7,11 +7,12 @@
 
 import Foundation
 
+@Observable
 @MainActor
-class RMDataManager: ObservableObject {
-    
-    @Published var unitsWithBasicData: [RMUnit] = []
-    @Published var vacantUnits: [RMUnit] = []
+class RMDataManager {
+
+    var unitsWithBasicData: [RMUnit] = []
+    var vacantUnits: [RMUnit] = []
     
     static let shared = RMDataManager()
     

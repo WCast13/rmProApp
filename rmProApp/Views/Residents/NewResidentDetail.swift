@@ -11,7 +11,7 @@ import Foundation
 
 struct NewResidentDetailView: View {
     @Binding var navigationPath: NavigationPath
-    @EnvironmentObject var tenantDataManager: TenantDataManager
+    @Environment(TenantDataManager.self) private var tenantDataManager
     @State var tenant: WCLeaseTenant
     @State private var isLoadingTransactions = false
 

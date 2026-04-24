@@ -7,18 +7,19 @@
 
 import Foundation
 
+@Observable
 @MainActor
-class TenantDataManager: ObservableObject {
+class TenantDataManager {
     // MARK: Main Tenant Groups
-    @Published var havenTenants: [RMTenant] = []
-    @Published var pembrokeTenants: [RMTenant] = []
-    @Published var allTenants: [RMTenant] = []
-    @Published var singleTenant: RMTenant?
-    @Published var allUnitTenants: [WCLeaseTenant] = []
-    @Published var allUnits : [RMUnit] = []
+    var havenTenants: [RMTenant] = []
+    var pembrokeTenants: [RMTenant] = []
+    var allTenants: [RMTenant] = []
+    var singleTenant: RMTenant?
+    var allUnitTenants: [WCLeaseTenant] = []
+    var allUnits: [RMUnit] = []
 
-    @Published var tenantsInDeliquency: [RMTenant]?
-    @Published var rentIncreaseTenants: [WCRentIncreaseTenant] = []
+    var tenantsInDeliquency: [RMTenant]?
+    var rentIncreaseTenants: [WCRentIncreaseTenant] = []
 
     // MARK: Caching and Performance
     private var tenantCache: [String: RMTenant] = [:]

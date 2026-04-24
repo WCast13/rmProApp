@@ -11,7 +11,7 @@ import SwiftData
 struct MainAppView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var navigationPath = NavigationPath()
-    @StateObject private var tenantDataManager = TenantDataManager.shared
+    @State private var tenantDataManager = TenantDataManager.shared
     @StateObject private var tokenManager = TokenManager.shared
     
     var body: some View {
@@ -36,7 +36,7 @@ struct MainAppView: View {
                     }
                 }
         }
-        .environmentObject(tenantDataManager)
+        .environment(tenantDataManager)
         .onAppear {
             Task {
                 // Initialize UDFs cache on startup

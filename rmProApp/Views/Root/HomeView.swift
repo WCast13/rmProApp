@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Binding var navigationPath: NavigationPath
-    @EnvironmentObject var tenantDataManager: TenantDataManager
+    @Environment(TenantDataManager.self) private var tenantDataManager
     
     var body: some View {
         

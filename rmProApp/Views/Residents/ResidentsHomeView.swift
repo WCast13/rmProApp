@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ResidentsHomeView: View {
     @Binding var navigationPath: NavigationPath
-    @EnvironmentObject var tenantDataManager: TenantDataManager
+    @Environment(TenantDataManager.self) private var tenantDataManager
     @State private var searchText: String = ""
     @State private var selectedFilter: ResidentFilter = .all
     @State private var isShowingFilters = false
