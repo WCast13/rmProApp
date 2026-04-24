@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-SwiftUI iOS/iPad app (`wctech.rmProApp`, bundle `rmProApp`) that is a custom client for the **RentManager** property management REST API (`https://trieq.api.rentmanager.com/`). Targets iOS 17.6+, Swift 5.0, iPhone + iPad. Two real properties are managed: **Haven Lake Estates** (`propertyID == 3`) and **Pembroke Park Lakes** (`propertyID == 12`); a third pseudo-property (`propertyID == 8`) is used as the account context for loan creation.
+SwiftUI iOS/iPad app (`wctech.rmProApp`, bundle `rmProApp`) that is a custom client for the **RentManager** property management REST API (`https://trieq.api.rentmanager.com/`). Targets iOS 26+ / macOS 26+, Swift 5.0, iPhone + iPad (and Mac via Designed-for-iPad). Two real properties are managed: **Haven Lake Estates** (`propertyID == 3`) and **Pembroke Park Lakes** (`propertyID == 12`); a third pseudo-property (`propertyID == 8`) is used as the account context for loan creation.
 
 Primary workflows:
 1. Generate rent-increase mailing labels (Avery 5160) + a filled USPS PS Form 3877 firm mailing book — PDFs written to the user's documents directory.
@@ -18,16 +18,16 @@ Xcode project (no SwiftPM manifest, no CocoaPods). Open `rmProApp.xcodeproj` in 
 ```bash
 # Build
 xcodebuild build -project rmProApp.xcodeproj -scheme rmProApp \
-  -destination 'platform=iOS Simulator,name=iPhone 15'
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 
 # Full test run (mirrors CI in .github/workflows/tests.yml)
 xcodebuild test -project rmProApp.xcodeproj -scheme rmProApp \
-  -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.0' \
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
   -enableCodeCoverage YES -resultBundlePath TestResults.xcresult
 
 # Single test
 xcodebuild test -project rmProApp.xcodeproj -scheme rmProApp \
-  -destination 'platform=iOS Simulator,name=iPhone 15' \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -only-testing:rmProAppTests/<ClassName>/<testMethodName>
 ```
 
@@ -79,4 +79,4 @@ xcodebuild test -project rmProApp.xcodeproj -scheme rmProApp \
 
 - **Misnamed folder:** `rmProApp/Assets/` is **source code** (`EncodeDecodeHelpers.swift`, `SwiftUIAssets.swift`), not an asset catalog. The real asset catalog is `Assets.xcassets/`.
 - **`TODO:` comments in `TenantDataManager` and model files describe intentional future work** (dashboard filters, SwiftData-based delta sync of tenant data — see the bottom half of `Notes` at the repo root for the plan). They are not bugs to chase unless specifically asked.
-- **CI pins `macos-latest` + `Xcode_15.0.app` + iOS 17.0 simulator** (`.github/workflows/tests.yml`) while the project's deployment target is iOS 17.6. Local builds on newer Xcode should still succeed; if CI fails after an Xcode upgrade, bump the runner's `xcode-select` path and the simulator OS string together.
+- **CI uses `macos-latest` with the runner's default Xcode** (`.github/workflows/tests.yml`), destination `iPhone 17,OS=latest`. The deployment target is iOS 26 / macOS 26, so whatever Xcode the runner ships with needs the iOS 26 SDK (Xcode 17+). If a runner upgrade drops the iPhone 17 sim, update the destination name.
