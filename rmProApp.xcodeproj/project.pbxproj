@@ -62,6 +62,12 @@
 		E1A434CB2DD5018800BDE071 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1A434932DD5018800BDE071 /* Assets.xcassets */; };
 		E1E0F11B2EB14FDB00382044 /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E1E0F11A2EB14FDB00382044 /* ps3877.pdf */; };
 		E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */; };
+		DF193E285A364DCFB2DE816A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1EAA8F9ACA4953B3E9E3D6 /* HTTPMethod.swift */; };
+		1DFD50B2D42245EDB1428292 /* RMAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7309279727540ED96B408A5 /* RMAPIError.swift */; };
+		4A8E411BE1BC4692866D183A /* RMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F70C8421194A42A716C0CD /* RMRequest.swift */; };
+		62F5B6A58BA34D3BBE8650FE /* RequestCoalescer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3ABFDB64540028295E811 /* RequestCoalescer.swift */; };
+		9552A6AFFFD24423AB29188D /* RMAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1B9E0562D486B8B87F564 /* RMAPIClient.swift */; };
+		142B91DD6FBF40A2BFEF652A /* GetTenantsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CCD8676B7640A990BF1CC7 /* GetTenantsRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +128,12 @@
 		E1A434972DD5018800BDE071 /* rmProAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppApp.swift; sourceTree = "<group>"; };
 		E1E0F11A2EB14FDB00382044 /* ps3877.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ps3877.pdf; sourceTree = "<group>"; };
 		E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		DB1EAA8F9ACA4953B3E9E3D6 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		B7309279727540ED96B408A5 /* RMAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMAPIError.swift; sourceTree = "<group>"; };
+		30F70C8421194A42A716C0CD /* RMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMRequest.swift; sourceTree = "<group>"; };
+		5BE3ABFDB64540028295E811 /* RequestCoalescer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoalescer.swift; sourceTree = "<group>"; };
+		ACE1B9E0562D486B8B87F564 /* RMAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMAPIClient.swift; sourceTree = "<group>"; };
+		48CCD8676B7640A990BF1CC7 /* GetTenantsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTenantsRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,12 +345,34 @@
 		E1A4347C2DD5018800BDE071 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				24FF78DC2775488F831C2069 /* Core */,
+				8F43F76609BC4C5DAECE019C /* Requests */,
 				E1980FBF2E69E83A00B8A386 /* RM Data Manager */,
 				E1A434752DD5018800BDE071 /* Essential API Manager */,
 				E1A434782DD5018800BDE071 /* Notice Manager */,
 				E11AEBA02E7CEE660082FC7B /* Parameters */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		24FF78DC2775488F831C2069 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				DB1EAA8F9ACA4953B3E9E3D6 /* HTTPMethod.swift */,
+				B7309279727540ED96B408A5 /* RMAPIError.swift */,
+				30F70C8421194A42A716C0CD /* RMRequest.swift */,
+				5BE3ABFDB64540028295E811 /* RequestCoalescer.swift */,
+				ACE1B9E0562D486B8B87F564 /* RMAPIClient.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		8F43F76609BC4C5DAECE019C /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				48CCD8676B7640A990BF1CC7 /* GetTenantsRequest.swift */,
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		E1A434982DD5018800BDE071 /* rmProApp */ = {
@@ -489,6 +523,12 @@
 				E11AEB902E7CEDDF0082FC7B /* RMPaymentReversal.swift in Sources */,
 				E11AEB912E7CEDDF0082FC7B /* RMPayment.swift in Sources */,
 				E13677D82EABFD61002AE5B1 /* ResidentDetailSections.swift in Sources */,
+				DF193E285A364DCFB2DE816A /* HTTPMethod.swift in Sources */,
+				1DFD50B2D42245EDB1428292 /* RMAPIError.swift in Sources */,
+				4A8E411BE1BC4692866D183A /* RMRequest.swift in Sources */,
+				62F5B6A58BA34D3BBE8650FE /* RequestCoalescer.swift in Sources */,
+				9552A6AFFFD24423AB29188D /* RMAPIClient.swift in Sources */,
+				142B91DD6FBF40A2BFEF652A /* GetTenantsRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -113,18 +113,15 @@ class TenantDataManager: ObservableObject {
     }
     
     private func fetchTenantBase() async -> [RMTenant] {
-        let filters = [
-            RMFilter(key: "Status", operation: "ne", value: "Past")
-        ]
-        
-        guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, filters: filters) else {
-            return []
+        let (result, _) = await timeAPICall("Base fetch for tenants (new client): ") {
+            do {
+                return try await RMAPIClient.shared.send(GetTenantsRequest())
+            } catch {
+                print("❌ fetchTenantBase failed: \(error.localizedDescription)")
+                return []
+            }
         }
-        
-        let (result, _) = await timeAPICall("Base fetch for tenants: ") {
-            await RentManagerAPIClient.shared.request(url: url, responseType: [RMTenant].self) ?? []
-        }
-        
+
         return result
     }
     
