@@ -53,9 +53,17 @@ class RMDataManager: ObservableObject {
         print("Vacant Units: \(vacantUnits.count)")
     }
 
-    func loadUserDefinedValues() async -> [RMUserDefinedValue] {
+    func loadUserDefinedValues(deltaFilter: RMFilter? = nil) async -> [RMUserDefinedValue] {
+        let filters: [RMFilter] = deltaFilter.map { [$0] } ?? []
+        let label = deltaFilter == nil ? "UDFs (full sync)" : "UDFs (delta)"
+        if deltaFilter != nil {
+            print("🔁 loadUserDefinedValues delta: UpdateDate,gte,...")
+        }
+
         do {
-            return try await RMAPIClient.shared.send(GetUserDefinedFieldsRequest())
+            let result = try await RMAPIClient.shared.send(GetUserDefinedFieldsRequest(filters: filters))
+            print("✅ \(label): \(result.count) records")
+            return result
         } catch {
             print("❌ loadUserDefinedValues failed: \(error.localizedDescription)")
             return []
@@ -64,48 +72,41 @@ class RMDataManager: ObservableObject {
 
     // MARK: - Startup Cache Management
 
-    /// Load UDFs with cache-first strategy on startup
+    /// SwiftData-cache-first + SyncCoordinator delta sync on startup
     @MainActor
     func loadUDFsOnStartup() async -> [RMUserDefinedValue] {
+        // 1. Hydrate from SwiftData for instant availability
+        var cached: [RMUserDefinedValue] = []
         do {
-            // Try to load from SwiftData first
-            let cachedUDFs = try SwiftDataManager.shared.loadAll(of: RMUserDefinedValue.self)
-
-            if !cachedUDFs.isEmpty {
-                // Check if any cached data is stale
-                let staleUDFs = cachedUDFs.filter { $0.isStale() }
-
-                if staleUDFs.isEmpty {
-                    print("📦 Using fresh cached UDFs (\(cachedUDFs.count) items)")
-                    return cachedUDFs
-                } else {
-                    print("⏰ Found \(staleUDFs.count) stale UDFs, refreshing from API...")
-                }
-            } else {
-                print("📭 No cached UDFs found, loading from API...")
+            cached = try SwiftDataManager.shared.loadAll(of: RMUserDefinedValue.self)
+            if !cached.isEmpty {
+                print("📦 Hydrated \(cached.count) UDFs from SwiftData cache")
             }
-
-            // Load fresh data from API
-            let freshUDFs = await loadUserDefinedValues()
-
-            // Update sync dates and save to cache
-            for udf in freshUDFs {
-                udf.updateSyncDate()
-            }
-
-            // Replace all cached UDFs with fresh data
-            try SwiftDataManager.shared.replaceAll(freshUDFs, of: RMUserDefinedValue.self)
-
-            print("✅ Loaded and cached \(freshUDFs.count) UDFs on startup")
-            return freshUDFs
-
         } catch {
-            print("❌ Failed to load UDFs from cache: \(error)")
+            print("❌ UDF cache hydrate failed: \(error.localizedDescription)")
+        }
 
-            // Fallback to API only
-            let fallbackUDFs = await loadUserDefinedValues()
-            print("⚠️ Using API fallback: \(fallbackUDFs.count) UDFs")
-            return fallbackUDFs
+        // 2. Delta (or full) sync via SyncCoordinator
+        let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMUserDefinedValue.self)
+        let fetched = await loadUserDefinedValues(deltaFilter: deltaFilter)
+
+        // 3. Upsert fetched records via @Attribute(.unique) id
+        if !fetched.isEmpty {
+            do {
+                try SwiftDataManager.shared.save(fetched)
+            } catch {
+                print("❌ UDF persist failed: \(error.localizedDescription)")
+            }
+        }
+
+        await SyncCoordinator.shared.markSynced(RMUserDefinedValue.self)
+
+        // 4. Return the merged cache for callers
+        do {
+            return try SwiftDataManager.shared.loadAll(of: RMUserDefinedValue.self)
+        } catch {
+            print("❌ UDF post-sync reload failed: \(error.localizedDescription)")
+            return cached.isEmpty ? fetched : cached
         }
     }
 
@@ -123,26 +124,12 @@ class RMDataManager: ObservableObject {
         }
     }
 
-    /// Force refresh UDFs from API
+    /// Force refresh UDFs from API (resets the sync window)
     @MainActor
     func refreshUDFs() async -> [RMUserDefinedValue] {
         print("🔄 Force refreshing UDFs from API...")
-        let freshUDFs = await loadUserDefinedValues()
-
-        do {
-            // Update sync dates
-            for udf in freshUDFs {
-                udf.updateSyncDate()
-            }
-
-            // Replace cached data
-            try SwiftDataManager.shared.replaceAll(freshUDFs, of: RMUserDefinedValue.self)
-            print("✅ Refreshed and cached \(freshUDFs.count) UDFs")
-        } catch {
-            print("⚠️ Failed to cache refreshed UDFs: \(error)")
-        }
-
-        return freshUDFs
+        await SyncCoordinator.shared.resetSyncDate(for: RMUserDefinedValue.self)
+        return await loadUDFsOnStartup()
     }
 }
 
