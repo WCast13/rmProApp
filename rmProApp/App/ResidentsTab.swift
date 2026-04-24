@@ -22,7 +22,7 @@ struct ResidentsTab: View {
                 .navigationDestination(for: ResidentsDestination.self) { destination in
                     switch destination {
                     case .residentDetail(let tenant):
-                        NewResidentDetailView(navigationPath: $path, tenant: tenant)
+                        ResidentDetailView(navigationPath: $path, tenant: tenant)
                     }
                 }
         }

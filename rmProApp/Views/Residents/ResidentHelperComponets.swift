@@ -120,23 +120,3 @@ struct TransactionItem: View {
     }
 }
 
-struct ActionButton: View {
-    let title: String
-    let icon: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(systemName: icon)
-                Text(title)
-            }
-            .font(.subheadline.bold())
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(Color.accentColor.opacity(0.1))
-            .foregroundColor(.accentColor)
-            .clipShape(Capsule())
-        }
-    }
-}

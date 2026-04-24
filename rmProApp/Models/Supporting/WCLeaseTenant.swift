@@ -224,6 +224,80 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     // NOTE: Not Codable. Skipped in encode/decode.
     var transactions: [WCTransaction]?
     
+    /// Flatten an RMTenant and one of its active leases into a single
+    /// row. The unit comes from the lease so the row is always scoped
+    /// to that lease's unit.
+    convenience init(tenant: RMTenant, lease: RMLease) {
+        self.init(
+            accountGroupID: tenant.accountGroupID,
+            accountGroupMasterTenantID: tenant.accountGroupMasterTenantID,
+            addresses: tenant.addresses,
+            allLeases: tenant.leases,
+            balance: tenant.balance,
+            charges: tenant.charges,
+            chargeTypes: tenant.chargeTypes,
+            checkPayeeName: tenant.checkPayeeName,
+            colorID: tenant.colorID,
+            comment: tenant.comment,
+            contacts: tenant.contacts,
+            createDate: tenant.createDate,
+            createUserID: tenant.createUserID,
+            defaultTaxTypeID: tenant.defaultTaxTypeID,
+            doNotAcceptChecks: tenant.doNotAcceptChecks,
+            doNotAcceptPayments: tenant.doNotAcceptPayments,
+            doNotAllowTWAPayments: tenant.doNotAllowTWAPayments,
+            doNotChargeLateFees: tenant.doNotChargeLateFees,
+            doNotPrintStatements: tenant.doNotPrintStatements,
+            doNotSendARAutomationNotifications: tenant.doNotSendARAutomationNotifications,
+            evictionID: tenant.evictionID,
+            failedCalls: tenant.failedCalls,
+            firstContact: tenant.firstContact,
+            firstName: tenant.firstName,
+            flexibleRentInternalStatus: tenant.flexibleRentInternalStatus,
+            flexibleRentStatus: tenant.flexibleRentStatus,
+            isAccountGroupMaster: tenant.isAccountGroupMaster,
+            isCompany: tenant.isCompany,
+            isProspect: tenant.isProspect,
+            isShowCommentBanner: tenant.isShowCommentBanner,
+            lastContact: tenant.lastContact,
+            lastName: tenant.lastName,
+            lastNameFirstName: tenant.lastNameFirstName,
+            lease: lease,
+            loans: tenant.loans,
+            name: tenant.name,
+            openBalance: tenant.openBalance,
+            overrideCreateDate: tenant.overrideCreateDate,
+            overrideCreateUserID: tenant.overrideCreateUserID,
+            overrideReason: tenant.overrideReason,
+            overrideScreeningDecision: tenant.overrideScreeningDecision,
+            overrideUpdateDate: tenant.overrideUpdateDate,
+            overrideUpdateUserID: tenant.overrideUpdateUserID,
+            payments: tenant.payments,
+            paymentReversals: tenant.paymentReversals,
+            postingStartDate: tenant.postingStartDate,
+            propertyID: tenant.propertyID,
+            recurringChargeSummaries: tenant.recurringChargeSummaries,
+            rentDueDay: tenant.rentDueDay,
+            rentPeriod: tenant.rentPeriod,
+            screeningStatus: tenant.screeningStatus,
+            securityDepositHeld: tenant.securityDepositHeld,
+            securityDepositSummaries: tenant.securityDepositSummaries,
+            statementMethod: tenant.statementMethod,
+            status: tenant.status,
+            tenantDisplayID: tenant.tenantDisplayID,
+            tenantID: tenant.tenantID,
+            totalCalls: tenant.totalCalls,
+            totalEmails: tenant.totalEmails,
+            totalVisits: tenant.totalVisits,
+            udfs: tenant.udfs,
+            unit: lease.unit,
+            updateDate: tenant.updateDate,
+            updateUserID: tenant.updateUserID,
+            webMessage: tenant.webMessage,
+            primaryContact: tenant.primaryContact
+        )
+    }
+
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.accountGroupID = try? container.decode(Int.self, forKey: .accountGroupID)

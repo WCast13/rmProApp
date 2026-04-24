@@ -2,14 +2,14 @@
 //  ResidentDetailView.swift
 //  rmProApp
 //
-//  Created by William Castellano on 4/3/25.
-//  Redesigned by Grok on 6/4/25.
+//  Resident detail screen. Owns a ResidentDetailViewModel that loads
+//  the merged transaction timeline; cards read from the view model's
+//  tenant reference.
 //
 
 import SwiftUI
-import Foundation
 
-struct NewResidentDetailView: View {
+struct ResidentDetailView: View {
     @Binding var navigationPath: NavigationPath
     @State private var viewModel: ResidentDetailViewModel
 
@@ -20,7 +20,7 @@ struct NewResidentDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: DSSpacing.xl) {
                 HeaderView(tenant: viewModel.tenant)
                 InformationCard(tenant: viewModel.tenant)
                 AddressesCard(tenant: viewModel.tenant)
@@ -34,8 +34,8 @@ struct NewResidentDetailView: View {
                     isLoading: viewModel.isLoadingTransactions
                 )
             }
-            .padding(.horizontal)
-            .padding(.bottom, 20)
+            .padding(.horizontal, DSSpacing.l)
+            .padding(.bottom, DSSpacing.xl)
         }
         .background(Color(.systemBackground))
         .navigationTitle("Resident Details")

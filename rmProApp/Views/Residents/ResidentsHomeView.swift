@@ -41,59 +41,70 @@ struct ResidentsHomeView: View {
             // Header
             HStack {
                 Text("Residents")
-                    .font(.title)
-                    .bold()
-                    .foregroundColor(.primary)
+                    .font(DSTypography.title)
+                    .foregroundColor(DSColor.primary)
 
                 Spacer()
 
                 Button(action: { viewModel.isShowingFilters.toggle() }) {
                     Image(systemName: "slider.horizontal.3")
                         .font(.title2)
-                        .foregroundColor(.accentColor)
-                        .padding(10)
+                        .foregroundColor(DSColor.accent)
+                        .padding(DSSpacing.m)
                         .background(Circle().fill(Color.white.opacity(0.8)))
                         .shadow(radius: 2)
                 }
             }
-            .padding(.horizontal)
-            .padding(.top, 10)
+            .padding(.horizontal, DSSpacing.l)
+            .padding(.top, DSSpacing.m)
 
             // Search Bar
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
+                    .foregroundColor(DSColor.secondary)
                 TextField("Search by Name or Unit", text: $viewModel.searchText)
                     .textFieldStyle(.plain)
-                    .font(.body)
+                    .font(DSTypography.body)
                     .frame(minHeight: 50)
             }
+            .padding(.horizontal, DSSpacing.l)
 
             // Filter Chips
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
+                HStack(spacing: DSSpacing.m) {
                     ForEach(ResidentsListViewModel.Filter.allCases) { filter in
-                        FilterChipView(title: filter.rawValue, isSelected: viewModel.selectedFilter == filter) {
+                        FilterChip(title: filter.rawValue, isSelected: viewModel.selectedFilter == filter) {
                             withAnimation(.easeInOut) {
                                 viewModel.selectedFilter = filter
                             }
                         }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 5)
+                .padding(.horizontal, DSSpacing.l)
+                .padding(.vertical, DSSpacing.xs)
             }
 
-            // Residents List
-            ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(viewModel.filteredTenants, id: \.id) { tenant in
-                        ResidentCard(tenant: tenant, navigationPath: $navigationPath)
-                            .padding(.horizontal)
-                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+            // Residents list / empty state
+            if viewModel.filteredTenants.isEmpty {
+                EmptyStateView(
+                    systemImage: "person.3.sequence",
+                    title: "No Residents Match",
+                    message: "Try clearing the filter or searching a different name or unit."
+                )
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: DSSpacing.m) {
+                        ForEach(viewModel.filteredTenants, id: \.id) { tenant in
+                            ResidentCard(tenant: tenant, navigationPath: $navigationPath)
+                                .padding(.horizontal, DSSpacing.l)
+                                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        }
                     }
+                    .padding(.top, DSSpacing.m)
                 }
-                .padding(.top, 10)
+                .refreshable {
+                    await tenantDataManager.fetchTenants(forceRefresh: true)
+                }
             }
         }
         .sheet(isPresented: $viewModel.isShowingFilters) {
@@ -104,28 +115,8 @@ struct ResidentsHomeView: View {
 }
 
 
-// MARK: View Helpers
-// Filter Chip
-struct FilterChipView: View {
-    let title: String
-    let isSelected: Bool
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(isSelected ? Color.accentColor : .gray.opacity(0.2))
-                .foregroundColor(isSelected ? .white : .primary)
-                .clipShape(.capsule)
-        }
-    }
-}
-
-// Resident Card
-struct ResidentCard : View {
+// MARK: - Resident Card
+struct ResidentCard: View {
     let tenant: WCLeaseTenant
     @Binding var navigationPath: NavigationPath
 
@@ -133,55 +124,58 @@ struct ResidentCard : View {
         Button(action: {
             navigationPath.append(ResidentsDestination.residentDetail(tenant))
         }) {
-            HStack(alignment: .top, spacing: 12) {
-                //Initials Circle
+            HStack(alignment: .top, spacing: DSSpacing.m) {
                 ZStack {
                     Circle()
-                        .fill( LinearGradient(colors: [.blue, .black], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .fill(LinearGradient(
+                            colors: [.blue, .black],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
                         .frame(width: 50, height: 50)
                     Text(initials(from: tenant.name ?? "N/A"))
                         .font(.system(size: 18, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                 }
 
-                // Details
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: DSSpacing.xs) {
                     Text(tenant.name ?? "N/A")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                        .foregroundColor(.red)
+                        .font(DSTypography.subheadlineBold)
+                        .foregroundColor(DSColor.primary)
 
                     if let unitName = tenant.lease?.unit?.name {
                         Text("Unit: \(unitName)")
-                            .font(.system(size: 14, design: .rounded))
-                            .foregroundColor(.green)
+                            .font(DSTypography.caption)
+                            .foregroundColor(DSColor.secondary)
                     }
 
                     if let balance = tenant.openBalance, balance > 0 {
                         Text("Balance: $\(balance)")
-                            .font(.system(size: 18, weight: .medium, design: .rounded))
-                            .foregroundColor(.red)
+                            .font(DSTypography.subheadlineBold)
+                            .foregroundColor(DSColor.destructive)
                     }
                 }
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+                    .foregroundColor(DSColor.secondary)
                     .font(.system(size: 16))
             }
         }
-        .padding()
-        .background( RoundedRectangle(cornerRadius: 12)
-            .fill(Color.white)
-            .shadow(radius: 2))
+        .padding(DSSpacing.l)
+        .background(
+            RoundedRectangle(cornerRadius: DSRadius.medium)
+                .fill(Color.white)
+                .shadow(radius: 2)
+        )
     }
 }
 
-
 private func initials(from name: String) -> String {
-   let components = name.split(separator: " ")
-   let initials = components.prefix(2).map { $0.first?.uppercased() ?? "" }.joined()
-   return initials.isEmpty ? "N/A" : initials
+    let components = name.split(separator: " ")
+    let initials = components.prefix(2).map { $0.first?.uppercased() ?? "" }.joined()
+    return initials.isEmpty ? "N/A" : initials
 }
 
 struct FilterSheet: View {
@@ -189,7 +183,7 @@ struct FilterSheet: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(ResidentsListViewModel.Filter.allCases) { filter in
                     Button(action: {
@@ -198,18 +192,22 @@ struct FilterSheet: View {
                     }) {
                         HStack {
                             Text(filter.rawValue)
-                                .foregroundColor(.primary)
+                                .foregroundColor(DSColor.primary)
                             Spacer()
                             if selectedFilter == filter {
                                 Image(systemName: "checkmark")
-                                    .foregroundColor(.green)
+                                    .foregroundColor(DSColor.positive)
                             }
                         }
                     }
                 }
             }
             .navigationTitle("Filters")
-            .navigationBarItems(trailing: Button("Done") { dismiss() })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") { dismiss() }
+                }
+            }
         }
     }
 }
