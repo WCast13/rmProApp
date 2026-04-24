@@ -14,7 +14,7 @@ enum MailingsDestination: Hashable {
 }
 
 struct MailingsTab: View {
-    @State private var path = NavigationPath()
+    @Binding var path: NavigationPath
 
     var body: some View {
         NavigationStack(path: $path) {
