@@ -69,6 +69,9 @@
 		0EF2AB4C36F043BDA8D9393C /* GetUserDefinedFieldsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166156D3A96491A91415ADE /* GetUserDefinedFieldsRequest.swift */; };
 		9A4744BCE32F48FEA88FF646 /* GetTenantDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4480763F13B541328908E853 /* GetTenantDetailRequest.swift */; };
 		45AA77A07FB04D37B754C51C /* RMFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEDAF7CFAD945029D50FEC9 /* RMFilter.swift */; };
+		DE6974F9F2034E519213715B /* SyncableEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D15B8D49AF4D2CA9B19C83 /* SyncableEntity.swift */; };
+		DF48683A19104289AB122709 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */; };
+		4F5073DDF5424268AC171B86 /* RMTenant+Syncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +139,9 @@
 		C166156D3A96491A91415ADE /* GetUserDefinedFieldsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserDefinedFieldsRequest.swift; sourceTree = "<group>"; };
 		4480763F13B541328908E853 /* GetTenantDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTenantDetailRequest.swift; sourceTree = "<group>"; };
 		EBEDAF7CFAD945029D50FEC9 /* RMFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMFilter.swift; sourceTree = "<group>"; };
+		A3D15B8D49AF4D2CA9B19C83 /* SyncableEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncableEntity.swift; sourceTree = "<group>"; };
+		6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
+		307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RMTenant+Syncable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,12 +352,23 @@
 			children = (
 				24FF78DC2775488F831C2069 /* Core */,
 				8F43F76609BC4C5DAECE019C /* Requests */,
+				18EE4EA8219044E7AD970466 /* Sync */,
 				E1980FBF2E69E83A00B8A386 /* RM Data Manager */,
 				E1A434752DD5018800BDE071 /* Essential API Manager */,
 				E1A434782DD5018800BDE071 /* Notice Manager */,
 				E11AEBA02E7CEE660082FC7B /* Parameters */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		18EE4EA8219044E7AD970466 /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				A3D15B8D49AF4D2CA9B19C83 /* SyncableEntity.swift */,
+				6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */,
+				307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */,
+			);
+			path = Sync;
 			sourceTree = "<group>";
 		};
 		24FF78DC2775488F831C2069 /* Core */ = {
@@ -533,6 +550,9 @@
 				0EF2AB4C36F043BDA8D9393C /* GetUserDefinedFieldsRequest.swift in Sources */,
 				9A4744BCE32F48FEA88FF646 /* GetTenantDetailRequest.swift in Sources */,
 				45AA77A07FB04D37B754C51C /* RMFilter.swift in Sources */,
+				DE6974F9F2034E519213715B /* SyncableEntity.swift in Sources */,
+				DF48683A19104289AB122709 /* SyncCoordinator.swift in Sources */,
+				4F5073DDF5424268AC171B86 /* RMTenant+Syncable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

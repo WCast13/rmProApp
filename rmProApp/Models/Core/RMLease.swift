@@ -15,7 +15,7 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
     }
     
     
-    var id = UUID()
+    @Attribute(.unique) var id: String = ""
     var leaseID: Int?
     var tenantID: Int?
     var unitID: Int?
@@ -70,7 +70,6 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
     }
     
     init(
-        id: UUID = UUID(),
         leaseID: Int? = nil,
         tenantID: Int? = nil,
         unitID: Int? = nil,
@@ -96,7 +95,6 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
         propertyUnit: String? = nil,
         unitProperty: String? = nil
     ) {
-        self.id = id
         self.leaseID = leaseID
         self.tenantID = tenantID
         self.unitID = unitID
@@ -121,6 +119,7 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
         self.property = property
         self.propertyUnit = propertyUnit
         self.unitProperty = unitProperty
+        self.id = "lease-\(leaseID ?? -1)"
     }
 
     required init(from decoder: Decoder) throws {
@@ -149,6 +148,7 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
         self.unit = try container.decodeIfPresent(RMUnit.self, forKey: .unit)
         self.propertyUnit = try container.decodeIfPresent(String.self, forKey: .propertyUnit)
         self.unitProperty = try container.decodeIfPresent(String.self, forKey: .unitProperty)
+        self.id = "lease-\(self.leaseID ?? -1)"
     }
 
     func encode(to encoder: Encoder) throws {

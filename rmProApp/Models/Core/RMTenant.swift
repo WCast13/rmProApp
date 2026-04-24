@@ -10,8 +10,8 @@ import SwiftData
 
 @Model
 final class RMTenant: Codable, Identifiable, Hashable {
-    
-    var id = UUID()
+
+    @Attribute(.unique) var id: String = ""
     var accountGroupID: Int?
     var accountGroupMasterTenantID: Int?
     var balance: Decimal?
@@ -156,7 +156,6 @@ final class RMTenant: Codable, Identifiable, Hashable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = UUID()
         self.accountGroupID = try container.decodeIfPresent(Int.self, forKey: .accountGroupID)
         self.accountGroupMasterTenantID = try container.decodeIfPresent(Int.self, forKey: .accountGroupMasterTenantID)
         self.balance = try container.decodeIfPresent(Decimal.self, forKey: .balance)
@@ -222,6 +221,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
         self.webMessage = try container.decodeIfPresent(String.self, forKey: .webMessage)
         self.addresses = try container.decodeIfPresent([RMAddress].self, forKey: .addresses)
         self.primaryContact = try container.decodeIfPresent(RMContact.self, forKey: .primaryContact)
+        self.id = "tenant-\(self.tenantID ?? -1)"
     }
 
     func encode(to encoder: Encoder) throws {

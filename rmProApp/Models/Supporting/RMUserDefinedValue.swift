@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class RMUserDefinedValue: Codable, Identifiable, Hashable {
-    @Attribute(.unique) var id: UUID
+    @Attribute(.unique) var id: String = ""
     var userDefinedValueID: Int?
     var userDefinedFieldID: Int?
     var parentID: Int?
@@ -29,7 +29,6 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
          name: String? = nil, value: String? = nil, dateValue: String? = nil,
          updateDate: String? = nil, fieldType: String? = nil, updateUserID: Int? = nil,
          createUserID: Int? = nil, updateFrequency: TimeInterval? = 86400 * 60) { // Default 24 hours
-        self.id = UUID()
         self.userDefinedValueID = userDefinedValueID
         self.userDefinedFieldID = userDefinedFieldID
         self.parentID = parentID
@@ -43,6 +42,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.lastSyncDate = Date()
         self.parentType = parentType
         self.updateFrequency = updateFrequency
+        self.id = "udv-\(userDefinedValueID ?? -1)"
     }
 
     // MARK: - Codable Implementation
@@ -62,7 +62,6 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = UUID()
         self.userDefinedValueID = try container.decodeIfPresent(Int.self, forKey: .userDefinedValueID)
         self.userDefinedFieldID = try container.decodeIfPresent(Int.self, forKey: .userDefinedFieldID)
         self.parentID = try container.decodeIfPresent(Int.self, forKey: .parentID)
@@ -76,6 +75,7 @@ class RMUserDefinedValue: Codable, Identifiable, Hashable {
         self.lastSyncDate = Date()
         self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
         self.updateFrequency = 86400 // Default 24 hours for API data
+        self.id = "udv-\(self.userDefinedValueID ?? -1)"
     }
 
     func encode(to encoder: Encoder) throws {

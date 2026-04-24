@@ -15,8 +15,8 @@ final class RMContact: Codable, Identifiable, Hashable, Equatable {
         lhs.contactID == rhs.contactID
     }
     
-    var id = UUID()
-    
+    @Attribute(.unique) var id: String = ""
+
     var contactID: Int?
     var firstName: String?
     var lastName: String?
@@ -98,6 +98,7 @@ final class RMContact: Codable, Identifiable, Hashable, Equatable {
         self.parentID = try container.decodeIfPresent(Int.self, forKey: .parentID)
         self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
         self.phoneNumbers = try container.decodeIfPresent([RMPhoneNumber].self, forKey: .phoneNumbers) ?? []
+        self.id = "contact-\(self.contactID ?? -1)"
     }
 
     func encode(to encoder: Encoder) throws {

@@ -15,7 +15,6 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     }
     
     init(
-        id: UUID = UUID(),
         accountGroupID: Int? = nil,
         accountGroupMasterTenantID: Int? = nil,
         addresses: [RMAddress]? = nil,
@@ -84,7 +83,6 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         primaryContact: RMContact? = nil,
         transactions: [WCTransaction]? = nil
     ) {
-        self.id = id
         self.accountGroupID = accountGroupID
         self.accountGroupMasterTenantID = accountGroupMasterTenantID
         self.addresses = addresses
@@ -152,9 +150,10 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         self.webMessage = webMessage
         self.primaryContact = primaryContact
         self.transactions = transactions
+        self.id = "wclt-\(tenantID ?? -1)-\(lease?.leaseID ?? -1)"
     }
-    
-    var id: UUID = UUID()
+
+    @Attribute(.unique) var id: String = ""
     var accountGroupID: Int?
     var accountGroupMasterTenantID: Int?
     var addresses: [RMAddress]?
@@ -227,7 +226,6 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = UUID()
         self.accountGroupID = try? container.decode(Int.self, forKey: .accountGroupID)
         self.accountGroupMasterTenantID = try? container.decode(Int.self, forKey: .accountGroupMasterTenantID)
         self.balance = try? container.decode(Decimal.self, forKey: .balance)
@@ -296,6 +294,7 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         self.primaryContact = try? container.decode(RMContact.self, forKey: .primaryContact)
         // Not Codable, skip
         self.transactions = nil
+        self.id = "wclt-\(self.tenantID ?? -1)--1"
     }
 
     func encode(to encoder: Encoder) throws {

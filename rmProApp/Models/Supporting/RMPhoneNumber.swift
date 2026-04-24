@@ -14,7 +14,7 @@ final class RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
         return lhs.id == rhs.id
     }
     
-    var id = UUID()
+    @Attribute(.unique) var id: String = ""
     var phoneNumberID: Int?
     var phoneNumberTypeID: Int?
     var phoneNumber: String?
@@ -43,7 +43,6 @@ final class RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = UUID()
         self.phoneNumberID = try container.decodeIfPresent(Int.self, forKey: .phoneNumberID)
         self.phoneNumberTypeID = try container.decodeIfPresent(Int.self, forKey: .phoneNumberTypeID)
         self.phoneNumber = try container.decodeIfPresent(String.self, forKey: .phoneNumber)
@@ -54,6 +53,7 @@ final class RMPhoneNumber: Codable, Identifiable, Hashable, Equatable {
         self.isOptOut = try container.decodeIfPresent(Bool.self, forKey: .isOptOut)
         self.parentID = try container.decodeIfPresent(Int.self, forKey: .parentID)
         self.parentType = try container.decodeIfPresent(String.self, forKey: .parentType)
+        self.id = "phone-\(self.phoneNumberID ?? -1)"
     }
 
     func encode(to encoder: Encoder) throws {

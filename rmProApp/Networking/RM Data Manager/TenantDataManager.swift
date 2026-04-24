@@ -75,8 +75,34 @@ class TenantDataManager: ObservableObject {
 
         let startTime = Date()
 
-        // 1. Fetch base tenant data first
-        allTenants = await fetchTenantBase()
+        // forceRefresh resets the sync window so we pull everything again
+        if forceRefresh {
+            await SyncCoordinator.shared.resetSyncDate(for: RMTenant.self)
+        }
+
+        // 1. Fetch base tenant data (delta if we have a prior sync, full otherwise)
+        let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMTenant.self)
+        let fetched = await fetchTenantBase(deltaFilter: deltaFilter)
+
+        if deltaFilter == nil {
+            // First sync this window — fetched IS the world.
+            allTenants = fetched
+        } else {
+            // Delta sync — merge changed records into the existing in-memory set
+            for updated in fetched {
+                guard let newID = updated.tenantID else { continue }
+                if let idx = allTenants.firstIndex(where: { $0.tenantID == newID }) {
+                    allTenants[idx] = updated
+                } else {
+                    allTenants.append(updated)
+                }
+            }
+            print("🔁 Delta sync merged \(fetched.count) updated tenants (total in memory: \(allTenants.count))")
+        }
+
+        // Mark the successful sync boundary for the next pull
+        await SyncCoordinator.shared.markSynced(RMTenant.self)
+
         let tenantsSnapshot = self.allTenants
 
         // 2. Fetch sections concurrently for better performance
@@ -112,10 +138,20 @@ class TenantDataManager: ObservableObject {
         print("🚀 Total fetch time: \(totalTime) seconds")
     }
     
-    private func fetchTenantBase() async -> [RMTenant] {
-        let (result, _) = await timeAPICall("Base fetch for tenants (new client): ") {
+    private func fetchTenantBase(deltaFilter: RMFilter? = nil) async -> [RMTenant] {
+        var filters: [RMFilter] = [RMFilter(key: "Status", operation: "ne", value: "Past")]
+        if let deltaFilter {
+            filters.append(deltaFilter)
+            print("🔁 fetchTenantBase delta: \(deltaFilter.key),\(deltaFilter.operation),\(deltaFilter.value)")
+        } else {
+            print("🌊 fetchTenantBase full sync")
+        }
+
+        let label = deltaFilter == nil ? "Base fetch for tenants (full): " : "Base fetch for tenants (delta): "
+
+        let (result, _) = await timeAPICall(label) {
             do {
-                return try await RMAPIClient.shared.send(GetTenantsRequest())
+                return try await RMAPIClient.shared.send(GetTenantsRequest(filters: filters))
             } catch {
                 print("❌ fetchTenantBase failed: \(error.localizedDescription)")
                 return []

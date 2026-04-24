@@ -11,7 +11,7 @@ import SwiftData
 // MARK: - Loan
 @Model
 final class RMLoan: Codable, Identifiable, Hashable {
-    var id = UUID()
+    @Attribute(.unique) var id: String = ""
     var loanID: Int?
     var reference: String?
     var accountID: Int?
@@ -105,7 +105,6 @@ final class RMLoan: Codable, Identifiable, Hashable {
     }
 
     init(
-        id: UUID = UUID(),
         loanID: Int? = nil,
         reference: String? = nil,
         accountID: Int? = nil,
@@ -151,7 +150,6 @@ final class RMLoan: Codable, Identifiable, Hashable {
         updateUserID: Int? = nil,
         concurrencyID: Int? = nil
     ) {
-        self.id = id
         self.loanID = loanID
         self.reference = reference
         self.accountID = accountID
@@ -196,12 +194,12 @@ final class RMLoan: Codable, Identifiable, Hashable {
         self.updateDate = updateDate
         self.updateUserID = updateUserID
         self.concurrencyID = concurrencyID
+        self.id = "loan-\(loanID ?? -1)"
     }
 
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
-            id: UUID(), // 'id' is not in CodingKeys, initialize as new UUID or customize if needed
             loanID: try container.decodeIfPresent(Int.self, forKey: .loanID),
             reference: try container.decodeIfPresent(String.self, forKey: .reference),
             accountID: try container.decodeIfPresent(Int.self, forKey: .accountID),
