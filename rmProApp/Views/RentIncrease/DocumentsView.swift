@@ -33,7 +33,7 @@ struct DocumentsView: View {
             } else {
                 List(documents, id: \.self) { url in
                     HStack {
-                        NavigationLink(value: AppDestination.documentViewer(url)) {
+                        NavigationLink(value: MailingsDestination.documentViewer(url)) {
                             HStack {
                                 Image(systemName: iconForFileExtension(url.pathExtension))
                                     .foregroundColor(.accentColor)

@@ -36,9 +36,11 @@
 		E11AEBF22E7CF12B0082FC7B /* NewResidentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC02E7CF12B0082FC7B /* NewResidentDetail.swift */; };
 		E11AEBF72E7CF12B0082FC7B /* ResidentsHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */; };
 		E11AEBFE2E7CF12B0082FC7B /* MailingLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBBA2E7CF12B0082FC7B /* MailingLabelView.swift */; };
-		E11AEC012E7CF12B0082FC7B /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC82E7CF12B0082FC7B /* MainAppView.swift */; };
+		063548D4B33644D492F79E36 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3939CBA53540819A0CF40D /* RootView.swift */; };
+		ACF60834A9CA470889A9431E /* ResidentsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A036480554377BFF5FD03 /* ResidentsTab.swift */; };
+		30D8576BF4BF49B6AACA478E /* MailingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFFDEB5F6A14C398700E892 /* MailingsTab.swift */; };
+		82C05E680CCE470EBC62265E /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E0FCB695294625B4DA2703 /* SettingsTab.swift */; };
 		E11AEC042E7CF12B0082FC7B /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBB82E7CF12B0082FC7B /* DocumentsView.swift */; };
-		E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC62E7CF12B0082FC7B /* HomeView.swift */; };
 		E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC72E7CF12B0082FC7B /* LoginView.swift */; };
 		E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */; };
 		E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */; };
@@ -111,9 +113,11 @@
 		E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
 		E11AEBC02E7CF12B0082FC7B /* NewResidentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewResidentDetail.swift; sourceTree = "<group>"; };
 		E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsHomeView.swift; sourceTree = "<group>"; };
-		E11AEBC62E7CF12B0082FC7B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5F3939CBA53540819A0CF40D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		D33A036480554377BFF5FD03 /* ResidentsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsTab.swift; sourceTree = "<group>"; };
+		9FFFDEB5F6A14C398700E892 /* MailingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingsTab.swift; sourceTree = "<group>"; };
+		20E0FCB695294625B4DA2703 /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
 		E11AEBC72E7CF12B0082FC7B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		E11AEBC82E7CF12B0082FC7B /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		E11AEBCC2E7CF12B0082FC7B /* UnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsView.swift; sourceTree = "<group>"; };
 		E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Avery 5160 Template PDF.pdf"; sourceTree = "<group>"; };
 		E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppTests.swift; sourceTree = "<group>"; };
@@ -262,11 +266,20 @@
 		E11AEBC92E7CF12B0082FC7B /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				E11AEBC62E7CF12B0082FC7B /* HomeView.swift */,
 				E11AEBC72E7CF12B0082FC7B /* LoginView.swift */,
-				E11AEBC82E7CF12B0082FC7B /* MainAppView.swift */,
 			);
 			path = Root;
+			sourceTree = "<group>";
+		};
+		5EC1B02169DB4B699B411445 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5F3939CBA53540819A0CF40D /* RootView.swift */,
+				D33A036480554377BFF5FD03 /* ResidentsTab.swift */,
+				9FFFDEB5F6A14C398700E892 /* MailingsTab.swift */,
+				20E0FCB695294625B4DA2703 /* SettingsTab.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		E11AEBCD2E7CF12B0082FC7B /* Units */ = {
@@ -435,6 +448,7 @@
 		E1A434982DD5018800BDE071 /* rmProApp */ = {
 			isa = PBXGroup;
 			children = (
+				5EC1B02169DB4B699B411445 /* App */,
 				E1F5077D2EB2B51E002A3F2E /* Extensions */,
 				E1A4345A2DD5018800BDE071 /* Assets */,
 				E1A434712DD5018800BDE071 /* Models */,
@@ -562,11 +576,13 @@
 				E11AEBF22E7CF12B0082FC7B /* NewResidentDetail.swift in Sources */,
 				E11AEBF72E7CF12B0082FC7B /* ResidentsHomeView.swift in Sources */,
 				E11AEBFE2E7CF12B0082FC7B /* MailingLabelView.swift in Sources */,
-				E11AEC012E7CF12B0082FC7B /* MainAppView.swift in Sources */,
+				063548D4B33644D492F79E36 /* RootView.swift in Sources */,
+				ACF60834A9CA470889A9431E /* ResidentsTab.swift in Sources */,
+				30D8576BF4BF49B6AACA478E /* MailingsTab.swift in Sources */,
+				82C05E680CCE470EBC62265E /* SettingsTab.swift in Sources */,
 				E11AEC042E7CF12B0082FC7B /* DocumentsView.swift in Sources */,
 				E13677D62EABFD16002AE5B1 /* ResidentHelperComponets.swift in Sources */,
 				E11AEC312E7ED4A70082FC7B /* SwiftDataManager.swift in Sources */,
-				E11AEC142E7CF12B0082FC7B /* HomeView.swift in Sources */,
 				E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */,
 				E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */,
 				E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */,

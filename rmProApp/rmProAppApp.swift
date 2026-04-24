@@ -12,7 +12,8 @@ import SwiftData
 @main
 struct rmProAppApp: App {
     @StateObject private var tokenManager = TokenManager.shared
-    
+    @State private var tenantDataManager = TenantDataManager.shared
+
     init() {
         // Initialize authentication on app startup
         Task {
@@ -24,7 +25,6 @@ struct rmProAppApp: App {
         WindowGroup {
             Group {
                 if tokenManager.isAuthenticating {
-                    // Show loading screen while checking authentication
                     VStack {
                         ProgressView("Checking authentication...")
                         Text("Please wait...")
@@ -32,12 +32,13 @@ struct rmProAppApp: App {
                             .foregroundColor(.secondary)
                     }
                 } else if tokenManager.isAuthenticated {
-                    MainAppView()
+                    RootView()
                 } else {
                     LoginView()
                 }
             }
             .environmentObject(tokenManager)
+            .environment(tenantDataManager)
         }
     }
 }

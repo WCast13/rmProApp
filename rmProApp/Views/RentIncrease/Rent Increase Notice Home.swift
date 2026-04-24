@@ -19,7 +19,7 @@ struct RentIncreaseNoticeBuilder: View {
     var body: some View {
         
             VStack {
-                HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
+                HomeButton(title: "Completed Labels and ps3877 Form", destination: MailingsDestination.documents)
                 
                 Text("Create Rent Increase Notice")
                 

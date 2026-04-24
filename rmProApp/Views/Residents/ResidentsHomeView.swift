@@ -131,7 +131,7 @@ struct ResidentCard : View {
 
     var body: some View {
         Button(action: {
-            navigationPath.append(AppDestination.residentDetails((tenant)))
+            navigationPath.append(ResidentsDestination.residentDetail(tenant))
         }) {
             HStack(alignment: .top, spacing: 12) {
                 //Initials Circle
