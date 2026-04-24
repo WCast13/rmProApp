@@ -513,16 +513,3 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
         case primaryContact = "PrimaryContact"
     }
 }
-
-/*
- FOR Resident Details:- Need to Add
- Open Recievables
- Loans
- Vehicles
- Evictions
- History
- 
- NEEDS TO EDIT-
- Lease
- 
- */
