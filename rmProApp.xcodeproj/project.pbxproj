@@ -77,6 +77,7 @@
 		859B97D380004559A714A3C0 /* TenantRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E9EA74072C477A816C7B2E /* TenantRepository.swift */; };
 		F6018EE28ACC47F5994F22E7 /* UnitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3D2F42E964402AD95A0FE /* UnitRepository.swift */; };
 		917094A3CA634C0DB4937C4C /* UDFRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4A80B0F8A4C7F81C0FA04 /* UDFRepository.swift */; };
+		91B5115D26EC44C19003ACB5 /* TransactionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF1416A987475787531A44 /* TransactionRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,7 @@
 		F2E9EA74072C477A816C7B2E /* TenantRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantRepository.swift; sourceTree = "<group>"; };
 		ACC3D2F42E964402AD95A0FE /* UnitRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitRepository.swift; sourceTree = "<group>"; };
 		02E4A80B0F8A4C7F81C0FA04 /* UDFRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDFRepository.swift; sourceTree = "<group>"; };
+		D2AF1416A987475787531A44 /* TransactionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +380,7 @@
 				F2E9EA74072C477A816C7B2E /* TenantRepository.swift */,
 				ACC3D2F42E964402AD95A0FE /* UnitRepository.swift */,
 				02E4A80B0F8A4C7F81C0FA04 /* UDFRepository.swift */,
+				D2AF1416A987475787531A44 /* TransactionRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				859B97D380004559A714A3C0 /* TenantRepository.swift in Sources */,
 				F6018EE28ACC47F5994F22E7 /* UnitRepository.swift in Sources */,
 				917094A3CA634C0DB4937C4C /* UDFRepository.swift in Sources */,
+				91B5115D26EC44C19003ACB5 /* TransactionRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

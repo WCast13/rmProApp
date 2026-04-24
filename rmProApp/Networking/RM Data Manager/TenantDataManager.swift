@@ -210,17 +210,7 @@ class TenantDataManager: ObservableObject {
     }
     
     func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
-        let request = GetTenantDetailRequest(
-            tenantID: tenantID,
-            embeds: [.charges, .charges_ChargeType, .payments, .paymentReversals],
-            fields: [.charges, .payments, .paymentReversals]
-        )
-        do {
-            return try await RMAPIClient.shared.send(request)
-        } catch {
-            print("❌ fetchSingleTenantTransactions failed: \(error.localizedDescription)")
-            return nil
-        }
+        await TransactionRepository.shared.fetchTransactions(for: tenantID)
     }
 
     func fetchAddresses(tenant: WCLeaseTenant) async -> [RMAddress] {
