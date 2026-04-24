@@ -75,47 +75,10 @@ class TenantDataManager: ObservableObject {
 
         let startTime = Date()
 
-        // Hydrate from SwiftData on the first call of a fresh launch so the
-        // delta merge below has something to merge into.
-        if allTenants.isEmpty {
-            allTenants = loadCachedTenants()
-            if !allTenants.isEmpty {
-                print("📦 Hydrated \(allTenants.count) tenants from SwiftData cache")
-            }
-        }
-
-        // forceRefresh resets the sync window so we pull everything again
-        if forceRefresh {
-            await SyncCoordinator.shared.resetSyncDate(for: RMTenant.self)
-        }
-
-        // 1. Fetch base tenant data (delta if we have a prior sync, full otherwise)
-        let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMTenant.self)
-        let fetched = await fetchTenantBase(deltaFilter: deltaFilter)
-
-        if deltaFilter == nil {
-            // First sync this window — fetched IS the world.
-            allTenants = fetched
-        } else {
-            // Delta sync — merge changed records into the existing in-memory set
-            for updated in fetched {
-                guard let newID = updated.tenantID else { continue }
-                if let idx = allTenants.firstIndex(where: { $0.tenantID == newID }) {
-                    allTenants[idx] = updated
-                } else {
-                    allTenants.append(updated)
-                }
-            }
-            print("🔁 Delta sync merged \(fetched.count) updated tenants (total in memory: \(allTenants.count))")
-        }
-
-        // Persist the fetched set to SwiftData (upsert via @Attribute(.unique) id)
-        if !fetched.isEmpty {
-            persistTenants(fetched)
-        }
-
-        // Mark the successful sync boundary for the next pull
-        await SyncCoordinator.shared.markSynced(RMTenant.self)
+        // Delegate base tenant sync (hydrate, delta/full fetch, merge, persist,
+        // markSynced) to TenantRepository. Section merges below still run here
+        // since they don't have repositories yet.
+        allTenants = await TenantRepository.shared.syncBase(forceRefresh: forceRefresh)
 
         let tenantsSnapshot = self.allTenants
 
@@ -150,48 +113,6 @@ class TenantDataManager: ObservableObject {
 
         let totalTime = Date().timeIntervalSince(startTime)
         print("🚀 Total fetch time: \(totalTime) seconds")
-    }
-    
-    // MARK: SwiftData-backed tenant cache
-
-    private func loadCachedTenants() -> [RMTenant] {
-        do {
-            return try SwiftDataManager.shared.loadAll(of: RMTenant.self)
-        } catch {
-            print("❌ loadCachedTenants failed: \(error.localizedDescription)")
-            return []
-        }
-    }
-
-    private func persistTenants(_ tenants: [RMTenant]) {
-        do {
-            try SwiftDataManager.shared.save(tenants)
-        } catch {
-            print("❌ persistTenants failed: \(error.localizedDescription)")
-        }
-    }
-
-    private func fetchTenantBase(deltaFilter: RMFilter? = nil) async -> [RMTenant] {
-        var filters: [RMFilter] = [RMFilter(key: "Status", operation: "ne", value: "Past")]
-        if let deltaFilter {
-            filters.append(deltaFilter)
-            print("🔁 fetchTenantBase delta: \(deltaFilter.key),\(deltaFilter.operation),\(deltaFilter.value)")
-        } else {
-            print("🌊 fetchTenantBase full sync")
-        }
-
-        let label = deltaFilter == nil ? "Base fetch for tenants (full): " : "Base fetch for tenants (delta): "
-
-        let (result, _) = await timeAPICall(label) {
-            do {
-                return try await RMAPIClient.shared.send(GetTenantsRequest(filters: filters))
-            } catch {
-                print("❌ fetchTenantBase failed: \(error.localizedDescription)")
-                return []
-            }
-        }
-
-        return result
     }
     
     private func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async {
