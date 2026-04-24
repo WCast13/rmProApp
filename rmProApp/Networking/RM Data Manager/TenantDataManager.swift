@@ -126,24 +126,17 @@ class TenantDataManager: ObservableObject {
     }
     
     private func fetchSection(for tenants: [RMTenant], embeds: [TenantEmbeds], fields: [TenantFields], section: TenantDataSection) async {
-
-        let embedsString = embeds.map(\.rawValue).joined(separator: ",")
-        let fieldsString = fields.map(\.rawValue).joined(separator: ",")
-
-        let filters = [
-            RMFilter(key: "Status", operation: "ne", value: "Past")
-        ]
-
-        guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: embedsString, fields: fieldsString, filters: filters) else {
-            print("❌ Failed to build section URL")
-            return
-        }
+        let request = GetTenantsRequest(embeds: embeds, fields: fields)
 
         let (tenantData, duration) = await timeAPICall("Section \(section)") {
-            await RentManagerAPIClient.shared.request(url: url, responseType: [RMTenant].self) ?? []
+            do {
+                return try await RMAPIClient.shared.send(request)
+            } catch {
+                print("❌ fetchSection \(section) failed: \(error.localizedDescription)")
+                return []
+            }
         }
 
-        // Batch merge operations for better performance
         for newData in tenantData {
             mergeTenant(newData: newData, section: section)
         }
@@ -203,21 +196,23 @@ class TenantDataManager: ObservableObject {
         }
 
         // If not in cache, fetch from API
-        let fullEmbedsString = TenantEmbeds.fullEmbeds.map { $0.rawValue }.joined(separator: ",")
-        let fullFieldsString = TenantFields.fullFields.map { $0.rawValue }.joined(separator: ",")
-
-        guard let url = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: fullEmbedsString, fields: fullFieldsString, id: tenantID) else {
-            print("❌ Failed to build single tenant URL")
-            return nil
-        }
+        let request = GetTenantDetailRequest(
+            tenantID: tenantID,
+            embeds: TenantEmbeds.fullEmbeds,
+            fields: TenantFields.fullFields
+        )
 
         let (tenant, duration) = await timeAPICall("Single tenant fetch") {
-            await RentManagerAPIClient.shared.request(url: url, responseType: RMTenant.self)
+            do {
+                return try await RMAPIClient.shared.send(request) as RMTenant?
+            } catch {
+                print("❌ fetchSingleTenant failed: \(error.localizedDescription)")
+                return nil
+            }
         }
 
         if let tenant = tenant {
             singleTenant = tenant
-            // Update cache with full tenant data
             tenantCache[tenantID] = tenant
         }
 
@@ -225,44 +220,48 @@ class TenantDataManager: ObservableObject {
     }
     
     func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
-        let transactionsEmbeds: [TenantEmbeds] = [.charges, .charges_ChargeType, .payments, .paymentReversals]
-        let transactionsFields: [TenantFields] = [.charges, .payments, .paymentReversals]
-        
-        let transactionEmbedsString = transactionsEmbeds.map { $0.rawValue }.joined(separator: ",")
-        let transactionFieldsString = transactionsFields.map { $0.rawValue }.joined(separator: ",")
-        
-        let transactionURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: transactionEmbedsString, fields: transactionFieldsString, id: tenantID)
-        
-        let transactions = await RentManagerAPIClient.shared.request(url: transactionURL!, responseType: RMTenant.self)
-        return transactions
+        let request = GetTenantDetailRequest(
+            tenantID: tenantID,
+            embeds: [.charges, .charges_ChargeType, .payments, .paymentReversals],
+            fields: [.charges, .payments, .paymentReversals]
+        )
+        do {
+            return try await RMAPIClient.shared.send(request)
+        } catch {
+            print("❌ fetchSingleTenantTransactions failed: \(error.localizedDescription)")
+            return nil
+        }
     }
-    
+
     func fetchAddresses(tenant: WCLeaseTenant) async -> [RMAddress] {
-        let addressEmbeds: [TenantEmbeds] = [.addresses, .addresses_AddressType]
-        let addressFields: [TenantFields] = [.addresses]
-        
-        let addressEmbedsString = addressEmbeds.map { $0.rawValue }.joined(separator: ",")
-        let addressFieldsString = addressFields.map { $0.rawValue }.joined(separator: ",")
-        
-        let addressURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: addressEmbedsString, fields: addressFieldsString, id: String(tenant.tenantID ?? 0))
-        
-        let tenantAddresses = await RentManagerAPIClient.shared.request(url: addressURL!, responseType: RMTenant.self)
-        
-        return tenantAddresses?.addresses ?? [RMAddress]()
+        let request = GetTenantDetailRequest(
+            tenantID: String(tenant.tenantID ?? 0),
+            embeds: [.addresses, .addresses_AddressType],
+            fields: [.addresses]
+        )
+        do {
+            let tenantDetail = try await RMAPIClient.shared.send(request)
+            return tenantDetail.addresses ?? []
+        } catch {
+            print("❌ fetchAddresses failed: \(error.localizedDescription)")
+            return []
+        }
     }
-    
+
     func fetchContacts(tenant: WCLeaseTenant) async -> [RMContact] {
-        let contactEmbeds: [TenantEmbeds] = [.contacts]
-        let contactFields: [TenantFields] = [.contacts]
-        
-        let contactEmbedsString = contactEmbeds.map { $0.rawValue }.joined(separator: ",")
-        let contactFieldsString = contactFields.map { $0.rawValue }.joined(separator: ",")
-        
-        let contactURL: URL? = URLBuilder.shared.buildURL(endpoint: .tenants, embeds: contactEmbedsString, fields: contactFieldsString, id: "\(tenant.tenantID ?? 0)")
-        let contacts = await RentManagerAPIClient.shared.request(url: contactURL!, responseType: RMTenant.self)
-        
-        print(contacts?.contacts?.count ?? 0)
-        return contacts?.contacts ?? [RMContact]()
+        let request = GetTenantDetailRequest(
+            tenantID: String(tenant.tenantID ?? 0),
+            embeds: [.contacts],
+            fields: [.contacts]
+        )
+        do {
+            let tenantDetail = try await RMAPIClient.shared.send(request)
+            print(tenantDetail.contacts?.count ?? 0)
+            return tenantDetail.contacts ?? []
+        } catch {
+            print("❌ fetchContacts failed: \(error.localizedDescription)")
+            return []
+        }
     }
     
     // MARK: Generate Rent Increase Tenants for Mailing Labels
