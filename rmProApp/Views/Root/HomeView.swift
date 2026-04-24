@@ -15,8 +15,7 @@ struct HomeView: View {
         
         VStack(spacing: 20) {
             
-            HomeButton(title: "Rent Increase Builder", destination: AppDestination.contentView)
-            HomeButton(title: "Rent Increase Builder Home", destination: AppDestination.rentIncreaseBuilder)
+            HomeButton(title: "Rent Increase Builder", destination: AppDestination.rentIncreaseBuilder)
             HomeButton(title: "Residents Home View", destination: AppDestination.residentsHome)
             
             HStack {

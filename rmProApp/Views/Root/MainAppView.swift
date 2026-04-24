@@ -33,13 +33,6 @@ struct MainAppView: View {
                         ResidentsHomeView(navigationPath: $navigationPath)
                     case .residentDetails(let tenant):
                         NewResidentDetailView(navigationPath: $navigationPath, tenant: tenant)
-                    case .noticesBuilder(let unit):
-                        ViolationBuilderView(navigationPath: $navigationPath, unit: unit)
-                    case .specialTask:
-                        GetBoxNumbersForUDF(navigationPath: $navigationPath)
-                    case .contentView:
-                        // Present your existing ContentView and pass the NavigationPath binding
-                        ContentView(navigationPath: $navigationPath)
                     }
                 }
         }
@@ -79,7 +72,4 @@ enum AppDestination: Hashable {
     case documentViewer(URL)
     case residentsHome
     case residentDetails(WCLeaseTenant)
-    case noticesBuilder(RMUnit)
-    case specialTask
-    case contentView // NEW: Route to legacy ContentView
 }

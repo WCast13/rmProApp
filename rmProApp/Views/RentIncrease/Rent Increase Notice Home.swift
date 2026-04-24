@@ -19,7 +19,6 @@ struct RentIncreaseNoticeBuilder: View {
     var body: some View {
         
             VStack {
-                HomeButton(title: "Labels & PS3877 (Legacy ContentView)", destination: AppDestination.contentView)
                 HomeButton(title: "Completed Labels and ps3877 Form", destination: AppDestination.documents)
                 
                 Text("Create Rent Increase Notice")

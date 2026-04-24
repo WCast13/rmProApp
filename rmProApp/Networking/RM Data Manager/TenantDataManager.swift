@@ -17,10 +17,7 @@ class TenantDataManager: ObservableObject {
     @Published var allUnitTenants: [WCLeaseTenant] = []
     @Published var allUnits : [RMUnit] = []
 
-    // TODO: Dashboard Filters
     @Published var tenantsInDeliquency: [RMTenant]?
-    @Published var tenantsInEviction: [RMTenant]? // TODO: Need RMEviction
-    @Published var tenantPaymentReturns: [RMTenant]? // TODO: Might Not Need
     @Published var rentIncreaseTenants: [WCRentIncreaseTenant] = []
 
     // MARK: Caching and Performance
@@ -272,7 +269,6 @@ class TenantDataManager: ObservableObject {
     }
     
     // MARK: Generate Rent Increase Tenants for Mailing Labels
-    // TODO: Need to Add Vacant Units to List
     func buildRentIncreaseTenants() {
         var rentIncreaseTenants: [WCRentIncreaseTenant] = []
         
