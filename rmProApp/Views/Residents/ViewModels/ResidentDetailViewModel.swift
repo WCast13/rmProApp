@@ -49,8 +49,9 @@ final class ResidentDetailViewModel {
     /// Merge charges, payments, and payment reversals into a single
     /// timeline. One `WCTransaction` per source row — each with its own
     /// identity — sorted by transactionDate descending (ISO-8601 strings
-    /// order correctly as lexical sorts).
-    private func buildTransactions(
+    /// order correctly as lexical sorts). Internal so tests can exercise
+    /// the merge directly.
+    func buildTransactions(
         charges: [RMCharge],
         payments: [RMPayment],
         reversals: [RMPaymentReversal]

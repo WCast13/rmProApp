@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "00000000-0000-0000-0000-000000000001",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:rmProApp.xcodeproj",
+        "identifier" : "E117D0462E688FBB00925291",
+        "name" : "rmProAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

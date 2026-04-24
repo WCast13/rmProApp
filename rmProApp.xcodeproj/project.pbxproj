@@ -47,6 +47,8 @@
 		E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC72E7CF12B0082FC7B /* LoginView.swift */; };
 		E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */; };
 		E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */; };
+		B7785F27C7904BC6A26CC205 /* NetworkingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934D8B401C04DC0B472CD36 /* NetworkingTests.swift */; };
+		B5734C10BC3049DAA3D0E8E0 /* MailingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526BA323354549148CF076AE /* MailingsTests.swift */; };
 		E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */; };
 		E11AEC312E7ED4A70082FC7B /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */; };
 		E13677D62EABFD16002AE5B1 /* ResidentHelperComponets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13677D52EABFD16002AE5B1 /* ResidentHelperComponets.swift */; };
@@ -84,6 +86,16 @@
 		917094A3CA634C0DB4937C4C /* UDFRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E4A80B0F8A4C7F81C0FA04 /* UDFRepository.swift */; };
 		91B5115D26EC44C19003ACB5 /* TransactionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF1416A987475787531A44 /* TransactionRepository.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		874401F3C46346A6A57E83CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E155012A2C63D252000A0726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E15501312C63D252000A0726;
+			remoteInfo = rmProApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E11AEB6D2E7CECB30082FC7B /* RMLease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLease.swift; sourceTree = "<group>"; };
@@ -126,6 +138,9 @@
 		E11AEBCC2E7CF12B0082FC7B /* UnitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsView.swift; sourceTree = "<group>"; };
 		E11AEC212E7CF6270082FC7B /* Avery 5160 Template PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Avery 5160 Template PDF.pdf"; sourceTree = "<group>"; };
 		E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rmProAppTests.swift; sourceTree = "<group>"; };
+		4CC6F27F646F4F078BC022A1 /* rmProAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rmProAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A934D8B401C04DC0B472CD36 /* NetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingTests.swift; sourceTree = "<group>"; };
+		526BA323354549148CF076AE /* MailingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingsTests.swift; sourceTree = "<group>"; };
 		E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMDataManager.swift; sourceTree = "<group>"; };
 		E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		E13677D52EABFD16002AE5B1 /* ResidentHelperComponets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentHelperComponets.swift; sourceTree = "<group>"; };
@@ -168,6 +183,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		E155012F2C63D252000A0726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50650350F8C547E19CA2EC82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -325,6 +347,8 @@
 			isa = PBXGroup;
 			children = (
 				E11AEC292E7CF7610082FC7B /* rmProAppTests.swift */,
+				A934D8B401C04DC0B472CD36 /* NetworkingTests.swift */,
+				526BA323354549148CF076AE /* MailingsTests.swift */,
 			);
 			path = rmProAppTests;
 			sourceTree = "<group>";
@@ -342,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				E15501322C63D252000A0726 /* rmProApp.app */,
+				4CC6F27F646F4F078BC022A1 /* rmProAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,6 +530,24 @@
 			productReference = E15501322C63D252000A0726 /* rmProApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E117D0462E688FBB00925291 /* rmProAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE1E6AA585944058954F0055 /* Build configuration list for PBXNativeTarget "rmProAppTests" */;
+			buildPhases = (
+				C3424C78F13F45CD80C2E3F6 /* Sources */,
+				50650350F8C547E19CA2EC82 /* Frameworks */,
+				973CC56E75C4423B9A9B3699 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F2BD6379726499E962A109E /* PBXTargetDependency */,
+			);
+			name = rmProAppTests;
+			productName = rmProAppTests;
+			productReference = 4CC6F27F646F4F078BC022A1 /* rmProAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -517,6 +560,10 @@
 				TargetAttributes = {
 					E15501312C63D252000A0726 = {
 						CreatedOnToolsVersion = 15.4;
+					};
+					E117D0462E688FBB00925291 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = E15501312C63D252000A0726;
 					};
 				};
 			};
@@ -534,6 +581,7 @@
 			projectRoot = "";
 			targets = (
 				E15501312C63D252000A0726 /* rmProApp */,
+				E117D0462E688FBB00925291 /* rmProAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -546,6 +594,13 @@
 				E1A434CB2DD5018800BDE071 /* Assets.xcassets in Resources */,
 				E11AEC252E7CF6270082FC7B /* Avery 5160 Template PDF.pdf in Resources */,
 				E1E0F11B2EB14FDB00382044 /* ps3877.pdf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		973CC56E75C4423B9A9B3699 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +658,6 @@
 				E11AEC2F2E7DD3530082FC7B /* RMDataManager.swift in Sources */,
 				E11AEC202E7CF12B0082FC7B /* LoginView.swift in Sources */,
 				E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */,
-				E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */,
 				E11AEBA32E7CEE660082FC7B /* UnitParams.swift in Sources */,
 				E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */,
 				E11AEB8F2E7CEDDF0082FC7B /* WCTransaction.swift in Sources */,
@@ -632,7 +686,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3424C78F13F45CD80C2E3F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */,
+				B7785F27C7904BC6A26CC205 /* NetworkingTests.swift in Sources */,
+				B5734C10BC3049DAA3D0E8E0 /* MailingsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3F2BD6379726499E962A109E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E15501312C63D252000A0726 /* rmProApp */;
+			targetProxy = 874401F3C46346A6A57E83CE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E155013F2C63D253000A0726 /* Debug */ = {
@@ -834,6 +906,48 @@
 			};
 			name = Release;
 		};
+		B25CE45B20114D2591F9F0BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wctech.rmProAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rmProApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/rmProApp";
+			};
+			name = Debug;
+		};
+		AFE079B2CD3849FDAB55445F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wctech.rmProAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/rmProApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/rmProApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -851,6 +965,15 @@
 			buildConfigurations = (
 				E15501422C63D253000A0726 /* Debug */,
 				E15501432C63D253000A0726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE1E6AA585944058954F0055 /* Build configuration list for PBXNativeTarget "rmProAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B25CE45B20114D2591F9F0BC /* Debug */,
+				AFE079B2CD3849FDAB55445F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
