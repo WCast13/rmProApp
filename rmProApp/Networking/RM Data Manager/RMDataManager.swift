@@ -18,85 +18,18 @@ class RMDataManager: ObservableObject {
     private init() {}
     
     func loadUnitsWithBasicData() async {
-        await loadUnitsCommon(
-            embeds: [.addresses, .isVacant, .leases, .unitType],
-            fields: [.addresses, .leases, .name, .unitType, .isVacant, .propertyID, .unitID, .updateDate],
-            label: "loadUnitsWithBasicData"
-        )
+        unitsWithBasicData = await UnitRepository.shared.syncUnits(.basic)
+        recomputeVacantUnits()
     }
 
     func loadUnits() async {
-        await loadUnitsCommon(
-            embeds: [.addresses, .currentOccupants, .isVacant, .primaryAddress, .property, .property_Addresses, .leases_Tenant, .leases, .unitType],
-            fields: [.addresses, .currentOccupants, .isVacant, .leases, .name, .primaryAddress, .property, .propertyID, .unitType, .userDefinedValues, .unitID, .updateDate],
-            label: "loadUnits"
-        )
+        unitsWithBasicData = await UnitRepository.shared.syncUnits(.full)
+        recomputeVacantUnits()
     }
 
-    private func loadUnitsCommon(embeds: [UnitEmbedOption], fields: [UnitFieldOption], label: String) async {
-        // Hydrate from SwiftData first for instant availability
-        if unitsWithBasicData.isEmpty {
-            do {
-                let cached = try SwiftDataManager.shared.loadAll(of: RMUnit.self)
-                if !cached.isEmpty {
-                    unitsWithBasicData = cached
-                    print("📦 Hydrated \(cached.count) units from SwiftData cache")
-                }
-            } catch {
-                print("❌ Unit cache hydrate failed: \(error.localizedDescription)")
-            }
-        }
-
-        // Base filter: active properties only. Add delta filter if we have a prior sync.
-        var filters: [RMFilter] = [RMFilter(key: "Property.IsActive", operation: "eq", value: "true")]
-        let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMUnit.self)
-        if let deltaFilter {
-            filters.append(deltaFilter)
-            print("🔁 \(label) delta: UpdateDate,gte,...")
-        } else {
-            print("🌊 \(label) full sync")
-        }
-
-        let request = GetUnitsRequest(embeds: embeds, fields: fields, filters: filters)
-        let fetched: [RMUnit]
-        do {
-            fetched = try await RMAPIClient.shared.send(request)
-        } catch {
-            print("❌ \(label) failed: \(error.localizedDescription)")
-            return
-        }
-
-        if deltaFilter == nil {
-            // Full sync — fetched is the world
-            unitsWithBasicData = fetched
-        } else {
-            // Delta — merge into existing in-memory set
-            for updated in fetched {
-                guard let newID = updated.unitID else { continue }
-                if let idx = unitsWithBasicData.firstIndex(where: { $0.unitID == newID }) {
-                    unitsWithBasicData[idx] = updated
-                } else {
-                    unitsWithBasicData.append(updated)
-                }
-            }
-            print("🔁 Delta sync merged \(fetched.count) updated units (total in memory: \(unitsWithBasicData.count))")
-        }
-
-        // Persist the fetched set (upsert via @Attribute(.unique) id)
-        if !fetched.isEmpty {
-            do {
-                try SwiftDataManager.shared.save(fetched)
-            } catch {
-                print("❌ Unit persist failed: \(error.localizedDescription)")
-            }
-        }
-
-        await SyncCoordinator.shared.markSynced(RMUnit.self)
-
+    private func recomputeVacantUnits() {
         vacantUnits = unitsWithBasicData.filter { $0.isVacant == true && $0.name?.components(separatedBy: " ").last != "Loan" }
-
-        print("Units: \(unitsWithBasicData.count)")
-        print("Vacant Units: \(vacantUnits.count)")
+        print("Units: \(unitsWithBasicData.count)  Vacant Units: \(vacantUnits.count)")
     }
 
     func loadUserDefinedValues(deltaFilter: RMFilter? = nil) async -> [RMUserDefinedValue] {
