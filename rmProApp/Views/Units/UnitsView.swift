@@ -21,7 +21,7 @@ struct UnitsView: View {
                 LazyVGrid(columns: columns, spacing: 20) {
 
                     if let units = units {
-                        ForEach(units, id: \.uuid) { unit in
+                        ForEach(units, id: \.id) { unit in
                             VStack {
                                 Text("\(unit.name ?? "")")
                                 Text(unit.currentOccupants?.first?.name ?? "")

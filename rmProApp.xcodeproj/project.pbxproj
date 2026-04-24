@@ -73,6 +73,7 @@
 		DF48683A19104289AB122709 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */; };
 		4F5073DDF5424268AC171B86 /* RMTenant+Syncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */; };
 		DA05F789FE174103BAE10600 /* RMUserDefinedValue+Syncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C99F25062F4CE296310279 /* RMUserDefinedValue+Syncable.swift */; };
+		6B0AD333A98A4879B5C70E4A /* RMUnit+Syncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9BAA6B8E34E8CA976F7E2 /* RMUnit+Syncable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RMTenant+Syncable.swift"; sourceTree = "<group>"; };
 		61C99F25062F4CE296310279 /* RMUserDefinedValue+Syncable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RMUserDefinedValue+Syncable.swift"; sourceTree = "<group>"; };
+		13B9BAA6B8E34E8CA976F7E2 /* RMUnit+Syncable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RMUnit+Syncable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				6351E2CD805B4528B917DB16 /* SyncCoordinator.swift */,
 				307C0302F9554153B725F6CE /* RMTenant+Syncable.swift */,
 				61C99F25062F4CE296310279 /* RMUserDefinedValue+Syncable.swift */,
+				13B9BAA6B8E34E8CA976F7E2 /* RMUnit+Syncable.swift */,
 			);
 			path = Sync;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				DF48683A19104289AB122709 /* SyncCoordinator.swift in Sources */,
 				4F5073DDF5424268AC171B86 /* RMTenant+Syncable.swift in Sources */,
 				DA05F789FE174103BAE10600 /* RMUserDefinedValue+Syncable.swift in Sources */,
+				6B0AD333A98A4879B5C70E4A /* RMUnit+Syncable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
