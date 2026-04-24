@@ -117,12 +117,14 @@ class LabelGeneratorManager {
         var labelText = ""
         
         if unit.propertyID == 3 {
+            // Haven: street is "<street>\r\n<box>"; split into two lines
+            // so the box number lands on its own line below the street.
             let addressParts = unit.primaryAddress?.street?.components(separatedBy: "\r\n")
-            
+
             labelText = """
             \(namesPortion)
             \(addressParts?.first ?? "") Lot \(unit.name ?? "X-44")
-            Box \(addressParts?.last! ?? "")
+            Box \(addressParts?.last ?? "")
             \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33025")
             """
         } else {
@@ -132,13 +134,7 @@ class LabelGeneratorManager {
             \(unit.primaryAddress?.city ?? "xxxxx") \(unit.primaryAddress?.state ?? "FL"), \(unit.primaryAddress?.postalCode ?? "33009")
             """
         }
-        
-        labelText = """
-            Pembroke Park Lakes
-            PO Box 260490
-            Pembroke Park, FL 33009
-            """
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         

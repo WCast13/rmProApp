@@ -18,7 +18,7 @@ struct MailingsTab: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            RentIncreaseNoticeBuilder(navigationPath: $path)
+            MailingsHomeView(navigationPath: $path)
                 .navigationDestination(for: MailingsDestination.self) { destination in
                     switch destination {
                     case .documents:

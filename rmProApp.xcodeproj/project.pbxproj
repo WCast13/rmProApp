@@ -36,9 +36,9 @@
 		E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEB9E2E7CEE660082FC7B /* TenantParams.swift */; };
 		E11AEBA32E7CEE660082FC7B /* UnitParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEB9F2E7CEE660082FC7B /* UnitParams.swift */; };
 		E11AEBEB2E7CF12B0082FC7B /* UnitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBCC2E7CF12B0082FC7B /* UnitsView.swift */; };
-		E11AEBEF2E7CF12B0082FC7B /* Rent Increase Notice Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */; };
+		EE06B3FD91CA456CBDC502FB /* MailingsHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1EB40F19F74477A1A6ADE2 /* MailingsHomeView.swift */; };
+		51F92EB3556C44C89A6B75F3 /* MailingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA24C7717F2844E4B05FAB49 /* MailingsViewModel.swift */; };
 		E11AEBF72E7CF12B0082FC7B /* ResidentsHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */; };
-		E11AEBFE2E7CF12B0082FC7B /* MailingLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11AEBBA2E7CF12B0082FC7B /* MailingLabelView.swift */; };
 		063548D4B33644D492F79E36 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3939CBA53540819A0CF40D /* RootView.swift */; };
 		ACF60834A9CA470889A9431E /* ResidentsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33A036480554377BFF5FD03 /* ResidentsTab.swift */; };
 		30D8576BF4BF49B6AACA478E /* MailingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFFDEB5F6A14C398700E892 /* MailingsTab.swift */; };
@@ -115,8 +115,8 @@
 		E11AEB9E2E7CEE660082FC7B /* TenantParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantParams.swift; sourceTree = "<group>"; };
 		E11AEB9F2E7CEE660082FC7B /* UnitParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitParams.swift; sourceTree = "<group>"; };
 		E11AEBB82E7CF12B0082FC7B /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
-		E11AEBBA2E7CF12B0082FC7B /* MailingLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingLabelView.swift; sourceTree = "<group>"; };
-		E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rent Increase Notice Home.swift"; sourceTree = "<group>"; };
+		8A1EB40F19F74477A1A6ADE2 /* MailingsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingsHomeView.swift; sourceTree = "<group>"; };
+		DA24C7717F2844E4B05FAB49 /* MailingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailingsViewModel.swift; sourceTree = "<group>"; };
 		E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsHomeView.swift; sourceTree = "<group>"; };
 		5F3939CBA53540819A0CF40D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		D33A036480554377BFF5FD03 /* ResidentsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsTab.swift; sourceTree = "<group>"; };
@@ -235,14 +235,22 @@
 			path = Parameters;
 			sourceTree = "<group>";
 		};
-		E11AEBBE2E7CF12B0082FC7B /* RentIncrease */ = {
+		E11AEBBE2E7CF12B0082FC7B /* Mailings */ = {
 			isa = PBXGroup;
 			children = (
+				8A1EB40F19F74477A1A6ADE2 /* MailingsHomeView.swift */,
 				E11AEBB82E7CF12B0082FC7B /* DocumentsView.swift */,
-				E11AEBBA2E7CF12B0082FC7B /* MailingLabelView.swift */,
-				E11AEBBB2E7CF12B0082FC7B /* Rent Increase Notice Home.swift */,
+				BB05FD74CDEF49CB8DB48659 /* ViewModels */,
 			);
-			path = RentIncrease;
+			path = Mailings;
+			sourceTree = "<group>";
+		};
+		BB05FD74CDEF49CB8DB48659 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DA24C7717F2844E4B05FAB49 /* MailingsViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E11AEBC52E7CF12B0082FC7B /* Residents */ = {
@@ -296,7 +304,7 @@
 		E11AEBEA2E7CF12B0082FC7B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E11AEBBE2E7CF12B0082FC7B /* RentIncrease */,
+				E11AEBBE2E7CF12B0082FC7B /* Mailings */,
 				E11AEBC52E7CF12B0082FC7B /* Residents */,
 				E11AEBC92E7CF12B0082FC7B /* Root */,
 				E11AEBCD2E7CF12B0082FC7B /* Units */,
@@ -577,14 +585,14 @@
 				E1A434C12DD5018800BDE071 /* rmProAppApp.swift in Sources */,
 				E1A434C72DD5018800BDE071 /* LabelManager.swift in Sources */,
 				E11AEBEB2E7CF12B0082FC7B /* UnitsView.swift in Sources */,
-				E11AEBEF2E7CF12B0082FC7B /* Rent Increase Notice Home.swift in Sources */,
+				EE06B3FD91CA456CBDC502FB /* MailingsHomeView.swift in Sources */,
+				51F92EB3556C44C89A6B75F3 /* MailingsViewModel.swift in Sources */,
 				214649CA5E4B42B086329573 /* ResidentDetailView.swift in Sources */,
 				04C285A58A4343B3BC28B71D /* FilterChip.swift in Sources */,
 				096F41F504F046FF9F24BD08 /* EmptyStateView.swift in Sources */,
 				88AA4EF97E594C248CF2927D /* SectionHeader.swift in Sources */,
 				23C7052154CB4569B38B9C23 /* Card.swift in Sources */,
 				E11AEBF72E7CF12B0082FC7B /* ResidentsHomeView.swift in Sources */,
-				E11AEBFE2E7CF12B0082FC7B /* MailingLabelView.swift in Sources */,
 				063548D4B33644D492F79E36 /* RootView.swift in Sources */,
 				ACF60834A9CA470889A9431E /* ResidentsTab.swift in Sources */,
 				30D8576BF4BF49B6AACA478E /* MailingsTab.swift in Sources */,
