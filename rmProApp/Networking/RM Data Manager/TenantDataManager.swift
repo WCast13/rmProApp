@@ -14,15 +14,11 @@ class TenantDataManager {
     var havenTenants: [RMTenant] = []
     var pembrokeTenants: [RMTenant] = []
     var allTenants: [RMTenant] = []
-    var singleTenant: RMTenant?
     var allUnitTenants: [WCLeaseTenant] = []
     var allUnits: [RMUnit] = []
-
-    var tenantsInDeliquency: [RMTenant]?
     var rentIncreaseTenants: [WCRentIncreaseTenant] = []
 
     // MARK: Caching and Performance
-    private var tenantCache: [String: RMTenant] = [:]
     private var lastFetchTime: Date?
     private let cacheTimeout: TimeInterval = 300 // 5 minutes
     private var isCurrentlyFetching = false
@@ -107,8 +103,7 @@ class TenantDataManager {
             }
         }
 
-        // 4. Update cache and build derived data
-        updateTenantCache()
+        // 4. Build derived data
         buildRentIncreaseTenants()
         lastFetchTime = Date()
 
@@ -161,88 +156,6 @@ class TenantDataManager {
         
         allTenants[index] = existing
 //        print(allTenants.count)
-    }
-    
-    // MARK: Cache Management
-    private func updateTenantCache() {
-        tenantCache.removeAll()
-        for tenant in allTenants {
-            if let tenantID = tenant.tenantID {
-                tenantCache[String(tenantID)] = tenant
-            }
-        }
-    }
-
-    private func getCachedTenant(id: String) -> RMTenant? {
-        return tenantCache[id]
-    }
-
-    // MARK: Get Single Tenant- Details
-    func fetchSingleTenant(tenantID: String) async -> RMTenant? {
-        // Check cache first
-        if let cachedTenant = getCachedTenant(id: tenantID) {
-            print("📋 Using cached tenant: \(tenantID)")
-            singleTenant = cachedTenant
-            return cachedTenant
-        }
-
-        // If not in cache, fetch from API
-        let request = GetTenantDetailRequest(
-            tenantID: tenantID,
-            embeds: TenantEmbeds.fullEmbeds,
-            fields: TenantFields.fullFields
-        )
-
-        let (tenant, duration) = await timeAPICall("Single tenant fetch") {
-            do {
-                return try await RMAPIClient.shared.send(request) as RMTenant?
-            } catch {
-                print("❌ fetchSingleTenant failed: \(error.localizedDescription)")
-                return nil
-            }
-        }
-
-        if let tenant = tenant {
-            singleTenant = tenant
-            tenantCache[tenantID] = tenant
-        }
-
-        return tenant
-    }
-    
-    func fetchSingleTenantTransactions(tenantID: String) async -> RMTenant? {
-        await TransactionRepository.shared.fetchTransactions(for: tenantID)
-    }
-
-    func fetchAddresses(tenant: WCLeaseTenant) async -> [RMAddress] {
-        let request = GetTenantDetailRequest(
-            tenantID: String(tenant.tenantID ?? 0),
-            embeds: [.addresses, .addresses_AddressType],
-            fields: [.addresses]
-        )
-        do {
-            let tenantDetail = try await RMAPIClient.shared.send(request)
-            return tenantDetail.addresses ?? []
-        } catch {
-            print("❌ fetchAddresses failed: \(error.localizedDescription)")
-            return []
-        }
-    }
-
-    func fetchContacts(tenant: WCLeaseTenant) async -> [RMContact] {
-        let request = GetTenantDetailRequest(
-            tenantID: String(tenant.tenantID ?? 0),
-            embeds: [.contacts],
-            fields: [.contacts]
-        )
-        do {
-            let tenantDetail = try await RMAPIClient.shared.send(request)
-            print(tenantDetail.contacts?.count ?? 0)
-            return tenantDetail.contacts ?? []
-        } catch {
-            print("❌ fetchContacts failed: \(error.localizedDescription)")
-            return []
-        }
     }
     
     // MARK: Generate Rent Increase Tenants for Mailing Labels

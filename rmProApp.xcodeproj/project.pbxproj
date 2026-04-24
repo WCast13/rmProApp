@@ -48,7 +48,8 @@
 		E13677D82EABFD61002AE5B1 /* ResidentDetailSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13677D72EABFD61002AE5B1 /* ResidentDetailSections.swift */; };
 		E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17A7F3F2E5F71E30056B554 /* KeychainService.swift */; };
 		E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */; };
-		E1980FC12E69E83A00B8A386 /* TenantTransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */; };
+		A6CF783FFC8C4349993FAB58 /* ResidentDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A340487A6854DEBAE0B3DB9 /* ResidentDetailViewModel.swift */; };
+		EE2F196214F4457988AE4C5A /* ResidentsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BED6B620D04DC99EFE076B /* ResidentsListViewModel.swift */; };
 		E1A434BB2DD5018800BDE071 /* PS3877FormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434772DD5018800BDE071 /* PS3877FormManager.swift */; };
 		E1A434BC2DD5018800BDE071 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434732DD5018800BDE071 /* TokenManager.swift */; };
 		E1A434BE2DD5018800BDE071 /* EncodeDecodeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */; };
@@ -123,7 +124,8 @@
 		E15501322C63D252000A0726 /* rmProApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rmProApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17A7F3F2E5F71E30056B554 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
-		E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantTransactionsManager.swift; sourceTree = "<group>"; };
+		1A340487A6854DEBAE0B3DB9 /* ResidentDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailViewModel.swift; sourceTree = "<group>"; };
+		81BED6B620D04DC99EFE076B /* ResidentsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsListViewModel.swift; sourceTree = "<group>"; };
 		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeDecodeHelpers.swift; sourceTree = "<group>"; };
 		E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAssets.swift; sourceTree = "<group>"; };
@@ -243,8 +245,18 @@
 				E13677D72EABFD61002AE5B1 /* ResidentDetailSections.swift */,
 				E11AEBC32E7CF12B0082FC7B /* ResidentsHomeView.swift */,
 				E13677D52EABFD16002AE5B1 /* ResidentHelperComponets.swift */,
+				9B536A6BCB4B44E9A418D6B7 /* ViewModels */,
 			);
 			path = Residents;
+			sourceTree = "<group>";
+		};
+		9B536A6BCB4B44E9A418D6B7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1A340487A6854DEBAE0B3DB9 /* ResidentDetailViewModel.swift */,
+				81BED6B620D04DC99EFE076B /* ResidentsListViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E11AEBC92E7CF12B0082FC7B /* Root */ = {
@@ -314,7 +326,6 @@
 			isa = PBXGroup;
 			children = (
 				E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */,
-				E1980FBE2E69E83A00B8A386 /* TenantTransactionsManager.swift */,
 				E11AEC2E2E7DD3530082FC7B /* RMDataManager.swift */,
 				E11AEC302E7ED4A70082FC7B /* SwiftDataManager.swift */,
 			);
@@ -532,7 +543,8 @@
 				E11AEB892E7CEDAE0082FC7B /* RMAddress.swift in Sources */,
 				E11AEB8A2E7CEDAE0082FC7B /* RMContact.swift in Sources */,
 				E1980FC02E69E83A00B8A386 /* TenantDataManager.swift in Sources */,
-				E1980FC12E69E83A00B8A386 /* TenantTransactionsManager.swift in Sources */,
+				A6CF783FFC8C4349993FAB58 /* ResidentDetailViewModel.swift in Sources */,
+				EE2F196214F4457988AE4C5A /* ResidentsListViewModel.swift in Sources */,
 				E17A7F402E5F71E30056B554 /* KeychainService.swift in Sources */,
 				E1A434BB2DD5018800BDE071 /* PS3877FormManager.swift in Sources */,
 				E1A434BC2DD5018800BDE071 /* TokenManager.swift in Sources */,
