@@ -54,11 +54,10 @@
 		EE2F196214F4457988AE4C5A /* ResidentsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BED6B620D04DC99EFE076B /* ResidentsListViewModel.swift */; };
 		E1A434BB2DD5018800BDE071 /* PS3877FormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434772DD5018800BDE071 /* PS3877FormManager.swift */; };
 		E1A434BC2DD5018800BDE071 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434732DD5018800BDE071 /* TokenManager.swift */; };
-		E1A434BE2DD5018800BDE071 /* EncodeDecodeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */; };
+		B01FB505DA834E3C95B09B3A /* DSTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15743116E9D47719808C38A /* DSTokens.swift */; };
+		9B7F487841E147B182E8A3D5 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E368B960B34F03B651F564 /* PrimaryButton.swift */; };
 		E1A434C12DD5018800BDE071 /* rmProAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434972DD5018800BDE071 /* rmProAppApp.swift */; };
 		E1A434C72DD5018800BDE071 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434762DD5018800BDE071 /* LabelManager.swift */; };
-		E1A434C82DD5018800BDE071 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434572DD5018800BDE071 /* Color+Ext.swift */; };
-		E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */; };
 		E1A434CB2DD5018800BDE071 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1A434932DD5018800BDE071 /* Assets.xcassets */; };
 		E1E0F11B2EB14FDB00382044 /* ps3877.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E1E0F11A2EB14FDB00382044 /* ps3877.pdf */; };
 		E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */; };
@@ -130,9 +129,8 @@
 		E1980FBD2E69E83A00B8A386 /* TenantDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDataManager.swift; sourceTree = "<group>"; };
 		1A340487A6854DEBAE0B3DB9 /* ResidentDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentDetailViewModel.swift; sourceTree = "<group>"; };
 		81BED6B620D04DC99EFE076B /* ResidentsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidentsListViewModel.swift; sourceTree = "<group>"; };
-		E1A434572DD5018800BDE071 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
-		E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeDecodeHelpers.swift; sourceTree = "<group>"; };
-		E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAssets.swift; sourceTree = "<group>"; };
+		A15743116E9D47719808C38A /* DSTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSTokens.swift; sourceTree = "<group>"; };
+		26E368B960B34F03B651F564 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		E1A434732DD5018800BDE071 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		E1A434762DD5018800BDE071 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		E1A434772DD5018800BDE071 /* PS3877FormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PS3877FormManager.swift; sourceTree = "<group>"; };
@@ -345,13 +343,13 @@
 			path = "RM Data Manager";
 			sourceTree = "<group>";
 		};
-		E1A4345A2DD5018800BDE071 /* Assets */ = {
+		5B802D0AB82446138C4A84D3 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				E1A434582DD5018800BDE071 /* EncodeDecodeHelpers.swift */,
-				E1A434592DD5018800BDE071 /* SwiftUIAssets.swift */,
+				A15743116E9D47719808C38A /* DSTokens.swift */,
+				26E368B960B34F03B651F564 /* PrimaryButton.swift */,
 			);
-			path = Assets;
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 		E1A434712DD5018800BDE071 /* Models */ = {
@@ -449,8 +447,8 @@
 			isa = PBXGroup;
 			children = (
 				5EC1B02169DB4B699B411445 /* App */,
+				5B802D0AB82446138C4A84D3 /* DesignSystem */,
 				E1F5077D2EB2B51E002A3F2E /* Extensions */,
-				E1A4345A2DD5018800BDE071 /* Assets */,
 				E1A434712DD5018800BDE071 /* Models */,
 				E1A4347C2DD5018800BDE071 /* Networking */,
 				E1A434932DD5018800BDE071 /* Assets.xcassets */,
@@ -466,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				E1F5077C2EB2B51E002A3F2E /* Date+Extensions.swift */,
-				E1A434572DD5018800BDE071 /* Color+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -567,10 +564,10 @@
 				E11AEB9A2E7CEDFF0082FC7B /* RMSecurityDepositSummary.swift in Sources */,
 				E11AEB9B2E7CEDFF0082FC7B /* RMCharge.swift in Sources */,
 				E11AEB9C2E7CEDFF0082FC7B /* RMChargeType.swift in Sources */,
-				E1A434BE2DD5018800BDE071 /* EncodeDecodeHelpers.swift in Sources */,
+				B01FB505DA834E3C95B09B3A /* DSTokens.swift in Sources */,
+				9B7F487841E147B182E8A3D5 /* PrimaryButton.swift in Sources */,
 				E1A434C12DD5018800BDE071 /* rmProAppApp.swift in Sources */,
 				E1A434C72DD5018800BDE071 /* LabelManager.swift in Sources */,
-				E1A434C82DD5018800BDE071 /* Color+Ext.swift in Sources */,
 				E11AEBEB2E7CF12B0082FC7B /* UnitsView.swift in Sources */,
 				E11AEBEF2E7CF12B0082FC7B /* Rent Increase Notice Home.swift in Sources */,
 				E11AEBF22E7CF12B0082FC7B /* NewResidentDetail.swift in Sources */,
@@ -588,7 +585,6 @@
 				E11AEBA12E7CEE660082FC7B /* TenantParams.swift in Sources */,
 				E11AEC2B2E7CF7610082FC7B /* rmProAppTests.swift in Sources */,
 				E11AEBA32E7CEE660082FC7B /* UnitParams.swift in Sources */,
-				E1A434C92DD5018800BDE071 /* SwiftUIAssets.swift in Sources */,
 				E1F5077E2EB2B51E002A3F2E /* Date+Extensions.swift in Sources */,
 				E11AEB8F2E7CEDDF0082FC7B /* WCTransaction.swift in Sources */,
 				E11AEB902E7CEDDF0082FC7B /* RMPaymentReversal.swift in Sources */,
