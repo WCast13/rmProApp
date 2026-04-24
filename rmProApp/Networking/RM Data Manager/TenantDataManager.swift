@@ -75,6 +75,15 @@ class TenantDataManager: ObservableObject {
 
         let startTime = Date()
 
+        // Hydrate from SwiftData on the first call of a fresh launch so the
+        // delta merge below has something to merge into.
+        if allTenants.isEmpty {
+            allTenants = loadCachedTenants()
+            if !allTenants.isEmpty {
+                print("📦 Hydrated \(allTenants.count) tenants from SwiftData cache")
+            }
+        }
+
         // forceRefresh resets the sync window so we pull everything again
         if forceRefresh {
             await SyncCoordinator.shared.resetSyncDate(for: RMTenant.self)
@@ -98,6 +107,11 @@ class TenantDataManager: ObservableObject {
                 }
             }
             print("🔁 Delta sync merged \(fetched.count) updated tenants (total in memory: \(allTenants.count))")
+        }
+
+        // Persist the fetched set to SwiftData (upsert via @Attribute(.unique) id)
+        if !fetched.isEmpty {
+            persistTenants(fetched)
         }
 
         // Mark the successful sync boundary for the next pull
@@ -138,6 +152,25 @@ class TenantDataManager: ObservableObject {
         print("🚀 Total fetch time: \(totalTime) seconds")
     }
     
+    // MARK: SwiftData-backed tenant cache
+
+    private func loadCachedTenants() -> [RMTenant] {
+        do {
+            return try SwiftDataManager.shared.loadAll(of: RMTenant.self)
+        } catch {
+            print("❌ loadCachedTenants failed: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    private func persistTenants(_ tenants: [RMTenant]) {
+        do {
+            try SwiftDataManager.shared.save(tenants)
+        } catch {
+            print("❌ persistTenants failed: \(error.localizedDescription)")
+        }
+    }
+
     private func fetchTenantBase(deltaFilter: RMFilter? = nil) async -> [RMTenant] {
         var filters: [RMFilter] = [RMFilter(key: "Status", operation: "ne", value: "Past")]
         if let deltaFilter {
