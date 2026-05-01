@@ -37,7 +37,13 @@ actor TenantRepository {
         }
 
         let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMTenant.self)
-        let fetched = await fetchFromAPI(deltaFilter: deltaFilter)
+        let fetched: [RMTenant]
+        do {
+            fetched = try await fetchFromAPI(deltaFilter: deltaFilter)
+        } catch {
+            print("❌ TenantRepository fetch failed: \(error.localizedDescription)")
+            return cache
+        }
 
         if deltaFilter == nil {
             cache = fetched
@@ -124,21 +130,15 @@ actor TenantRepository {
         cache[index] = existing
     }
 
-    private func fetchFromAPI(deltaFilter: RMFilter?) async -> [RMTenant] {
+    private func fetchFromAPI(deltaFilter: RMFilter?) async throws -> [RMTenant] {
         var filters: [RMFilter] = [RMFilter(key: "Status", operation: "ne", value: "Past")]
         if let deltaFilter {
             filters.append(deltaFilter)
-            print("🔁 TenantRepository delta fetch (UpdateDate,gte,\(deltaFilter.value))")
+            print("🔁 TenantRepository delta fetch (\(deltaFilter.key),\(deltaFilter.operation),\(deltaFilter.value))")
         } else {
             print("🌊 TenantRepository full fetch")
         }
-
-        do {
-            return try await RMAPIClient.shared.send(GetTenantsRequest(filters: filters))
-        } catch {
-            print("❌ TenantRepository fetch failed: \(error.localizedDescription)")
-            return []
-        }
+        return try await RMAPIClient.shared.send(GetTenantsRequest(filters: filters))
     }
 
     @MainActor

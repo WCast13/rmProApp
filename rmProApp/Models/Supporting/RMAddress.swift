@@ -95,14 +95,14 @@ struct RMAddress: Codable, Identifiable {
 struct RMAddressType: Codable {
     let addressTypeID: Int?
     let name: String?
-    let description: String?
+    let descriptionText: String?
     let sortOrder: Int?
     let parentType: String?
     
     enum CodingKeys: String, CodingKey {
         case addressTypeID = "AddressTypeID"
         case name = "Name"
-        case description = "Description"
+        case descriptionText = "Description"
         case sortOrder = "SortOrder"
         case parentType = "ParentType"
     }

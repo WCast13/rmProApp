@@ -12,7 +12,7 @@ struct RMChargeType: Codable, Identifiable, Hashable {
     let id = UUID()
     let chargeTypeID: Int?
     let name: String?
-    let description: String?
+    let descriptionText: String?
     let glAccountID: Int?
     let defaultAmount: Int?
     let isProrated: Bool?
@@ -27,7 +27,7 @@ struct RMChargeType: Codable, Identifiable, Hashable {
     enum CodingKeys: String, CodingKey {
         case chargeTypeID = "ChargeTypeID"
         case name = "Name"
-        case description = "Description"
+        case descriptionText = "Description"
         case glAccountID = "GLAccountID"
         case defaultAmount = "DefaultAmount"
         case isProrated = "IsProrated"

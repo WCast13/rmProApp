@@ -43,8 +43,19 @@ final class RMAPIClient {
             return data
         }
 
+        // RentManager returns 200 with an empty body when a query matches zero
+        // rows (e.g. a delta filter with no updates). Coerce to a JSON empty
+        // array; current request types all decode to `[T]`, so this round-trips.
+        // Non-collection response types will fail the decode below and surface.
+        let payload: Data
+        if data.isEmpty || data.allSatisfy({ $0 == 0x20 || $0 == 0x09 || $0 == 0x0A || $0 == 0x0D }) {
+            payload = Data("[]".utf8)
+        } else {
+            payload = data
+        }
+
         do {
-            return try decoder.decode(R.Response.self, from: data)
+            return try decoder.decode(R.Response.self, from: payload)
         } catch {
             let raw = String(data: data, encoding: .utf8) ?? ""
             throw RMAPIError.decoding(error, rawBody: raw)

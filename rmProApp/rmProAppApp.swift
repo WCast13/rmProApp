@@ -40,5 +40,16 @@ struct rmProAppApp: App {
             .environmentObject(tokenManager)
             .environment(tenantDataManager)
         }
+        .modelContainer(for: [
+            RMTenant.self,
+            RMUnit.self,
+            RMLease.self,
+            RMLoan.self,
+            RMContact.self,
+            RMPhoneNumber.self,
+            RMUserDefinedValue.self,
+            WCLeaseTenant.self,
+            WCTransaction.self,
+        ])
     }
 }

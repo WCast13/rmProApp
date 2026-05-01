@@ -20,7 +20,7 @@ final class RMTenant: Codable, Identifiable, Hashable {
     var checkPayeeName: String?
     var colorID: Int?
     var comment: String?
-    var contacts: [RMContact]?
+    @Transient var contacts: [RMContact]? = nil
     var createDate: String?
     var createUserID: Int?
     var defaultTaxTypeID: Int?
@@ -43,8 +43,8 @@ final class RMTenant: Codable, Identifiable, Hashable {
     var lastContact: String?
     var lastName: String?
     var lastNameFirstName: String?
-    var leases: [RMLease]?
-    var loans: [RMLoan]?
+    @Transient var leases: [RMLease]? = nil
+    @Transient var loans: [RMLoan]? = nil
     var name: String?
     var openBalance: Decimal?
     var overrideCreateDate: String?
@@ -70,13 +70,13 @@ final class RMTenant: Codable, Identifiable, Hashable {
     var totalCalls: Int?
     var totalEmails: Int?
     var totalVisits: Int?
-    var udfs: [RMUserDefinedValue]?
-    var unit: RMUnit?
+    @Transient var udfs: [RMUserDefinedValue]? = nil
+    @Transient var unit: RMUnit? = nil
     var updateDate: String?
     var updateUserID: Int?
     var webMessage: String?
     var addresses: [RMAddress]?
-    var primaryContact: RMContact?
+    @Transient var primaryContact: RMContact? = nil
         
 //        let openReceivables: [JSONAny]? //RMCharge?
 //        let vehicles: [RMVehicle]?

@@ -41,7 +41,7 @@ final class RMContact: Codable, Identifiable, Hashable, Equatable {
     var updateUserID: Int?
     var parentID: Int?
     var parentType: String?
-    var phoneNumbers: [RMPhoneNumber] = []
+    @Transient var phoneNumbers: [RMPhoneNumber] = []
     
     enum CodingKeys: String, CodingKey {
         case contactID = "ContactID"

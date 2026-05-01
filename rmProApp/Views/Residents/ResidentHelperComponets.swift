@@ -82,7 +82,7 @@ struct LeaseItem: View {
                     .font(.subheadline.bold())
                 ForEach(recurringCharges) { charge in
                     HStack {
-                        Text(charge.chargeType?.description ?? "N/A")
+                        Text(charge.chargeType?.descriptionText ?? "N/A")
                         Spacer()
                         Text("$\(charge.amount ?? 0)")
                     }

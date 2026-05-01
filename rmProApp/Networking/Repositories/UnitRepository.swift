@@ -63,7 +63,7 @@ actor UnitRepository {
         let deltaFilter = await SyncCoordinator.shared.deltaFilter(for: RMUnit.self)
         if let deltaFilter {
             filters.append(deltaFilter)
-            print("🔁 \(preset.label) delta (UpdateDate,gte,\(deltaFilter.value))")
+            print("🔁 \(preset.label) delta (\(deltaFilter.key),\(deltaFilter.operation),\(deltaFilter.value))")
         } else {
             print("🌊 \(preset.label) full fetch")
         }

@@ -10,8 +10,8 @@ actor SyncCoordinator {
 
     private let defaults = UserDefaults.standard
 
-    /// ISO8601 formatter RentManager accepts in filter values
-    /// (e.g. "2026-04-23T00:00:00"). Seconds precision, no timezone suffix.
+    /// ISO8601 formatter RentManager accepts in filter values, e.g.
+    /// "2026-04-23T00:00:00Z". Seconds precision, UTC `Z` suffix.
     private static let rmDateFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime]
@@ -30,11 +30,12 @@ actor SyncCoordinator {
         defaults.removeObject(forKey: E.lastSyncDateKey)
     }
 
-    /// Returns a RentManager-compatible date filter string ("UpdateDate,gte,<iso>")
+    /// Returns a RentManager-compatible date filter ("UpdateDate,ge,<iso>")
     /// when there's a prior sync, or nil (meaning: do a full pull).
+    /// `ge` is RentManager's operator code for ≥; `gte`/`gteq` are rejected.
     func deltaFilter<E: SyncableEntity>(for type: E.Type) -> RMFilter? {
         guard let last = lastSyncDate(for: type) else { return nil }
         let iso = Self.rmDateFormatter.string(from: last)
-        return RMFilter(key: "UpdateDate", operation: "gte", value: iso)
+        return RMFilter(key: "UpdateDate", operation: "ge", value: iso)
     }
 }

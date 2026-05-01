@@ -23,10 +23,10 @@ final class RMUnit: Codable, Identifiable, Hashable, Equatable {
     var updateDate: String?
 
     var addresses: [RMAddress]?
-    var leases: [RMLease]?
-    var userDefinedValues: [RMUserDefinedValue]?
+    @Transient var leases: [RMLease]? = nil
+    @Transient var userDefinedValues: [RMUserDefinedValue]? = nil
     var currentOccupancyStatus: RMOccupancyStatus?
-    var currentOccupants: [RMTenant]?
+    @Transient var currentOccupants: [RMTenant]? = nil
     var primaryAddress: RMAddress?
     var unitType: RMUnitType?
 

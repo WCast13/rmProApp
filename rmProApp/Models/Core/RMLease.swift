@@ -35,8 +35,8 @@ final class RMLease : Codable, Identifiable, Hashable, Equatable {
     var endDate: String?
     var createUserID: Int?
     var updateUserID: Int?
-    var tenant: RMTenant?
-    var unit: RMUnit?
+    @Transient var tenant: RMTenant? = nil
+    @Transient var unit: RMUnit? = nil
     var property: RMProperty?
     var propertyUnit: String?
     var unitProperty: String?

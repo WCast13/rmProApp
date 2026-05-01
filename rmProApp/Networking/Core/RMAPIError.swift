@@ -34,8 +34,9 @@ enum RMAPIError: Error, LocalizedError {
             return "Server error (\(code)): \(body)"
         case .client(let code, let body):
             return "Client error (\(code)): \(body)"
-        case .decoding(let error, _):
-            return "Decoding failed: \(error.localizedDescription)"
+        case .decoding(let error, let rawBody):
+            let snippet = rawBody.count > 1024 ? rawBody.prefix(1024) + "…(truncated)" : Substring(rawBody)
+            return "Decoding failed: \(String(reflecting: error))\nBody: \(snippet)"
         case .transport(let error):
             return "Network error: \(error.localizedDescription)"
         case .invalidResponse:

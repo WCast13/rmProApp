@@ -130,13 +130,13 @@ final class SyncCoordinatorTests: XCTestCase {
         XCTAssertNil(filter, "First sync should do a full pull, not apply a date filter.")
     }
 
-    func testDeltaFilterUsesUpdateDateGteAfterMarking() async {
+    func testDeltaFilterUsesUpdateDateGeAfterMarking() async {
         let fixed = Date(timeIntervalSince1970: 1_745_000_000)
         await SyncCoordinator.shared.markSynced(RMTenant.self, at: fixed)
 
         let filter = await SyncCoordinator.shared.deltaFilter(for: RMTenant.self)
         XCTAssertEqual(filter?.key, "UpdateDate")
-        XCTAssertEqual(filter?.operation, "gte")
+        XCTAssertEqual(filter?.operation, "ge")
         // ISO 8601 "Internet Date Time" in UTC for the fixed epoch second.
         XCTAssertEqual(filter?.value, "2025-04-18T18:13:20Z")
     }

@@ -157,14 +157,14 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     var accountGroupID: Int?
     var accountGroupMasterTenantID: Int?
     var addresses: [RMAddress]?
-    var allLeases: [RMLease]?
+    @Transient var allLeases: [RMLease]? = nil
     var balance: Decimal?
     var charges: [RMCharge]?
     var chargeTypes: [RMChargeType]?
     var checkPayeeName: String?
     var colorID: Int?
     var comment: String?
-    var contacts: [RMContact]?
+    @Transient var contacts: [RMContact]? = nil
     var createDate: String?
     var createUserID: Int?
     var defaultTaxTypeID: Int?
@@ -187,8 +187,8 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     var lastContact: String?
     var lastName: String?
     var lastNameFirstName: String?
-    var lease: RMLease?
-    var loans: [RMLoan]?
+    @Transient var lease: RMLease? = nil
+    @Transient var loans: [RMLoan]? = nil
     var name: String?
     var openBalance: Decimal?
     var overrideCreateDate: String?
@@ -214,15 +214,15 @@ final class WCLeaseTenant: Identifiable, Codable, Equatable, Hashable {
     var totalCalls: Int?
     var totalEmails: Int?
     var totalVisits: Int?
-    var udfs: [RMUserDefinedValue]?
-    var unit: RMUnit?
+    @Transient var udfs: [RMUserDefinedValue]? = nil
+    @Transient var unit: RMUnit? = nil
     var updateDate: String?
     var updateUserID: Int?
     var webMessage: String?
     
-    var primaryContact: RMContact?
+    @Transient var primaryContact: RMContact? = nil
     // NOTE: Not Codable. Skipped in encode/decode.
-    var transactions: [WCTransaction]?
+    @Transient var transactions: [WCTransaction]? = nil
     
     /// Flatten an RMTenant and one of its active leases into a single
     /// row. The unit comes from the lease so the row is always scoped
