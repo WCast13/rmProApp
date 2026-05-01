@@ -17,7 +17,7 @@ jobs:
       run: |
         xcodebuild test \
           -project rmProApp.xcodeproj \
-          -scheme rmProApp \
+          -scheme rmProAppTests \
           -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults.xcresult
